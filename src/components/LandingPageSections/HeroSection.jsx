@@ -13,25 +13,25 @@ const HeroSection = () => {
             mobile: '/videos/v1.mp4?size=mobile', // Append size query parameter for potential server-side resizing
             tablet: '/videos/v1.mp4?size=tablet',
             desktop: '/videos/v1.mp4',
-            poster: '/images/BrandWebsiteImages/sq1.png' // Static image placeholder
+            poster: '/images/placeholders/placeholder.png' // Static image placeholder
         },
         {
             mobile: '/videos/v2.mp4?size=mobile',
             tablet: '/videos/v2.mp4?size=tablet',
             desktop: '/videos/v2.mp4',
-            poster: '/images/BrandWebsiteImages/sq2.png'
+            poster: '/images/placeholders/placeholder.png'
         },
         {
             mobile: '/videos/v3.mp4?size=mobile',
             tablet: '/videos/v3.mp4?size=tablet',
             desktop: '/videos/v3.mp4',
-            poster: '/images/BrandWebsiteImages/sq3.png'
+            poster: '/images/placeholders/placeholder.png'
         },
         {
             mobile: '/videos/v4.mp4?size=mobile',
             tablet: '/videos/v4.mp4?size=tablet',
             desktop: '/videos/v4.mp4',
-            poster: '/images/BrandWebsiteImages/sq4.png'
+            poster: '/images/placeholders/placeholder.png'
         }
     ], []);
 
