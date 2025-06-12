@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 const cards = [
   {
     id: 1,
-    icon: '/images/section3images/i1.jpg',        
-    hoverIcon: '/images/section3images/i4.jpg',    // Second image to show on hover
+    icon: '/images/section3images/i4.png',        
+    hoverIcon: '/images/section3images/i3.png',    // Second image to show on hover
     title: 'Get started fast',
     description: 'Solo seller Megan Bre Camp started Summer Solace Tallow to sell her organic candles and skincare online and at local farmers markets.',
   },
   {
     id: 2,
-    icon: '/images/section3images/i2.jpg',
-    hoverIcon: '/images/section3images/i5.jpg',    // Second image to show on hover
+    icon: '/images/section3images/i6.png',
+    hoverIcon: '/images/section3images/i5.png',    // Second image to show on hover
     title: 'Grow as big as you want',
     description: 'Athleisure brand Gymshark grew from working out of a garage to the global juggernaut it is today, with $500M+ sales annually.',
   },
   {
     id: 3,
-    icon: '/images/section3images/i3.jpg',
-    hoverIcon: '/images/section3images/i6.jpg',    // Second image to show on hover
+    icon: '/images/section3images/i2.png',
+    hoverIcon: '/images/section3images/i1.png',    // Second image to show on hover
     title: 'Raise the bar',
     description: 'With the help of Shopify for enterprise, Mattel sells their iconic toys direct to customers around the world.',
   },
@@ -55,23 +55,23 @@ const Card = ({ icon, hoverIcon, title, description }) => {
 };
 
 const Section3 = () => (
-  <section className="relative bg-black -mt-40 pt-32 pb-20 z-40">
+  <section className="relative bg-black pb-20 z-40">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row text-white">
         <div className="lg:w-2/3">
           <h1 className="text-6xl mb-6 tracking-tighter font-light leading-tight">
-            For everyone from entrepreneurs to enterprise
+            Built to fit every fashion business
           </h1>
         </div>
         <div className="lg:w-1/3 relative p-10">
           <span className="text-gray-400 text-lg absolute bottom-0 right-0">
-            Millions of merchants of every size have collectively made over $1,000,000,000,000 in sales on Shopify.
+            Whether you're just getting started or running a full-scale operation, Octane gives you the tools to launch, grow, and streamline your business--all in one place.
           </span>
         </div>
       </div>
 
       {/* Cards grid */}
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-16 gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map(card => (
           <Card
             key={card.id}
