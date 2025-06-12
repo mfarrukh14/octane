@@ -3,24 +3,24 @@ import React, { useState } from 'react';
 const cards = [
   {
     id: 1,
-    icon: '/images/section3images/i4.png',        
-    hoverIcon: '/images/section3images/i3.png',    // Second image to show on hover
-    title: 'Get started fast',
-    description: 'Solo seller Megan Bre Camp started Summer Solace Tallow to sell her organic candles and skincare online and at local farmers markets.',
+    icon: '/images/section3images/i6.png',        
+    hoverIcon: '/images/section3images/i5.png',    // Second image to show on hover
+    title: 'Start smart',
+    description: 'Octane helps small brands build professional storefronts, manage inventory, and ship like a pro.',
   },
   {
     id: 2,
-    icon: '/images/section3images/i6.png',
-    hoverIcon: '/images/section3images/i5.png',    // Second image to show on hover
-    title: 'Grow as big as you want',
-    description: 'Athleisure brand Gymshark grew from working out of a garage to the global juggernaut it is today, with $500M+ sales annually.',
+    icon: '/images/section3images/i4.png',
+    hoverIcon: '/images/section3images/i3.png',    // Second image to show on hover
+    title: 'Elevate your brand',
+    description: 'Designer labels use Octane to streamline operations while keeping creative control.',
   },
   {
     id: 3,
     icon: '/images/section3images/i2.png',
     hoverIcon: '/images/section3images/i1.png',    // Second image to show on hover
-    title: 'Raise the bar',
-    description: 'With the help of Shopify for enterprise, Mattel sells their iconic toys direct to customers around the world.',
+    title: 'Scale efficiently',
+    description: 'Large manufacturers rely on Octane to handle high-volume orders, warehousing, and logistics.',
   },
   // ...add as many cards as you need
 ];
@@ -86,7 +86,7 @@ const Section3 = () => (
       {/* Action button */}
       <div className="flex justify-center mt-8">
         <button className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg font-medium transition-all duration-300 bg-black hover:bg-white hover:text-black">
-          Pick a plan that fits
+          Start Now!
         </button>
       </div>
     </div>
