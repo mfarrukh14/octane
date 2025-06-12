@@ -1,18 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import BlurText from '../UI/TextAnimations/BlurText';
 
 const HeroSection = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-    const [videosLoaded, setVideosLoaded] = useState(false);
+    const [isFirstVideoLoaded, setIsFirstVideoLoaded] = useState(false);
     const videoRefs = useRef([]);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // Video files from the public/videos folder
-    const videos = [
-        '/videos/v1.mp4',
-        '/videos/v2.mp4',
-        '/videos/v3.mp4',
-        '/videos/v4.mp4'
-    ];
+    // Responsive video sources with different resolutions
+    const videoSources = useMemo(() => [
+        {
+            mobile: '/videos/v1.mp4?size=mobile', // Append size query parameter for potential server-side resizing
+            tablet: '/videos/v1.mp4?size=tablet',
+            desktop: '/videos/v1.mp4',
+            poster: '/images/BrandWebsiteImages/sq1.png' // Static image placeholder
+        },
+        {
+            mobile: '/videos/v2.mp4?size=mobile',
+            tablet: '/videos/v2.mp4?size=tablet',
+            desktop: '/videos/v2.mp4',
+            poster: '/images/BrandWebsiteImages/sq2.png'
+        },
+        {
+            mobile: '/videos/v3.mp4?size=mobile',
+            tablet: '/videos/v3.mp4?size=tablet',
+            desktop: '/videos/v3.mp4',
+            poster: '/images/BrandWebsiteImages/sq3.png'
+        },
+        {
+            mobile: '/videos/v4.mp4?size=mobile',
+            tablet: '/videos/v4.mp4?size=tablet',
+            desktop: '/videos/v4.mp4',
+            poster: '/images/BrandWebsiteImages/sq4.png'
+        }
+    ], []);
 
     // Rotating texts for the second heading
     const rotatingTexts = [
@@ -31,76 +52,149 @@ const HeroSection = () => {
         "journey from click to door"
     ];
 
-    // Handle video loading
+    // Check if device is mobile
     useEffect(() => {
-        let loadedCount = 0;
-        const checkAllLoaded = () => {
-            loadedCount++;
-            if (loadedCount === videos.length) {
-                setVideosLoaded(true);
-            }
+        const checkIsMobile = () => {
+            setIsMobile(window.innerWidth < 768);
         };
+        
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+        
+        return () => window.removeEventListener('resize', checkIsMobile);
+    }, []);
 
-        videoRefs.current.forEach((video) => {
-            if (video) {
-                video.addEventListener('loadeddata', checkAllLoaded);
+    // Load only the first video initially, then load others progressively
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    // Only load and play the first video initially
+                    if (videoRefs.current[0]) {
+                        const firstVideo = videoRefs.current[0];
+                        
+                        // Use correct source based on device
+                        const source = isMobile ? 
+                            videoSources[0].mobile : 
+                            (window.innerWidth < 1024 ? videoSources[0].tablet : videoSources[0].desktop);
+                            
+                        firstVideo.src = source;
+                        
+                        firstVideo.load();
+                        
+                        // Once the first video can play, consider the hero section loaded
+                        firstVideo.addEventListener('canplay', () => {
+                            setIsFirstVideoLoaded(true);
+                            firstVideo.play().catch(err => {
+                                console.warn('Auto-play prevented:', err);
+                                // Still show content even if autoplay is blocked
+                                setIsFirstVideoLoaded(true);
+                            });
+                        }, { once: true });
+                    }
+                    
+                    // Disconnect after first video is loaded
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+        
+        // Observe the section itself
+        const section = document.querySelector('section');
+        if (section) observer.observe(section);
+        
+        return () => observer.disconnect();
+    }, [isMobile, videoSources]);
+
+    // Lazy load remaining videos
+    useEffect(() => {
+        if (!isFirstVideoLoaded) return;
+        
+        // Start loading the rest of the videos
+        videoSources.forEach((source, index) => {
+            if (index > 0 && videoRefs.current[index]) {
+                const video = videoRefs.current[index];
+                
+                // Use correct source based on device
+                video.src = isMobile ? 
+                    source.mobile : 
+                    (window.innerWidth < 1024 ? source.tablet : source.desktop);
+                    
+                // Just load, don't play yet
+                video.load();
             }
         });
-
-        return () => {
-            videoRefs.current.forEach((video) => {
-                if (video) {
-                    video.removeEventListener('loadeddata', checkAllLoaded);
-                }
-            });
-        };
-    }, [videos.length]);
+    }, [isFirstVideoLoaded, isMobile, videoSources]);
 
     // Cycle through videos every 6 seconds
     useEffect(() => {
-        if (!videosLoaded) return;
+        if (!isFirstVideoLoaded) return;
 
         const interval = setInterval(() => {
-            setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
+            setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoSources.length);
         }, 6000);
 
         return () => clearInterval(interval);
-    }, [videos.length, videosLoaded]);
+    }, [isFirstVideoLoaded, videoSources.length]);
 
     // Ensure current video plays
     useEffect(() => {
-        if (videosLoaded && videoRefs.current[currentVideoIndex]) {
-            videoRefs.current[currentVideoIndex].play().catch(console.error);
+        if (!isFirstVideoLoaded) return;
+        
+        const currentVideo = videoRefs.current[currentVideoIndex];
+        if (currentVideo) {
+            // Preload the next video in sequence
+            const nextIndex = (currentVideoIndex + 1) % videoSources.length;
+            const nextVideo = videoRefs.current[nextIndex];
+            
+            if (nextVideo && !nextVideo.src) {
+                const source = isMobile ? 
+                    videoSources[nextIndex].mobile : 
+                    (window.innerWidth < 1024 ? videoSources[nextIndex].tablet : videoSources[nextIndex].desktop);
+                
+                nextVideo.src = source;
+                nextVideo.load();
+            }
+            
+            // Play current video
+            currentVideo.play().catch(err => {
+                console.warn('Video play error:', err);
+                // Handle playback errors gracefully
+            });
         }
-    }, [currentVideoIndex, videosLoaded]);
+    }, [currentVideoIndex, isFirstVideoLoaded, isMobile, videoSources]);
 
     return (
         <section className="relative h-screen w-full overflow-hidden">
-            {/* Video Background */}
+            {/* Video Background / Static Fallback */}
             <div className="absolute inset-0 w-full h-full z-0">
-                {videos.map((video, index) => (
+                {/* Static Background Image when videos are loading */}
+                <div 
+                    className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${isFirstVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
+                    style={{ backgroundImage: `url(${videoSources[0].poster})` }}
+                />
+                
+                {videoSources.map((source, index) => (
                     <video
-                        key={video}
+                        key={`video-${index}`}
                         ref={(el) => (videoRefs.current[index] = el)}
-                        src={video}
-                        autoPlay={index === 0}
-                        loop
+                        poster={source.poster}
                         muted
                         playsInline
-                        preload="metadata"
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentVideoIndex ? 'opacity-100 z-10' : 'opacity-0 z-5'
-                            }`}
-                        onLoadStart={() => console.log(`Loading video ${index + 1}`)}
-                        onCanPlay={() => console.log(`Video ${index + 1} can play`)}
-                        onError={(e) => console.error(`Video ${index + 1} error:`, e)}
+                        loop
+                        preload="none" // Don't preload, we'll handle loading manually
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                            isFirstVideoLoaded && index === currentVideoIndex ? 'opacity-100 z-10' : 'opacity-0 z-5'
+                        }`}
                     />
                 ))}
             </div>
 
-            {/* Very subtle black overlay - reduced to 10% opacity */}
+            {/* Very subtle dark overlay */}
             <div className="absolute inset-0 bg-black/50 z-20"></div>
 
-            {/* Hero Content */}
+            {/* Hero Content - Always visible regardless of video loading */}
             <div className="relative z-30 flex items-center h-full text-white w-full">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="max-w-5xl">
@@ -142,16 +236,8 @@ const HeroSection = () => {
                             </span>
                         </button>
                     </div>
-
                 </div>
             </div>
-
-            {/* Video Loading Indicator */}
-            {!videosLoaded && (
-                <div className="absolute inset-0 bg-gray-900 flex items-center justify-center z-40">
-                    <div className="text-white text-xl">Loading videos...</div>
-                </div>
-            )}
         </section>
     );
 };
