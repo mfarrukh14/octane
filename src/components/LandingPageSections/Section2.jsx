@@ -48,7 +48,7 @@ const Section2 = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-white">
                     <h1 className="text-7xl md:text-7xl mb-6 tracking-tighter font-light leading-tight">
-                        The one commerce platform behind it all
+                        One platform. Every solution. Seamlessly connected.
                     </h1>
                     <div className="flex flex-wrap">
                         <div className="w-full">
@@ -57,19 +57,19 @@ const Section2 = () => {
                                     className={`inline ${currentIndex === 0 ? 'text-white' : ''} hover:bg-gradient-to-r hover:from-teal-400 hover:via-blue-500 hover:to-purple-600 hover:bg-clip-text hover:text-transparent cursor-pointer`}
                                     onClick={() => setCurrentIndex(0)}
                             >
-                                Sell online and in person.&nbsp;
+                                Sell online and direct.&nbsp;
                             </span>
                             <span 
                                 className={`inline ${currentIndex === 1 ? 'text-white' : ''} hover:bg-gradient-to-br hover:from-teal-300 hover:via-blue-400 hover:to-purple-500 hover:bg-clip-text hover:text-transparent cursor-pointer`}
                                 onClick={() => setCurrentIndex(1)}
                             >
-                                Sell locally and globally.&nbsp;
+                                Sell in-stock and on-demand.&nbsp;
                             </span>
                             <span 
                                 className={`inline ${currentIndex === 2 ? 'text-white' : ''} hover:bg-gradient-to-l hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 hover:bg-clip-text hover:text-transparent cursor-pointer`}
                                 onClick={() => setCurrentIndex(2)}
                             >
-                                Sell direct and wholesale.&nbsp;
+                                Sell locally and globally.&nbsp;
                             </span>
                             <span 
                                 className={`inline ${currentIndex === 3 ? 'text-white' : ''} hover:bg-gradient-to-t hover:from-teal-200 hover:via-blue-300 hover:to-purple-400 hover:bg-clip-text hover:text-transparent cursor-pointer`}

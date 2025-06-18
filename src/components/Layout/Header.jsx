@@ -26,37 +26,10 @@ const Header = () => {
             <div className="text-white text-2xl font-bold ml-5">
               OCTANE
             </div>
-
-            {/* Links */}
-            <nav className="hidden md:flex items-center space-x-7 text-white">
-              {/* Solutions */}
-              <div className="relative group">
-                <button className="flex items-center focus:outline-none hover:text-gray-200 transition-colors">
-                  <span>Solutions</span>
-                  <FontAwesomeIcon icon={faChevronDown} className="ml-1 text-sm" />
-                </button>
-              </div>
-
-              <a href="#" className="hover:text-gray-200 transition-colors">
-                Pricing
-              </a>
-
-              {/* Resources */}
-              <div className="relative group">
-                <button className="flex items-center focus:outline-none hover:text-gray-200 transition-colors">
-                  <span>Features</span>
-                  <FontAwesomeIcon icon={faChevronDown} className="ml-1 text-sm" />
-                </button>
-              </div>
-
-              <a href="#" className="hover:text-gray-200 transition-colors">
-                Enterprise
-              </a>
-            </nav>
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
 
             <a href="/login" className="text-white hover:text-gray-200 transition-colors">
               Log in
@@ -66,7 +39,7 @@ const Header = () => {
               href="/signup"
               className="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100 transition-colors"
             >
-              Start for free
+              Get in touch
             </a>
           </div>
         </div>

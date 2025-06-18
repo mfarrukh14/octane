@@ -5,22 +5,22 @@ const cards = [
     id: 1,
     icon: '/images/section3images/i6.png',        
     hoverIcon: '/images/section3images/i5.png',    // Second image to show on hover
-    title: 'Start smart',
-    description: 'Octane helps small brands build professional storefronts, manage inventory, and ship like a pro.',
+    title: 'Start fast',
+    description: 'STarting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
   },
   {
     id: 2,
     icon: '/images/section3images/i4.png',
     hoverIcon: '/images/section3images/i3.png',    // Second image to show on hover
     title: 'Elevate your brand',
-    description: 'Designer labels use Octane to streamline operations while keeping creative control.',
+    description: 'With Octane, HSY can focus on design while reaching diaspora markets (USA, UK, UAE) with zero backend headaches.',
   },
   {
     id: 3,
     icon: '/images/section3images/i2.png',
     hoverIcon: '/images/section3images/i1.png',    // Second image to show on hover
     title: 'Scale efficiently',
-    description: 'Large manufacturers rely on Octane to handle high-volume orders, warehousing, and logistics.',
+    description: 'Enterprises like Haseens rely on Octane to handle high-volume worldwide orders, warehousing, logistics and payments.',
   },
   // ...add as many cards as you need
 ];
@@ -60,7 +60,7 @@ const Section3 = () => (
       <div className="flex flex-col lg:flex-row text-white">
         <div className="lg:w-2/3">
           <h1 className="text-6xl mb-6 tracking-tighter font-light leading-tight">
-            Built to fit every fashion business
+            One platform, for scaling and business
           </h1>
         </div>
         <div className="lg:w-1/3 relative p-10">

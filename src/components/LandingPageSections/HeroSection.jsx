@@ -210,7 +210,7 @@ const HeroSection = () => {
                             direction="top"
                         />
                         <p className="text-xl md:text-2xl mb-8 leading-relaxed drop-shadow-md">
-                            Start, run, and grow your business with powerful tools and expert support
+                            Build, Fullfill, and Grow WorldWide - all from one powerful dashboard.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start">
                             <button className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
