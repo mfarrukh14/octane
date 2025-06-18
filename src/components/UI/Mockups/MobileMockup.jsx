@@ -3,7 +3,8 @@ import { motion, AnimatePresence, useMotionValue, animate, useDragControls } fro
 import { FaSignal, FaWifi, FaBatteryFull, FaBell } from 'react-icons/fa';
 
 // Constants
-const DEVICE_WIDTH = 300;
+const SCALE_FACTOR = 1.3; // Adjust this value to increase/decrease overall mockup size (e.g., 0.8 for 80%, 1.2 for 120%)
+const DEVICE_WIDTH = 300 * SCALE_FACTOR;
 const DEVICE_HEIGHT = DEVICE_WIDTH * 2.0037;
 const SWIPE_THRESHOLD = DEVICE_HEIGHT * 0.25;
 const DISPLAY_COUNT = 3;
@@ -41,17 +42,6 @@ export default function MobileMockup() {
     return () => clearInterval(notifInterval);
   }, []);
 
-  const onDragEnd = (_e, info) => {
-    if (-info.point.y > SWIPE_THRESHOLD) {
-      animate(y, -DEVICE_HEIGHT, {
-        type: 'spring', stiffness: 120,
-        onComplete: () => setShowFireworks(true),
-      });
-    } else {
-      animate(y, 0, { type: 'spring', stiffness: 200 });
-    }
-  };
-
   const dateString = now.toLocaleDateString(undefined, {
     weekday: 'long', month: 'short', day: 'numeric'
   });
@@ -62,16 +52,15 @@ export default function MobileMockup() {
   const formattedMinutes = minutes.toString().padStart(2, '0');
   const timeString = `${formattedHours}:${formattedMinutes}`;
 
-
   const variants = {
-    initial: () => ({ y: -60, opacity: 0 }),
+    initial: () => ({ y: -60 * SCALE_FACTOR, opacity: 0 }),
     animate: pos => ({
-      y: pos * 72,
+      y: pos * 60 * SCALE_FACTOR,
       opacity: 1,
       transition: { type: 'spring', stiffness: 120, damping: 14 }
     }),
     exit: () => ({
-      y: DISPLAY_COUNT * 60,
+      y: DISPLAY_COUNT * 60 * SCALE_FACTOR,
       opacity: 0,
       transition: { type: 'spring', stiffness: 120, damping: 14 }
     }),
@@ -80,29 +69,27 @@ export default function MobileMockup() {
   return (
     <div className="">
       <div
-        className="relative bg-black rounded-[50px] shadow-2xl"
+        className="relative bg-black rounded-[70px] shadow-2xl"
         style={{ width: DEVICE_WIDTH, height: DEVICE_HEIGHT }}
       >
 
         {/* Bezel border */}
-        <div className="absolute inset-0 border-4 border-black rounded-[46px]" />
+        <div className="absolute inset-0 border-4 border-black rounded-[70px]" />
 
         {/* Side buttons */}
         <div className="absolute left-[-2px] top-1/5 h-8 w-1 bg-black rounded-full" />
         <div className="absolute left-[-2px] top-[28%] h-8 w-1 bg-black rounded-full" />
-        <div className="absolute right-[-3px] top-1/5 h-20 w-8 bg-black rounded-full" />
-
-        {/* Dynamic Island */}
+        <div className="absolute right-[-3px] top-1/5 h-20 w-8 bg-black rounded-full" />        {/* Dynamic Island */}
         <div
           className="absolute left-1/2 top-4 transform -translate-x-1/2 bg-black rounded-full opacity-90 flex items-center justify-center"
-          style={{ width: DEVICE_WIDTH * 0.29, height: 24, zIndex: 20 }}
+          style={{ width: DEVICE_WIDTH * 0.29, height: 24 * SCALE_FACTOR, zIndex: 20 }}
         >
           {/* Center content if needed */}
         </div>
 
         {/* Status Icons */}
         <div
-          className="absolute inset-x-0 top-5 flex items-center justify-between px-8 z-30 text-white"
+          className="absolute inset-x-0 top-5 flex items-center justify-between px-10 z-30 text-white"
           style={{ width: DEVICE_WIDTH }}        >
           {/* Left side: notification bell + carrier */}
           <div className="flex items-center space-x-2">
@@ -110,15 +97,15 @@ export default function MobileMockup() {
           </div>
           {/* Right side: signal, wifi, battery */}
           <div className="flex items-center space-x-2 text-lg">
-            <FaSignal className="h-4 w-4" />
-            <FaWifi className="h-4 w-4" />
-            <FaBatteryFull className="h-4 w-4" />
+            <FaSignal className="h-5 w-5" />
+            <FaWifi className="h-5 w-5" />
+            <FaBatteryFull className="h-5 w-5" />
           </div>
         </div>
 
         {/* Draggable screen content */}
         <div
-          className="absolute inset-2 rounded-[40px] flex flex-col"
+          className="absolute inset-2 rounded-[60px] flex flex-col"
           style={{
             y,
             background: 'linear-gradient(to bottom left, rgb(30, 132, 158), #000)',
@@ -126,13 +113,13 @@ export default function MobileMockup() {
           }}
         >
           {/* Date & Time */}
-          <div className="flex flex-col items-center text-white mt-12">
-            <span className="text-sm font-medium">{dateString}</span>
-            <span className="text-6xl font-extrabold mt-1 leading-none">{timeString}</span>
+          <div className="flex flex-col items-center text-white mt-18">
+            <span className="font-medium">{dateString}</span>
+            <span className="text-7xl font-extrabold mt-1 leading-none">{timeString}</span>
           </div>
 
           {/* Notification Stack */}
-          <div className="absolute inset-x-0 top-40 h-60 pointer-events-none">
+          <div className="absolute inset-x-0 top-54 h-60 pointer-events-none">
             <AnimatePresence>
               {queue.map((notifIdx, i) => (
                 <motion.div
@@ -152,7 +139,7 @@ export default function MobileMockup() {
                     </div>
 
                     {/* Notification Body */}
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center">
                       <FaBell className="text-white flex-shrink-0" />
                       <span>{NOTIFICATIONS[notifIdx]}</span>
                     </div>
