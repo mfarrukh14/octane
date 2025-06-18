@@ -37,7 +37,7 @@ const Header = () => {
 
             <a
               href="/signup"
-              className="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-300 transition-colors"
             >
               Get in touch
             </a>

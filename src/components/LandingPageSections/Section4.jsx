@@ -1,56 +1,32 @@
 import React from 'react';
-import MobileMockup from '../UI/Mockups/MobileMockup';
-import LaptopMockup from '../UI/Mockups/LaptopMockup';
 
 const Section4 = () => (
     <section className="relative bg-black pb-20 z-40 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
-            {/* Teal small label */}
-            <p className="text-teal-400 text-lg mb-2">Desktop and Mobile</p>
 
-            {/* Main heading */}
-            <h2 className="text-white text-5xl tracking-tighter font-normal mb-10">
-                Take care of business
-            </h2>            {/* Cards container */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Card 1 */}
-                <div className="rounded-2xl bg-gradient-to-br from-teal-800 to-black/10 shadow-lg overflow-hidden flex flex-col justify-between h-[600px] relative">
-                    <div 
-                        className="flex-1 overflow-hidden flex items-start justify-start pl-8 pt-8"
-                        style={{
-                            maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-                        }}
-                    >
-                        <LaptopMockup />
-                    </div>
-                    <div className='text-white mt-4 px-8 pb-8 relative z-10'>
-                        <h3 className="text-xl tracking-tighter mb-2">Manage everything in one place</h3>
-                        <p className="text-gray-400 tracking-tighter leading-tight">
-                            From back office to front of store, you’re always in control with the fully centralized Shopify Admin.
-                        </p>
-                    </div>
+            <p className="text-teal-400 text-lg mb-2">Online and in person</p>            <div className='flex justify-between w-full'>
+                <div className='w-1/2'>
+                    <h2 className="text-white text-5xl tracking-tighter font-normal mb-10">
+                        Sell with style. Every click, every time.
+                    </h2>
                 </div>
-
-                {/* Card 2 */}
-                <div className="rounded-2xl p-8 bg-gradient-to-bl from-teal-800 to-black/20 text-white shadow-lg overflow-hidden flex flex-col justify-between h-[600px] relative">
-                    <div 
-                        className="flex-1 overflow-hidden flex items-start justify-center"
-                        style={{
-                            maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-                        }}
-                    >
-                        <MobileMockup />
-                    </div>
-                    <div className="mt-4 relative z-10">
-                        <h3 className="text-xl tracking-tighter mb-2">Run your store from anywhere</h3>
-                        <p className="text-gray-400 tracking-tighter leading-tight">
-                            Do it all right from your pocket with the full-featured Shopify mobile app.
-                        </p>
-                    </div>
+                <div className='flex justify-end w-1/2'>
+                    <span className='text-lg tracking-tighter text-gray-400'><u className='cursor-pointer hover:text-white'>Accelerate your launch</u> with professionally designed ready to use layouts, pick from refined, sales-optimized themes, or build a fully customized storefront from the ground up.</span>
                 </div>
+            </div>
 
+            {/* Video Section */}
+            <div className="mt-12">
+                <video
+                    className="w-full h-auto rounded-2xl shadow-lg"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                >
+                    <source src="/videos/v2.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
     </section>

@@ -57,10 +57,10 @@ const HeroSection = () => {
         const checkIsMobile = () => {
             setIsMobile(window.innerWidth < 768);
         };
-        
+
         checkIsMobile();
         window.addEventListener('resize', checkIsMobile);
-        
+
         return () => window.removeEventListener('resize', checkIsMobile);
     }, []);
 
@@ -72,16 +72,16 @@ const HeroSection = () => {
                     // Only load and play the first video initially
                     if (videoRefs.current[0]) {
                         const firstVideo = videoRefs.current[0];
-                        
+
                         // Use correct source based on device
-                        const source = isMobile ? 
-                            videoSources[0].mobile : 
+                        const source = isMobile ?
+                            videoSources[0].mobile :
                             (window.innerWidth < 1024 ? videoSources[0].tablet : videoSources[0].desktop);
-                            
+
                         firstVideo.src = source;
-                        
+
                         firstVideo.load();
-                        
+
                         // Once the first video can play, consider the hero section loaded
                         firstVideo.addEventListener('canplay', () => {
                             setIsFirstVideoLoaded(true);
@@ -92,35 +92,35 @@ const HeroSection = () => {
                             });
                         }, { once: true });
                     }
-                    
+
                     // Disconnect after first video is loaded
                     observer.disconnect();
                 }
             },
             { threshold: 0.1 }
         );
-        
+
         // Observe the section itself
         const section = document.querySelector('section');
         if (section) observer.observe(section);
-        
+
         return () => observer.disconnect();
     }, [isMobile, videoSources]);
 
     // Lazy load remaining videos
     useEffect(() => {
         if (!isFirstVideoLoaded) return;
-        
+
         // Start loading the rest of the videos
         videoSources.forEach((source, index) => {
             if (index > 0 && videoRefs.current[index]) {
                 const video = videoRefs.current[index];
-                
+
                 // Use correct source based on device
-                video.src = isMobile ? 
-                    source.mobile : 
+                video.src = isMobile ?
+                    source.mobile :
                     (window.innerWidth < 1024 ? source.tablet : source.desktop);
-                    
+
                 // Just load, don't play yet
                 video.load();
             }
@@ -141,22 +141,22 @@ const HeroSection = () => {
     // Ensure current video plays
     useEffect(() => {
         if (!isFirstVideoLoaded) return;
-        
+
         const currentVideo = videoRefs.current[currentVideoIndex];
         if (currentVideo) {
             // Preload the next video in sequence
             const nextIndex = (currentVideoIndex + 1) % videoSources.length;
             const nextVideo = videoRefs.current[nextIndex];
-            
+
             if (nextVideo && !nextVideo.src) {
-                const source = isMobile ? 
-                    videoSources[nextIndex].mobile : 
+                const source = isMobile ?
+                    videoSources[nextIndex].mobile :
                     (window.innerWidth < 1024 ? videoSources[nextIndex].tablet : videoSources[nextIndex].desktop);
-                
+
                 nextVideo.src = source;
                 nextVideo.load();
             }
-            
+
             // Play current video
             currentVideo.play().catch(err => {
                 console.warn('Video play error:', err);
@@ -170,11 +170,11 @@ const HeroSection = () => {
             {/* Video Background / Static Fallback */}
             <div className="absolute inset-0 w-full h-full z-0">
                 {/* Static Background Image when videos are loading */}
-                <div 
+                <div
                     className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${isFirstVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
                     style={{ backgroundImage: `url(${videoSources[0].poster})` }}
                 />
-                
+
                 {videoSources.map((source, index) => (
                     <video
                         key={`video-${index}`}
@@ -184,9 +184,8 @@ const HeroSection = () => {
                         playsInline
                         loop
                         preload="none" // Don't preload, we'll handle loading manually
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                            isFirstVideoLoaded && index === currentVideoIndex ? 'opacity-100 z-10' : 'opacity-0 z-5'
-                        }`}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isFirstVideoLoaded && index === currentVideoIndex ? 'opacity-100 z-10' : 'opacity-0 z-5'
+                            }`}
                     />
                 ))}
             </div>
@@ -196,16 +195,16 @@ const HeroSection = () => {
 
             {/* Hero Content - Always visible regardless of video loading */}
             <div className="relative z-30 flex items-center h-full text-white w-full">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div className="max-w-7xl mx-auto px-4 md:p-12 w-full">
                     <div className="max-w-5xl">
-                        <h1 className="text-6xl md:text-7xl mb-2 tracking-tighter leading-tight drop-shadow-lg">
+                        <h1 className="text-6xl md:text-5xl sm:text-3xl mb-2 tracking-tighter leading-tight drop-shadow-lg">
                             Build the next
                         </h1>
                         <BlurText
                             textList={rotatingTexts}
-                            rotationInterval={2500}
+                            rotationInterval={4000}
                             delay={80}
-                            className="text-6xl md:text-7xl mb-6 tracking-tighter leading-tight w-full"
+                            className="text-6xl md:text-5xl sm:text-3xl mb-6 tracking-tighter leading-tight w-full"
                             animateBy="words"
                             direction="top"
                         />
@@ -213,28 +212,28 @@ const HeroSection = () => {
                             Build, Fullfill, and Grow WorldWide - all from one powerful dashboard.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start">
-                            <button className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
-                                Start for Free
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <button
-                            className="relative group overflow-hidden text-white px-8 py-4 rounded-full text-lg font-medium hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
-                        >
-                            <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full backdrop-blur-md"></span>
-                            <span className="relative flex items-center gap-2">
-                                Why choose Octane
-                                <svg
-                                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            <div className='flex flex-col lg:flex-row md:flex-row sm:flex-col justify-between w-full'>
+                                <button className="bg-white cursor-pointer text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-300 transition-colors shadow-lg">
+                                    Get in touch
+                                </button>
+                                <button
+                                    className="relative group cursor-pointer overflow-hidden text-white px-8 py-4 rounded-full text-lg font-medium hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </span>
-                        </button>
+                                    <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full backdrop-blur-md"></span>
+                                    <span className="relative flex items-center gap-2">
+                                        Why choose Octane
+                                        <svg
+                                            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ const Section2 = () => {
     };
 
     return (
-        <section className="relative bg-black rounded-t-[3rem] md:rounded-t-[3rem] lg:rounded-t-[3rem] -mt-20 pt-20 pb-20 z-40">
+        <section className="relative w-full bg-black rounded-t-[3rem] md:rounded-t-[3rem] lg:rounded-t-[3rem] -mt-10 pt-20 pb-20 z-40">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-white">
                     <h1 className="text-7xl md:text-7xl mb-6 tracking-tighter font-light leading-tight">
