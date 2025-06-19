@@ -9,6 +9,7 @@ import Section6 from './components/LandingPageSections/Section6'
 import Section7 from './components/LandingPageSections/Section7'
 import Section8 from './components/LandingPageSections/Section8'
 import Section9 from './components/LandingPageSections/Section9'
+import Footer from './components/Layout/Footer'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Section7 />
       <Section8 />
       <Section9 />
+      <Footer />
     </>
   )
 }
