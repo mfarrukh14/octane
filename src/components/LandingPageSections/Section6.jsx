@@ -30,10 +30,8 @@ const Section6 = () => (
                             From back office to front of store, you’re always in control with the fully centralized Shopify Admin.
                         </p>
                     </div>
-                </div>
-
-                {/* Card 2 */}
-                <div className="rounded-2xl p-8 bg-gradient-to-bl from-teal-800 to-black/20 text-white shadow-lg overflow-hidden flex flex-col justify-between h-[600px] relative">
+                </div>                {/* Card 2 */}
+                <div className="rounded-2xl py-8 px-2 sm:px-6 md:px-4 lg:px-8 bg-gradient-to-bl from-teal-800 to-black/20 text-white shadow-lg overflow-hidden flex flex-col justify-between h-[600px] relative">
                     <div 
                         className="flex-1 overflow-hidden flex items-start justify-center"
                         style={{

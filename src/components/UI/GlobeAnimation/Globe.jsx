@@ -11,6 +11,17 @@ const RING_PROPAGATION_SPEED = 3;
 const aspect = 1.2;
 const cameraZ = 300;
 
+// Responsive camera distance based on screen size
+const getResponsiveCameraZ = () => {
+  if (typeof window !== 'undefined') {
+    const width = window.innerWidth;
+    if (width < 768) return 600; // Mobile - move camera further back
+    if (width < 1024) return 350; // Tablet - slightly further back
+    return 300; // Desktop - original distance
+  }
+  return 300;
+};
+
 let numbersOfRings = [0];
 
 // Pixelated Noise Mask Component
@@ -121,16 +132,20 @@ function SatelliteCards() {
       color: "#45b7d1"
     }
   ];
-
   // Convert lat/lng to 3D position above globe surface
-  const latLngToVector3 = (lat, lng, altitude = 140) => { // Increased from 130 to 140 for better visibility
+  const latLngToVector3 = (lat, lng, altitude = 140) => {
+    // Adjust altitude based on screen size for better visibility
+    const responsiveAltitude = typeof window !== 'undefined' && window.innerWidth < 768 
+      ? altitude * 1.2 // Increase altitude on mobile for better spacing
+      : altitude;
+      
     const phi = (90 - lat) * (Math.PI / 180);
     const theta = (lng + 180) * (Math.PI / 180);
     
     return new Vector3(
-      -altitude * Math.sin(phi) * Math.cos(theta),
-      altitude * Math.cos(phi),
-      altitude * Math.sin(phi) * Math.sin(theta)
+      -responsiveAltitude * Math.sin(phi) * Math.cos(theta),
+      responsiveAltitude * Math.cos(phi),
+      responsiveAltitude * Math.sin(phi) * Math.sin(theta)
     );
   };
 
@@ -186,31 +201,29 @@ function SatelliteCards() {
             >
               
               
-              {/* HTML content overlay - Made to fill the entire plane */}
-              <Html
+              {/* HTML content overlay - Made to fill the entire plane */}              <Html
                 transform
                 occlude
                 position={[0, 0, 1]}
-                distanceFactor={30} // Reduced from 8 to 4 for much larger appearance
+                distanceFactor={typeof window !== 'undefined' && window.innerWidth < 768 ? 40 : 30} // Larger distance factor on mobile
                 style={{
-                  width: '800px', // Increased from 500px to 800px to match plane size
-                  height: '500px', // Increased from 320px to 500px to match plane size
+                  width: typeof window !== 'undefined' && window.innerWidth < 768 ? '600px' : '800px', // Smaller on mobile
+                  height: typeof window !== 'undefined' && window.innerWidth < 768 ? '400px' : '500px', // Smaller on mobile
                   pointerEvents: 'none',
                   userSelect: 'none'
                 }}
-              >
-                <div
+              >                <div
                   style={{
                     background: 'rgba(5, 5, 5, 0.43)',
-                    border: `4px solid ${card.color}`, // Increased border thickness
-                    borderRadius: '20px', // Increased border radius
-                    padding: '40px', // Increased padding
+                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid ${card.color}`, // Thinner border on mobile
+                    borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Smaller radius on mobile
+                    padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '20px' : '40px', // Less padding on mobile
                     color: 'white',
                     fontFamily: 'Arial, sans-serif',
-                    fontSize: '28px', // Increased base font size
+                    fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '18px' : '28px', // Smaller text on mobile
                     textAlign: 'left',
                     backdropFilter: 'blur(15px)',
-                    boxShadow: `0 0 50px ${card.color}90`, // Stronger glow
+                    boxShadow: `0 0 ${typeof window !== 'undefined' && window.innerWidth < 768 ? '30px' : '50px'} ${card.color}90`, // Smaller glow on mobile
                     width: '100%',
                     height: '100%',
                     display: 'flex',
@@ -218,17 +231,16 @@ function SatelliteCards() {
                     justifyContent: 'space-between',
                     boxSizing: 'border-box' // Ensures padding is included in width/height
                   }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
-                    <span style={{ fontSize: '56px', marginRight: '24px' }}>{card.icon}</span> {/* Much larger icon */}
-                    <div style={{ color: card.color, fontSize: '48px', fontWeight: 'bold' }}> {/* Much larger title */}
+                >                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '24px' }}>
+                    <span style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '32px' : '56px', marginRight: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '24px' }}>{card.icon}</span> {/* Responsive icon size */}
+                    <div style={{ color: card.color, fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '28px' : '48px', fontWeight: 'bold' }}> {/* Responsive title size */}
                       {card.title}
                     </div>
                   </div>
-                  <div style={{ fontSize: '26px', color: '#00ff88', lineHeight: '1.4', marginBottom: '12px' }}> {/* Much larger subtitle */}
+                  <div style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '16px' : '26px', color: '#00ff88', lineHeight: '1.4', marginBottom: typeof window !== 'undefined' && window.innerWidth < 768 ? '6px' : '12px' }}> {/* Responsive subtitle */}
                     {card.subtitle}
                   </div>
-                  <div style={{ fontSize: '26px', color: '#00ff88', lineHeight: '1.4' }}> {/* Much larger subtitle */}
+                  <div style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '16px' : '26px', color: '#00ff88', lineHeight: '1.4' }}> {/* Responsive subtitle */}
                     {card.subtitle2}
                   </div>
                 </div>
@@ -413,20 +425,45 @@ export function WebGLRendererConfig() {
   const { gl, size } = useThree();
 
   useEffect(() => {
-    gl.setPixelRatio(window.devicePixelRatio);
+    gl.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
     gl.setSize(size.width, size.height);
     gl.setClearColor(0xffaaff, 0);
-  }, []);
+  }, [gl, size]);
 
   return null;
 }
 
 export function World(props) {
   const { globeConfig } = props;
+  const [cameraDistance, setCameraDistance] = useState(getResponsiveCameraZ());
+  
+  // Update camera distance on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setCameraDistance(getResponsiveCameraZ());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const scene = new Scene();
   scene.fog = new Fog(0xffffff, 400, 2000);
+  
+  // Calculate responsive aspect ratio
+  const getAspect = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth / window.innerHeight;
+    }
+    return aspect;
+  };
+
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas 
+      scene={scene} 
+      camera={new PerspectiveCamera(50, getAspect(), 180, 1800)}
+      style={{ width: '100%', height: '100%' }}
+    >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight
@@ -443,8 +480,8 @@ export function World(props) {
       <OrbitControls
         enablePan={false}
         enableZoom={false}
-        minDistance={cameraZ}
-        maxDistance={cameraZ}
+        minDistance={cameraDistance}
+        maxDistance={cameraDistance}
         autoRotateSpeed={1}
         autoRotate={true}
         minPolarAngle={Math.PI / 3.5}

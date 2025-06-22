@@ -2,22 +2,47 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate, useDragControls } from 'framer-motion';
 import { FaSignal, FaWifi, FaBatteryFull, FaBell } from 'react-icons/fa';
 
-// Constants
-const SCALE_FACTOR = 1.3; // Adjust this value to increase/decrease overall mockup size (e.g., 0.8 for 80%, 1.2 for 120%)
-const DEVICE_WIDTH = 300 * SCALE_FACTOR;
-const DEVICE_HEIGHT = DEVICE_WIDTH * 2.0037;
-const SWIPE_THRESHOLD = DEVICE_HEIGHT * 0.25;
-const DISPLAY_COUNT = 3;
-const INTERVAL_MS = 2000;
+// Hook to get responsive scale factor
+const useResponsiveScale = () => {
+  const [scaleFactor, setScaleFactor] = useState(1.3);
 
-const NOTIFICATIONS = [
-  "Payment received!",
-  "New Order received!",
-  "Order Shipped!",
-  "New Order received!",
-];
+  useEffect(() => {
+    const updateScale = () => {
+      const width = window.innerWidth;
+      if (width < 640) { // Mobile screens
+        setScaleFactor(1.0);
+      } else if (width < 768) { // Small tablets
+        setScaleFactor(1.0);
+      } else if (width < 1024) { // Tablets
+        setScaleFactor(1.2);
+      } else { // Desktop
+        setScaleFactor(1.3);
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
+  return scaleFactor;
+};
 
 export default function MobileMockup() {
+  const SCALE_FACTOR = useResponsiveScale();
+  const DEVICE_WIDTH = 300 * SCALE_FACTOR;
+  const DEVICE_HEIGHT = DEVICE_WIDTH * 2.0037;
+  const SWIPE_THRESHOLD = DEVICE_HEIGHT * 0.25;
+  const DISPLAY_COUNT = 3;
+  const INTERVAL_MS = 2000;
+
+  const NOTIFICATIONS = [
+    "Payment received!",
+    "New Order received!",
+    "Order Shipped!",
+    "New Order received!",
+  ];
+
   const [now, setNow] = useState(new Date());
   const [queue, setQueue] = useState(
     Array.from({ length: DISPLAY_COUNT }, (_, i) => i % NOTIFICATIONS.length)
@@ -97,9 +122,9 @@ export default function MobileMockup() {
           </div>
           {/* Right side: signal, wifi, battery */}
           <div className="flex items-center space-x-2 text-lg">
-            <FaSignal className="h-5 w-5" />
-            <FaWifi className="h-5 w-5" />
-            <FaBatteryFull className="h-5 w-5" />
+            <FaSignal className="h-4 w-4 md:h-5 md:w-5" />
+            <FaWifi className="h-4 w-4 md:h-5 md:w-5" />
+            <FaBatteryFull className="h-4 w-4 md:h-5 md:w-5" />
           </div>
         </div>
 

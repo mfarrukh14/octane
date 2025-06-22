@@ -73,19 +73,157 @@ const Section10 = () => {
       setSelected(prevIdx(selected))
     }
   }
-
   return (
     <section className="bg-[#001F29] text-white py-16 px-8">
       <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
-      <h1 className="text-5xl font-light mb-12">Grow around the world</h1>
+      <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>
 
-      <div className="relative flex items-center justify-between">        {/* Flags Column - Dial Effect */}
+      {/* Mobile Layout - Flags above cards */}
+      <div className="lg:hidden">
+        {/* Flags Row - Horizontal on mobile */}
+        <div 
+          className="flex items-center justify-center mb-8 relative"
+          onWheel={handleWheel}
+        >
+          {visibleCountries.map(({ country, position, index }, displayIndex) => (
+            <div
+              key={`${country.code}-${index}`}
+              className={`w-12 h-10 mx-2 transition-all duration-500 ease-in-out cursor-pointer ${
+                position === 'middle' ? 'transform scale-110 z-10' : 'transform scale-90'
+              }`}
+              style={{
+                opacity: position === 'middle' ? 1 : 0.4,
+                background: position !== 'middle' 
+                  ? `linear-gradient(${position === 'top' ? '90deg' : '270deg'}, rgba(0,31,41,0.6) 0%, transparent 100%)`
+                  : 'transparent'
+              }}
+            >
+              <button
+                onClick={() => handleCountryClick(index)}
+                className={`w-full cursor-pointer h-full rounded-lg p-1 overflow-hidden transition-all duration-300 relative ${
+                  position === 'middle'
+                    ? 'bg-white/20'
+                    : 'bg-white/20 hover:scale-105 hover:opacity-70'
+                }`}              >
+                <ReactCountryFlag 
+                  countryCode={country.code} 
+                  svg
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
+                  }}
+                  title={country.name}
+                />
+                {position !== 'middle' && (
+                  <div className={`absolute inset-0 bg-gradient-to-${position === 'top' ? 'r' : 'l'} from-[#001F29]/60 to-transparent pointer-events-none`} />
+                )}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Product Card Stack - Mobile */}
+        <div className="relative w-full max-w-sm mx-auto h-80 mb-8">
+          {visibleCards.map(({ country, position, index }) => (
+            <div
+              key={`card-${country.code}-${index}`}
+              className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
+                position === 'center'
+                  ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
+                  : position === 'left'
+                  ? 'left-0 -translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+                  : 'right-0 translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+              }`}
+            >
+              <img 
+                src="/images/products/product.jpg" 
+                alt={`Product for ${country.name}`} 
+                className="w-full h-full object-cover" 
+              />
+              
+              {position !== 'center' && (
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001F29]/40 to-transparent" />
+              )}
+              
+              <button 
+                className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${
+                  position === 'center'
+                    ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
+                    : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
+                }`}
+              >
+                {country.buyNow}
+              </button>
+            </div>
+          ))}
+
+          {/* Price bubble - Mobile positioning */}
+          <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white text-black rounded-full px-3 py-2 flex items-center text-xs shadow-lg transition-all duration-300 z-20">
+            <ReactCountryFlag 
+              countryCode={curr.code} 
+              svg
+              style={{
+                width: '14px',
+                height: '10px',
+                marginRight: '6px'
+              }}
+            />
+            <span className="font-bold mr-1">{curr.code}</span>
+            <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
+          </div>
+        </div>
+
+        {/* Shipping Modal - Below cards on mobile */}
+        <div className="bg-white text-black rounded-xl shadow-2xl w-full max-w-md mx-auto p-4 relative">
+          <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+          <h3 className="font-medium mb-4">Buy 0 shipping labels</h3>
+          <ul className="space-y-2 mb-4">
+            {[
+              { carrier: 'USPS Ground Advantage' },
+              { carrier: 'UPS® Ground Saver' },
+              { carrier: 'DHL Express Worldwide' },
+            ].map((item) => (
+              <li key={item.carrier} className="flex justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="w-4 h-4 bg-gray-300 rounded" />
+                  <span className="text-sm">0 × {item.carrier}</span>
+                </div>
+                <span className="text-sm">0.00 USD</span>
+              </li>
+            ))}
+          </ul>
+          <div className="border-t pt-2 mb-4 text-sm">
+            <div className="flex justify-between"><span>Subtotal</span><span>0.00 USD</span></div>
+            <div className="flex justify-between bg-gradient-to-r from-green-100 to-transparent py-1">
+              <span>Shopify Plan Discount</span><span>0.00 USD</span>
+            </div>
+            <div className="flex justify-between"><span>Insurance</span><span>Included</span></div>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <span className="font-bold">Total</span>
+            <span className="font-bold text-xl">0.00 USD</span>
+          </div>
+          <label className="block mb-4">
+            <span className="block text-sm text-gray-600">Shipping date</span>
+            <select className="mt-1 block w-full border rounded px-2 py-1 text-sm">
+              <option>Today</option>
+            </select>
+          </label>
+          <div className="flex justify-end space-x-2">
+            <button className="px-3 py-1 rounded border text-sm">Cancel</button>
+            <button className="px-3 py-1 rounded bg-[#00282F] text-white text-sm">Buy 0 shipping labels</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout - Original layout */}
+      <div className="hidden lg:flex relative items-center justify-between">        {/* Flags Column - Dial Effect */}
         <div 
           className="flex flex-col items-center mr-8 h-48 justify-center relative"
           onWheel={handleWheel}
-        >
-
-          {visibleCountries.map(({ country, position, index }, displayIndex) => (
+        >          {visibleCountries.map(({ country, position, index }, displayIndex) => (
             <div
               key={`${country.code}-${index}`}
               className={`w-14 h-12 mb-4 last:mb-0 transition-all duration-500 ease-in-out cursor-pointer ${

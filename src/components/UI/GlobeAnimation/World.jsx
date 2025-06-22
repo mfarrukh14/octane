@@ -1,7 +1,19 @@
 "use client";
 import React, { lazy, Suspense } from "react";
 
-const World = lazy(() => import("./Globe").then((m) => ({ default: m.World })));
+const World = lazy(() => 
+    import("./Globe").then((m) => ({ default: m.World }))
+);
+
+// Lightweight fallback that matches the globe container dimensions
+const GlobeFallback = () => (
+    <div className="w-full h-full bg-black flex items-center justify-center">
+        <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mb-2"></div>
+            <p className="text-white/40 text-xs">Initializing globe...</p>
+        </div>
+    </div>
+);
 
 export function GlobeDemo() {
     const globeConfig = {
@@ -9,7 +21,6 @@ export function GlobeDemo() {
         globeColor: "#062056",
         showAtmosphere: true,
         atmosphereColor: "rgb(255, 255, 255)",
-        atmosphereAltitude: 0.1,
         emissive: "#062056",
         emissiveIntensity: 0.1,
         shininess: 0.9,
@@ -388,15 +399,11 @@ export function GlobeDemo() {
             arcAlt: 0.3,
             color: colors[Math.floor(Math.random() * (colors.length - 1))],
         },
-    ];
-
-    return (
-        <div className="flex h-screen w-full bg-white dark:bg-black">
-            <div className="relative w-full h-full overflow-hidden">
-
-                {/* globe container now truly full‑size */}
+    ];    return (
+        <div className="flex h-[80vh] sm:h-[70vh] md:h-[75vh] lg:h-screen w-full bg-black dark:bg-black">
+            <div className="relative w-full h-full overflow-hidden">                {/* globe container now truly full‑size */}
                 <div className="absolute inset-0 z-10">
-                    <Suspense fallback={<div>Loading globe…</div>}>
+                    <Suspense fallback={<GlobeFallback />}>
                         <World data={sampleArcs} globeConfig={globeConfig} />
                     </Suspense>
                 </div>
