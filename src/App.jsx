@@ -7,6 +7,7 @@ import { MultiStepLoader } from './components/UI/multi-step-loader'
 import Header from './components/Layout/Header'
 import HeroSection from './components/LandingPageSections/HeroSection'
 import Footer from './components/Layout/Footer'
+import CreditCard from './components/UI/Mockups/CreditCardMockup'
 
 // Lazy load all sections for better performance
 const Section2 = React.lazy(() => import('./components/LandingPageSections/Section2'))
