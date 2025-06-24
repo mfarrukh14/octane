@@ -92,42 +92,37 @@ function PixelatedNoiseMask() {
 function SatelliteCards() {
   const satelliteGroupRef = useRef();
   const { camera } = useThree();
-  
-  // Sample card data - positioned equidistantly around equator
+    // Sample card data - positioned equidistantly around equator
   const cardData = [
     {
       id: 1,
-      title: "US$4,200,000",
-      subtitle: "SALES PER MINUTE DURING",
-      subtitle2: "PEAK SALES TIMES",
-      icon: "💰",
+      title: "Unlimited insured inventory storage",
+      subtitle: "",
+      subtitle2: "",
       position: { lat: 30, lng: 0 }, // Prime Meridian
       color: "#00ff88"
     },
     {
       id: 2,
-      title: "2.3M",
-      subtitle: "ACTIVE USERS",
-      subtitle2: "WORLDWIDE PLATFORM",
-      icon: "👥",
+      title: "Shipped to 150+ countries",
+      subtitle: "",
+      subtitle2: "",
       position: { lat: 30, lng: 90 }, // 90° East
       color: "#ff6b6b"
     },
     {
       id: 3,    
-      title: "99.9%",
-      subtitle: "SYSTEM UPTIME",
-      subtitle2: "GUARANTEED RELIABILITY",
-      icon: "⚡",
+      title: "Serves 1 million customers",
+      subtitle: "",
+      subtitle2: "",
       position: { lat: 10, lng: 180 }, // 180° (International Date Line)
       color: "#4ecdc4"
     },
     {
       id: 4,
-      title: "24/7",
-      subtitle: "GLOBAL SUPPORT",
-      subtitle2: "CUSTOMER SERVICE",
-      icon: "🌍",
+      title: "Unlimited product listings",
+      subtitle: "",
+      subtitle2: "",
       position: { lat: 10, lng: 270 }, // 270° West (or -90°)
       color: "#45b7d1"
     }
@@ -215,7 +210,7 @@ function SatelliteCards() {
               >                <div
                   style={{
                     background: 'rgba(5, 5, 5, 0.43)',
-                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid ${card.color}`, // Thinner border on mobile
+                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid white`, // White border
                     borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Smaller radius on mobile
                     padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '20px' : '40px', // Less padding on mobile
                     color: 'white',
@@ -223,25 +218,17 @@ function SatelliteCards() {
                     fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '18px' : '28px', // Smaller text on mobile
                     textAlign: 'left',
                     backdropFilter: 'blur(15px)',
-                    boxShadow: `0 0 ${typeof window !== 'undefined' && window.innerWidth < 768 ? '30px' : '50px'} ${card.color}90`, // Smaller glow on mobile
+                    boxShadow: `0 0 ${typeof window !== 'undefined' && window.innerWidth < 768 ? '40px' : '70px'} rgba(255, 255, 255, 0.8)`, // Increased white glow
                     width: '100%',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     boxSizing: 'border-box' // Ensures padding is included in width/height
-                  }}
-                >                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '24px' }}>
-                    <span style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '32px' : '56px', marginRight: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '24px' }}>{card.icon}</span> {/* Responsive icon size */}
-                    <div style={{ color: card.color, fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '28px' : '48px', fontWeight: 'bold' }}> {/* Responsive title size */}
+                  }}>                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    <div style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '36px' : '60px', fontWeight: 'bold', textAlign: 'center', lineHeight: '1.2' }}> {/* Gray-200 text color */}
                       {card.title}
                     </div>
-                  </div>
-                  <div style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '16px' : '26px', color: '#00ff88', lineHeight: '1.4', marginBottom: typeof window !== 'undefined' && window.innerWidth < 768 ? '6px' : '12px' }}> {/* Responsive subtitle */}
-                    {card.subtitle}
-                  </div>
-                  <div style={{ fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '16px' : '26px', color: '#00ff88', lineHeight: '1.4' }}> {/* Responsive subtitle */}
-                    {card.subtitle2}
                   </div>
                 </div>
               </Html>

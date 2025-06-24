@@ -8,6 +8,7 @@ import Header from './components/Layout/Header'
 import HeroSection from './components/LandingPageSections/HeroSection'
 import Footer from './components/Layout/Footer'
 import CreditCard from './components/UI/Mockups/CreditCardMockup'
+import Section11 from './components/LandingPageSections/Section11'
 
 // Lazy load all sections for better performance
 const Section2 = React.lazy(() => import('./components/LandingPageSections/Section2'))
@@ -68,7 +69,7 @@ function App() {
           import('./components/LandingPageSections/Section9'),
           import('./components/LandingPageSections/Section10'),
         ]);
-        
+
         setComponentsLoaded(true);
       } catch (error) {
         console.error('Error loading components:', error);
@@ -86,7 +87,7 @@ function App() {
       const timer = setTimeout(() => {
         setLoading(false);
       }, 1000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [componentsLoaded]);
@@ -94,9 +95,9 @@ function App() {
   return (
     <>
       {/* Global Loading Screen */}
-      <MultiStepLoader 
-        loadingStates={loadingStates} 
-        loading={loading} 
+      <MultiStepLoader
+        loadingStates={loadingStates}
+        loading={loading}
         duration={800}
         loop={true}
       />
@@ -106,43 +107,46 @@ function App() {
         <>
           <Header />
           <HeroSection />
-          
+
           <Suspense fallback={<div className="min-h-[100px]" />}>
             <Section2 />
           </Suspense>
-          
+
           <Suspense fallback={<div className="min-h-[100px]" />}>
             <Section3 />
           </Suspense>
-          
+
           <Suspense fallback={<div className="min-h-[100px]" />}>
             <Section4 />
           </Suspense>
-          
+
           <Suspense fallback={<div className="min-h-[100px]" />}>
             <Section5 />
           </Suspense>
-          
-          <Suspense fallback={<div className="min-h-[100px]" />}>
-            <Section6 />
-          </Suspense>
-          
-          <Suspense fallback={<div className="min-h-[100px]" />}>
-            <Section7 />
-          </Suspense>
-          
-          <Suspense fallback={<div className="min-h-[100px]" />}>
-            <Section8 />
-          </Suspense>
-          
-          <Suspense fallback={<div className="min-h-[100px]" />}>
-            <Section9 />
-          </Suspense>
-          
+
           <Suspense fallback={<div className="min-h-[100px]" />}>
             <Section10 />
           </Suspense>
-          
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Section6 />
+          </Suspense>
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Section7 />
+          </Suspense>
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Section8 />
+          </Suspense>
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Section9 />
+          </Suspense>
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Section11 />
+          </Suspense>
           <Footer />
         </>
       )}

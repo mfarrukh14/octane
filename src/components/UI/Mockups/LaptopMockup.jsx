@@ -176,7 +176,7 @@ export default function LaptopMockup() {
             <div className="flex items-center justify-between mb-2">
               <div className="flex space-x-2 text-sm">
                 <span>All</span>
-                <span>Added by Shopify</span>
+                <span>Added by Octane</span>
                 <span className="bg-gray-100 px-2 py-1 rounded">Web pages</span>
               </div>
               <FaPlus className="w-3 h-3 text-gray-400" />

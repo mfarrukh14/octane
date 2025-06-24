@@ -215,8 +215,8 @@ const HeroSection = () => {
                             <div className='flex flex-col lg:flex-row md:flex-row sm:flex-col justify-between w-full'>
                                 <button className="bg-white cursor-pointer text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-300 transition-colors shadow-lg">
                                     Get in touch
-                                </button>
-                                <button
+                                </button>                                <button
+                                    onClick={() => window.open('https://docs.google.com/document/d/1BlMGR8jbJRaksS3NpWFn3QNTh9i6jagOyzkD40cIgcc/edit?usp=drive_link', '_blank')}
                                     className="relative group cursor-pointer overflow-hidden text-white px-8 py-4 rounded-full text-lg font-medium hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
                                 >
                                     <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full backdrop-blur-md"></span>

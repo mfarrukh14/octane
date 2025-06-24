@@ -2,26 +2,84 @@
 import React, { useState, useEffect } from 'react'
 import ReactCountryFlag from 'react-country-flag'
 
+// Custom hook for counter animation
+const useCountUp = (endValue, duration = 1000, startValue = 0) => {
+  const [count, setCount] = useState(startValue)
+  
+  useEffect(() => {
+    let startTime
+    let animationFrame
+    
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      
+      const currentValue = startValue + (endValue - startValue) * progress
+      setCount(currentValue)
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate)
+      }
+    }
+    
+    animationFrame = requestAnimationFrame(animate)
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
+      }
+    }
+  }, [endValue, duration, startValue])
+  
+  return count
+}
+
 const countries = [
-  { code: 'MX', name: 'Mexico', currency: 'MXN', price: 2499, buyNow: 'Comprar ahora' },
-  { code: 'ES', name: 'Spain', currency: 'EUR', price: 109.99, buyNow: 'Comprar ahora' },
-  { code: 'US', name: 'United States', currency: 'USD', price: 125.00, buyNow: 'Buy now' },
-  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 89.50, buyNow: 'Buy now' },
-  { code: 'AU', name: 'Australia', currency: 'AUD', price: 169.99, buyNow: 'Buy now' },
-  { code: 'FR', name: 'France', currency: 'EUR', price: 119.00, buyNow: 'Acheter maintenant' },
-  { code: 'DE', name: 'Germany', currency: 'EUR', price: 115.50, buyNow: 'Jetzt kaufen' },
-  { code: 'IT', name: 'Italy', currency: 'EUR', price: 120.00, buyNow: 'Acquista ora' },
-  { code: 'CA', name: 'Canada', currency: 'CAD', price: 159.99, buyNow: 'Buy now' },
-  { code: 'JP', name: 'Japan', currency: 'JPY', price: 14500, buyNow: '今すぐ購入' },
+  { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 32500, buyNow: 'ابھی خریدیں', image: '/images/BrandWebsiteImages/r1.png' },
+  { code: 'AE', name: 'UAE', currency: 'AED', price: 459, buyNow: 'اشتري الآن', image: '/images/BrandWebsiteImages/r2.png' },
+  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 469, buyNow: 'اشتري الآن', image: '/images/BrandWebsiteImages/r3.png' },
+  { code: 'CA', name: 'Canada', currency: 'CAD', price: 159.99, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq1.png' },
+  { code: 'US', name: 'United States', currency: 'USD', price: 125.00, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq2.png' },
+  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 89.50, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq3.png' },
+  { code: 'AU', name: 'Australia', currency: 'AUD', price: 169.99, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq4.png' },
 ]
 
 const Section10 = () => {
-  const [selected, setSelected] = useState(2) // default to US
+  const [selected, setSelected] = useState(0) // default to Pakistan
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const sectionRef = React.useRef(null)
   const total = countries.length
 
   // helpers for circular prev/next
   const prevIdx = (i) => (i - 1 + total) % total
   const nextIdx = (i) => (i + 1) % total
+
+  // Add currency conversion rates (base: USD)
+  const currencyRates = {
+    PKR: 278.5,
+    AED: 3.67,
+    SAR: 3.75,
+    CAD: 1.35,
+    USD: 1.0,
+    GBP: 0.79,
+    AUD: 1.48
+  }
+  // Convert USD amounts to local currency
+  const convertCurrency = (usdAmount) => {
+    const rate = currencyRates[curr.currency]
+    return (usdAmount * rate).toFixed(2)
+  }
+  // Animated number component
+  const AnimatedNumber = ({ value, currency, decimals = 2 }) => {
+    const shouldAnimate = isInView || hasAnimated
+    const animatedValue = useCountUp(shouldAnimate ? parseFloat(value) : 0, 800)
+    return (
+      <span>
+        {animatedValue.toFixed(decimals)} {currency}
+      </span>
+    )
+  }
 
   const curr = countries[selected]
   // Get the 3 visible countries (previous, current, next)
@@ -47,7 +105,6 @@ const Section10 = () => {
   const handleCountryClick = (clickedIndex) => {
     setSelected(clickedIndex)
   }
-
   // Add keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -64,6 +121,31 @@ const Section10 = () => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [selected])
 
+  // Intersection Observer for initial animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsInView(true)
+          setHasAnimated(true)
+        }
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before fully in view
+      }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [hasAnimated])
   // Add scroll wheel navigation for the flags area
   const handleWheel = (e) => {
     e.preventDefault()
@@ -73,8 +155,9 @@ const Section10 = () => {
       setSelected(prevIdx(selected))
     }
   }
+  
   return (
-    <section className="bg-[#001F29] text-white py-16 px-8">
+    <section ref={sectionRef} className="bg-[#001F29] text-white py-16 px-8">
       <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
       <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>
 
@@ -126,8 +209,7 @@ const Section10 = () => {
 
         {/* Product Card Stack - Mobile */}
         <div className="relative w-full max-w-sm mx-auto h-80 mb-8">
-          {visibleCards.map(({ country, position, index }) => (
-            <div
+          {visibleCards.map(({ country, position, index }) => (            <div
               key={`card-${country.code}-${index}`}
               className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
                 position === 'center'
@@ -138,7 +220,7 @@ const Section10 = () => {
               }`}
             >
               <img 
-                src="/images/products/product.jpg" 
+                src={country.image} 
                 alt={`Product for ${country.name}`} 
                 className="w-full h-full object-cover" 
               />
@@ -173,37 +255,63 @@ const Section10 = () => {
             <span className="font-bold mr-1">{curr.code}</span>
             <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
           </div>
-        </div>
-
-        {/* Shipping Modal - Below cards on mobile */}
+        </div>        {/* Shipping Modal - Below cards on mobile */}
         <div className="bg-white text-black rounded-xl shadow-2xl w-full max-w-md mx-auto p-4 relative">
           <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
-          <h3 className="font-medium mb-4">Buy 0 shipping labels</h3>
+          <h3 className="font-medium mb-4">Buy 3 shipping labels</h3>
           <ul className="space-y-2 mb-4">
             {[
-              { carrier: 'USPS Ground Advantage' },
-              { carrier: 'UPS® Ground Saver' },
-              { carrier: 'DHL Express Worldwide' },
+              { carrier: 'USPS Ground Advantage', basePrice: 8.50 },
+              { carrier: 'UPS® Ground Saver', basePrice: 12.75 },
+              { carrier: 'DHL Express Worldwide', basePrice: 25.00 },
             ].map((item) => (
               <li key={item.carrier} className="flex justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="w-4 h-4 bg-gray-300 rounded" />
-                  <span className="text-sm">0 × {item.carrier}</span>
+                  <ReactCountryFlag 
+                    countryCode={curr.code} 
+                    svg
+                    style={{ width: '16px', height: '12px' }}
+                  />
+                  <span className="text-sm">1 × {item.carrier}</span>
                 </div>
-                <span className="text-sm">0.00 USD</span>
+                <span className="text-sm">
+                  <AnimatedNumber 
+                    value={convertCurrency(item.basePrice)} 
+                    currency={curr.currency}
+                  />
+                </span>
               </li>
             ))}
           </ul>
           <div className="border-t pt-2 mb-4 text-sm">
-            <div className="flex justify-between"><span>Subtotal</span><span>0.00 USD</span></div>
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>
+                <AnimatedNumber 
+                  value={convertCurrency(46.25)} 
+                  currency={curr.currency}
+                />
+              </span>
+            </div>
             <div className="flex justify-between bg-gradient-to-r from-green-100 to-transparent py-1">
-              <span>Shopify Plan Discount</span><span>0.00 USD</span>
+              <span>Octane Plan Discount</span>
+              <span>
+                -<AnimatedNumber 
+                  value={convertCurrency(5.00)} 
+                  currency={curr.currency}
+                />
+              </span>
             </div>
             <div className="flex justify-between"><span>Insurance</span><span>Included</span></div>
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="font-bold">Total</span>
-            <span className="font-bold text-xl">0.00 USD</span>
+            <span className="font-bold text-xl">
+              <AnimatedNumber 
+                value={convertCurrency(41.25)} 
+                currency={curr.currency}
+              />
+            </span>
           </div>
           <label className="block mb-4">
             <span className="block text-sm text-gray-600">Shipping date</span>
@@ -213,7 +321,7 @@ const Section10 = () => {
           </label>
           <div className="flex justify-end space-x-2">
             <button className="px-3 py-1 rounded border text-sm">Cancel</button>
-            <button className="px-3 py-1 rounded bg-[#00282F] text-white text-sm">Buy 0 shipping labels</button>
+            <button className="px-3 py-1 rounded bg-[#00282F] text-white text-sm">Buy 3 shipping labels</button>
           </div>
         </div>
       </div>
@@ -262,8 +370,7 @@ const Section10 = () => {
           ))}
         </div>        {/* Product Card Stack - Dial Effect */}
         <div className="relative w-80 h-96 flex-shrink-0">
-          {visibleCards.map(({ country, position, index }) => (
-            <div
+          {visibleCards.map(({ country, position, index }) => (            <div
               key={`card-${country.code}-${index}`}
               className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
                 position === 'center'
@@ -274,7 +381,7 @@ const Section10 = () => {
               }`}
             >
               <img 
-                src="/images/products/product.jpg" 
+                src={country.image} 
                 alt={`Product for ${country.name}`} 
                 className="w-full h-full object-cover" 
               />
@@ -311,37 +418,63 @@ const Section10 = () => {
             <span className="font-bold mr-2">{curr.code}</span>
             <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
           </div>
-        </div>
-
-        {/* Shipping Modal (on map) */}
+        </div>        {/* Shipping Modal (on map) */}
         <div className="ml-16 bg-white text-black rounded-xl shadow-2xl w-96 p-6 relative">
           <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
-          <h3 className="font-medium mb-4">Buy 0 shipping labels</h3>
+          <h3 className="font-medium mb-4">Buy 3 shipping labels</h3>
           <ul className="space-y-2 mb-4">
             {[
-              { carrier: 'USPS Ground Advantage' },
-              { carrier: 'UPS® Ground Saver' },
-              { carrier: 'DHL Express Worldwide' },
+              { carrier: 'USPS Ground Advantage', basePrice: 8.50 },
+              { carrier: 'UPS® Ground Saver', basePrice: 12.75 },
+              { carrier: 'DHL Express Worldwide', basePrice: 25.00 },
             ].map((item) => (
               <li key={item.carrier} className="flex justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 bg-gray-300 rounded" />
-                  <span>0 × {item.carrier}</span>
+                  <ReactCountryFlag 
+                    countryCode={curr.code} 
+                    svg
+                    style={{ width: '20px', height: '15px' }}
+                  />
+                  <span>1 × {item.carrier}</span>
                 </div>
-                <span>0.00 USD</span>
+                <span>
+                  <AnimatedNumber 
+                    value={convertCurrency(item.basePrice)} 
+                    currency={curr.currency}
+                  />
+                </span>
               </li>
             ))}
           </ul>
           <div className="border-t pt-2 mb-4">
-            <div className="flex justify-between"><span>Subtotal</span><span>0.00 USD</span></div>
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>
+                <AnimatedNumber 
+                  value={convertCurrency(46.25)} 
+                  currency={curr.currency}
+                />
+              </span>
+            </div>
             <div className="flex justify-between bg-gradient-to-r from-green-100 to-transparent py-1">
-              <span>Shopify Plan Discount</span><span>0.00 USD</span>
+              <span>Octane Plan Discount</span>
+              <span>
+                -<AnimatedNumber 
+                  value={convertCurrency(5.00)} 
+                  currency={curr.currency}
+                />
+              </span>
             </div>
             <div className="flex justify-between"><span>Insurance</span><span>Included</span></div>
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="font-bold text-lg">Total</span>
-            <span className="font-bold text-2xl">0.00 USD</span>
+            <span className="font-bold text-2xl">
+              <AnimatedNumber 
+                value={convertCurrency(41.25)} 
+                currency={curr.currency}
+              />
+            </span>
           </div>
           <label className="block mb-4">
             <span className="block text-sm text-gray-600">Shipping date</span>
@@ -351,18 +484,16 @@ const Section10 = () => {
           </label>
           <div className="flex justify-end space-x-2">
             <button className="px-4 py-1 rounded border">Cancel</button>
-            <button className="px-4 py-1 rounded bg-[#00282F] text-white">Buy 0 shipping labels</button>
+            <button className="px-4 py-1 rounded bg-[#00282F] text-white">Buy 3 shipping labels</button>
           </div>
         </div>
-      </div>
-
-      {/* Footer text */}
+      </div>      {/* Footer text */}
       <div className="mt-16 max-w-xl">
         <h4 className="text-xl font-semibold mb-2">Sell and ship everywhere</h4>
         <p className="text-gray-300">
-          Shopify takes the complexity out of international selling, from delivering products faster and more affordably with{' '}
-          <a href="#" className="underline">Shopify Shipping</a> to localizing your experience with{' '}
-          <a href="#" className="underline">Shopify Markets</a>.
+          Octane takes the complexity out of international selling, from delivering products faster and more affordably with{' '}
+          <a href="#" className="underline">Octane Shipping</a> to localizing your experience with{' '}
+          <a href="#" className="underline">Octane Markets</a>.
         </p>
       </div>
     </section>

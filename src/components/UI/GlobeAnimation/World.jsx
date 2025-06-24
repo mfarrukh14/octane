@@ -7,7 +7,7 @@ const World = lazy(() =>
 
 // Lightweight fallback that matches the globe container dimensions
 const GlobeFallback = () => (
-    <div className="w-full h-full bg-black flex items-center justify-center">
+    <div className="w-full h-full bg-transparent flex items-center justify-center">
         <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mb-2"></div>
             <p className="text-white/40 text-xs">Initializing globe...</p>
@@ -400,21 +400,13 @@ export function GlobeDemo() {
             color: colors[Math.floor(Math.random() * (colors.length - 1))],
         },
     ];    return (
-        <div className="flex h-[80vh] sm:h-[70vh] md:h-[75vh] lg:h-screen w-full bg-black dark:bg-black">
+        <div className="flex h-[80vh] sm:h-[70vh] md:h-[75vh] lg:h-screen w-full bg-transparent dark:bg-transparent">
             <div className="relative w-full h-full overflow-hidden">                {/* globe container now truly full‑size */}
                 <div className="absolute inset-0 z-10">
                     <Suspense fallback={<GlobeFallback />}>
                         <World data={sampleArcs} globeConfig={globeConfig} />
                     </Suspense>
                 </div>
-
-                {/* Diagonal fade overlay from top left to bottom right */}
-                <div
-                    className="absolute inset-0 z-20 pointer-events-none"
-                    style={{
-                        background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.11) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.67) 60%, rgb(0, 0, 0) 80%, rgb(0, 0, 0) 100%)',
-                    }}
-                />
             </div>
         </div>
 
