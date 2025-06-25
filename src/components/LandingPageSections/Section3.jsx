@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const cards = [
   {
@@ -54,7 +54,24 @@ const Card = ({ icon, hoverIcon, title, description }) => {
   );
 };
 
-const Section3 = () => (
+const Section3 = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 1200);
+    };
+
+    // Check initial size
+    checkScreenSize();
+
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return (
   <section className="relative bg-black pb-20 z-40">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row text-white">
@@ -68,10 +85,8 @@ const Section3 = () => (
             Whether you're just getting started or running a full-scale operation, Octane gives you the tools to launch, grow, and streamline your business--all in one place.
           </span>
         </div>
-      </div>
-
-      {/* Cards grid */}
-      <div className="mt-16 gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      </div>      {/* Cards grid */}
+      <div className={`mt-16 gap-4 grid ${isSmallScreen ? 'grid-cols-1' : 'grid-cols-3'}`}>
         {cards.map(card => (
           <Card
             key={card.id}
@@ -81,16 +96,15 @@ const Section3 = () => (
             description={card.description}
           />
         ))}
-      </div>
-      
-      {/* Action button */}
+      </div>        {/* Action button */}
       <div className="flex justify-center mt-8">
-        <button className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg font-medium transition-all duration-300 bg-black hover:bg-white hover:text-black">
+        <button className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg transition-all duration-300 bg-black hover:bg-white hover:text-black">
           Start Now!
         </button>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Section3;

@@ -42,10 +42,8 @@ const Section8 = () => {
     <section className="relative bg-[#001e12] text-white overflow-hidden py-20">
       <h2 className="text-center text-5xl md:text-6xl font-light mb-16 leading-tight">
       Where your store goes from <br /> simple to standout.
-      </h2>
-
-      <div className="container mx-auto flex flex-col lg:flex-row items-start lg:items-center px-4">
-        <div className="w-full lg:w-1/2 lg:pr-12 mb-12 lg:mb-0">
+      </h2>      <div className="container mx-auto flex flex-col xl:flex-row items-start xl:items-center px-4">
+        <div className="w-full xl:w-1/2 xl:pr-12 mb-12 xl:mb-0">
           <h3 className="text-3xl md:text-4xl font-light mb-8">
           show personalized options through A.I
           </h3>
@@ -82,7 +80,7 @@ const Section8 = () => {
           </p>
         </div>
 
-        <div className="w-full lg:w-1/2 flex justify-center relative">
+        <div className="w-full xl:w-1/2 flex justify-center relative">
           {/* Cart Container */}
           <div className="relative bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md h-96 flex items-center justify-center">
             <FaShoppingCart className="text-gray-400" size={96} />

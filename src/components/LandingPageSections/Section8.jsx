@@ -74,7 +74,7 @@ class GlobeErrorBoundary extends React.Component {
 
 export default function Section8() {
     return (
-        <section className="relative w-full bg-gradient-to-tl from-black via-black to-teal-900 pb-20 pt-40 z-40 px-12 md:px-12 lg:px-24 overflow-hidden">
+        <section className="relative w-full bg-gradient-to-br from-black via-black to-black pb-20 pt-10 sm:pt-20 md:pt-30 lg:pt-40 z-40 px-12 md:px-12 lg:px-24 overflow-hidden">
             {/* Stars Background */}
             <StarsBackground />
             

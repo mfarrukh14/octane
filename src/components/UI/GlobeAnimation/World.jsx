@@ -400,15 +400,24 @@ export function GlobeDemo() {
             color: colors[Math.floor(Math.random() * (colors.length - 1))],
         },
     ];    return (
-        <div className="flex h-[80vh] sm:h-[70vh] md:h-[75vh] lg:h-screen w-full bg-transparent dark:bg-transparent">
-            <div className="relative w-full h-full overflow-hidden">                {/* globe container now truly full‑size */}
+        <div className="flex h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-screen w-full bg-transparent dark:bg-transparent">
+            <div className="relative w-full h-full overflow-hidden">
+                {/* globe container now truly full‑size */}
                 <div className="absolute inset-0 z-10">
                     <Suspense fallback={<GlobeFallback />}>
                         <World data={sampleArcs} globeConfig={globeConfig} />
                     </Suspense>
                 </div>
+                  {/* Gradient Fade Overlays - Left, Right, and Bottom edges */}
+                {/* Left fade */}
+                <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-black via-black/70 to-transparent pointer-events-none z-20 rounded-r-3xl"></div>
+                
+                {/* Right fade */}
+                <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-black via-black/70 to-transparent pointer-events-none z-20 rounded-l-3xl"></div>
+                
+                {/* Bottom fade */}
+                <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none z-20 rounded-t-3xl"></div>
             </div>
         </div>
-
     );
 }

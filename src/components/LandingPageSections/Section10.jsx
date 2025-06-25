@@ -48,6 +48,7 @@ const Section10 = () => {
   const [selected, setSelected] = useState(0) // default to Pakistan
   const [hasAnimated, setHasAnimated] = useState(false)
   const [isInView, setIsInView] = useState(false)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
   const sectionRef = React.useRef(null)
   const total = countries.length
 
@@ -104,8 +105,7 @@ const Section10 = () => {
   const visibleCards = getVisibleCards()
   const handleCountryClick = (clickedIndex) => {
     setSelected(clickedIndex)
-  }
-  // Add keyboard navigation
+  }  // Add keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowUp') {
@@ -120,6 +120,22 @@ const Section10 = () => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [selected])
+
+  // Screen size detection
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 1200);
+    };
+
+    // Check initial size
+    checkScreenSize();
+
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Intersection Observer for initial animation
   useEffect(() => {
@@ -159,10 +175,8 @@ const Section10 = () => {
   return (
     <section ref={sectionRef} className="bg-[#001F29] text-white py-16 px-8">
       <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
-      <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>
-
-      {/* Mobile Layout - Flags above cards */}
-      <div className="lg:hidden">
+      <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>      {/* Mobile Layout - Flags above cards */}
+      <div className={isSmallScreen ? 'block' : 'lg:hidden'}>
         {/* Flags Row - Horizontal on mobile */}
         <div 
           className="flex items-center justify-center mb-8 relative"
@@ -324,10 +338,8 @@ const Section10 = () => {
             <button className="px-3 py-1 rounded bg-[#00282F] text-white text-sm">Buy 3 shipping labels</button>
           </div>
         </div>
-      </div>
-
-      {/* Desktop Layout - Original layout */}
-      <div className="hidden lg:flex relative items-center justify-between">        {/* Flags Column - Dial Effect */}
+      </div>      {/* Desktop Layout - Original layout */}
+      <div className={`${isSmallScreen ? 'hidden' : 'hidden lg:flex'} relative items-center justify-between`}>{/* Flags Column - Dial Effect */}
         <div 
           className="flex flex-col items-center mr-8 h-48 justify-center relative"
           onWheel={handleWheel}
