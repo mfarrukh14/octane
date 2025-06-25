@@ -3,22 +3,22 @@ import React, { useState, useEffect } from 'react';
 const cards = [
   {
     id: 1,
-    icon: '/images/section3images/i6.png',        
-    hoverIcon: '/images/section3images/i5.png',    // Second image to show on hover
+    icon: '/images/section3images/haseens1.jpeg',        
+    hoverIcon: '/images/section3images/haseens2.PNG',    // Second image to show on hover
     title: 'Start fast',
     description: 'STarting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
   },
   {
     id: 2,
-    icon: '/images/section3images/i4.png',
-    hoverIcon: '/images/section3images/i3.png',    // Second image to show on hover
+    icon: '/images/section3images/hsy1.PNG',
+    hoverIcon: '/images/section3images/hsy2.PNG',    // Second image to show on hover
     title: 'Elevate your brand',
     description: 'With Octane, HSY can focus on design while reaching diaspora markets (USA, UK, UAE) with zero backend headaches.',
   },
   {
     id: 3,
-    icon: '/images/section3images/i2.png',
-    hoverIcon: '/images/section3images/i1.png',    // Second image to show on hover
+    icon: '/images/section3images/reh1.PNG',
+    hoverIcon: '/images/section3images/reh2.PNG',    // Second image to show on hover
     title: 'Scale efficiently',
     description: 'Enterprises like Haseens rely on Octane to handle high-volume worldwide orders, warehousing, logistics and payments.',
   },
@@ -29,22 +29,21 @@ const Card = ({ icon, hoverIcon, title, description }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
-    <div className="p-1 flex flex-col items-start">
-      <div 
-        className="relative w-full h-64 rounded-lg overflow-hidden"
+    <div className="p-1 flex flex-col items-start">      <div 
+        className="relative w-full h-64 rounded-lg overflow-hidden bg-white"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <img 
           src={icon} 
           alt="" 
-          className="w-full h-full object-cover transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
+          className="w-full h-full object-contain transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
           style={{ opacity: isHovered ? 0 : 1 }}
         />
         <img 
           src={hoverIcon} 
           alt="" 
-          className="w-full h-full object-cover transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
+          className="w-full h-full object-contain transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
           style={{ opacity: isHovered ? 1 : 0 }}
         />
       </div>

@@ -5,12 +5,12 @@ const defaultCards = [
   {
     title: 'Start Building',
     subtitle: 'Your Journey Begins',
-    image: '/images/BrandWebsiteImages/r1.png'
+    image: '/images/section10images/s1.png'
   },
   {
     title: 'Get Ready',
     subtitle: 'Setup Complete',
-    image: '/images/BrandWebsiteImages/r2.png'
+    image: '/images/section10images/s2.jpg'
   }
 ];
 

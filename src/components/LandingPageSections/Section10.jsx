@@ -35,13 +35,13 @@ const useCountUp = (endValue, duration = 1000, startValue = 0) => {
 }
 
 const countries = [
-  { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 32500, buyNow: 'ابھی خریدیں', image: '/images/BrandWebsiteImages/r1.png' },
-  { code: 'AE', name: 'UAE', currency: 'AED', price: 459, buyNow: 'اشتري الآن', image: '/images/BrandWebsiteImages/r2.png' },
-  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 469, buyNow: 'اشتري الآن', image: '/images/BrandWebsiteImages/r3.png' },
-  { code: 'CA', name: 'Canada', currency: 'CAD', price: 159.99, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq1.png' },
-  { code: 'US', name: 'United States', currency: 'USD', price: 125.00, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq2.png' },
-  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 89.50, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq3.png' },
-  { code: 'AU', name: 'Australia', currency: 'AUD', price: 169.99, buyNow: 'Buy now', image: '/images/BrandWebsiteImages/sq4.png' },
+  { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 32500, buyNow: 'ابھی خریدیں', image: '/images/section6images/CA1.PNG' },
+  { code: 'AE', name: 'UAE', currency: 'AED', price: 459, buyNow: 'اشتري الآن', image: '/images/section6images/CA2.PNG' },
+  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 469, buyNow: 'اشتري الآن', image: '/images/section6images/CA1.PNG' },
+  { code: 'CA', name: 'Canada', currency: 'CAD', price: 159.99, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
+  { code: 'US', name: 'United States', currency: 'USD', price: 125.00, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
+  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 89.50, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
+  { code: 'AU', name: 'Australia', currency: 'AUD', price: 169.99, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
 ]
 
 const Section10 = () => {
