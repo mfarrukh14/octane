@@ -1082,8 +1082,7 @@ export default function LaptopMockup() {
                 <h3 className="text-[8px] font-medium text-gray-500 uppercase tracking-wide">
                   Manage your business
                 </h3>
-              </div>
-              {sidebarItems.slice(4, 8).map((item) => {
+              </div>              {sidebarItems.slice(4, 8).map((item) => {
                 const Icon = item.icon;
                 const active = activeSection === item.id;
                 return (
@@ -1097,9 +1096,9 @@ export default function LaptopMockup() {
                     }`}
                   >
                     <Icon className={`w-3 h-3 ${active ? 'text-blue-500' : 'text-gray-400'}`} />
-                    <span>{item.label}</span>
+                    <span className={item.id === 'customermanagement' ? 'text-[10px]' : ''}>{item.label}</span>
                   </button>
-                );              })}
+                );})}
             </nav>
 
             {/* Content area */}
