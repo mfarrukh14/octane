@@ -5,32 +5,32 @@ import ReactCountryFlag from 'react-country-flag'
 // Custom hook for counter animation
 const useCountUp = (endValue, duration = 1000, startValue = 0) => {
   const [count, setCount] = useState(startValue)
-  
+
   useEffect(() => {
     let startTime
     let animationFrame
-    
+
     const animate = (timestamp) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
-      
+
       const currentValue = startValue + (endValue - startValue) * progress
       setCount(currentValue)
-      
+
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate)
       }
     }
-    
+
     animationFrame = requestAnimationFrame(animate)
-    
+
     return () => {
       if (animationFrame) {
         cancelAnimationFrame(animationFrame)
       }
     }
   }, [endValue, duration, startValue])
-  
+
   return count
 }
 
@@ -83,12 +83,14 @@ const Section10 = () => {
   }
 
   const curr = countries[selected]
-  // Get the 3 visible countries (previous, current, next)
+  // Get the 5 visible countries (two above, current, two below)
   const getVisibleCountries = () => {
     return [
+      { country: countries[prevIdx(prevIdx(selected))], position: 'topmost', index: prevIdx(prevIdx(selected)) },
       { country: countries[prevIdx(selected)], position: 'top', index: prevIdx(selected) },
       { country: countries[selected], position: 'middle', index: selected },
-      { country: countries[nextIdx(selected)], position: 'bottom', index: nextIdx(selected) }
+      { country: countries[nextIdx(selected)], position: 'bottom', index: nextIdx(selected) },
+      { country: countries[nextIdx(nextIdx(selected))], position: 'bottommost', index: nextIdx(nextIdx(selected)) },
     ]
   }
 
@@ -162,351 +164,475 @@ const Section10 = () => {
       }
     }
   }, [hasAnimated])
-  // Add scroll wheel navigation for the flags area
+  // Add scroll wheel and swipe navigation for the flags area
   const handleWheel = (e) => {
     e.preventDefault()
     if (e.deltaY > 0) {
       setSelected(nextIdx(selected))
+      if (isSmallScreen && window.navigator.vibrate) window.navigator.vibrate(10)
     } else {
       setSelected(prevIdx(selected))
+      if (isSmallScreen && window.navigator.vibrate) window.navigator.vibrate(10)
     }
   }
-  
-  return (
-    <section ref={sectionRef} className="bg-[#001F29] text-white py-16 px-8">
-      <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
-      <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>      {/* Mobile Layout - Flags above cards */}
-      <div className={isSmallScreen ? 'block' : 'lg:hidden'}>
-        {/* Flags Row - Horizontal on mobile */}
-        <div 
-          className="flex items-center justify-center mb-8 relative"
-          onWheel={handleWheel}
-        >
-          {visibleCountries.map(({ country, position, index }, displayIndex) => (
-            <div
-              key={`${country.code}-${index}`}
-              className={`w-12 h-10 mx-2 transition-all duration-500 ease-in-out cursor-pointer ${
-                position === 'middle' ? 'transform scale-110 z-10' : 'transform scale-90'
-              }`}
-              style={{
-                opacity: position === 'middle' ? 1 : 0.4,
-                background: position !== 'middle' 
-                  ? `linear-gradient(${position === 'top' ? '90deg' : '270deg'}, rgba(0,31,41,0.6) 0%, transparent 100%)`
-                  : 'transparent'
-              }}
-            >
-              <button
-                onClick={() => handleCountryClick(index)}
-                className={`w-full cursor-pointer h-full rounded-lg p-1 overflow-hidden transition-all duration-300 relative ${
-                  position === 'middle'
-                    ? 'bg-white/20'
-                    : 'bg-white/20 hover:scale-105 hover:opacity-70'
-                }`}              >
-                <ReactCountryFlag 
-                  countryCode={country.code} 
-                  svg
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                  }}
-                  title={country.name}
-                />
-                {position !== 'middle' && (
-                  <div className={`absolute inset-0 bg-gradient-to-${position === 'top' ? 'r' : 'l'} from-[#001F29]/60 to-transparent pointer-events-none`} />
-                )}
-              </button>
-            </div>
-          ))}
-        </div>
 
-        {/* Product Card Stack - Mobile */}
-        <div className="relative w-full max-w-sm mx-auto h-80 mb-8">
-          {visibleCards.map(({ country, position, index }) => (            <div
+  // Touch swipe for mobile
+  useEffect(() => {
+    if (!isSmallScreen) return;
+    let startY = null;
+    const handleTouchStart = (e) => {
+      startY = e.touches[0].clientY;
+    };
+    const handleTouchMove = (e) => {
+      if (startY === null) return;
+      const deltaY = e.touches[0].clientY - startY;
+      if (Math.abs(deltaY) > 30) {
+        if (deltaY > 0) {
+          setSelected(prevIdx(selected));
+          if (window.navigator.vibrate) window.navigator.vibrate(10);
+        } else {
+          setSelected(nextIdx(selected));
+          if (window.navigator.vibrate) window.navigator.vibrate(10);
+        }
+        startY = null;
+      }
+    };
+    const flagsRow = document.getElementById('flags-row-mobile');
+    if (flagsRow) {
+      flagsRow.addEventListener('touchstart', handleTouchStart);
+      flagsRow.addEventListener('touchmove', handleTouchMove);
+    }
+    return () => {
+      if (flagsRow) {
+        flagsRow.removeEventListener('touchstart', handleTouchStart);
+        flagsRow.removeEventListener('touchmove', handleTouchMove);
+      }
+    };
+  }, [isSmallScreen, selected]);
+
+  return (
+    <section ref={sectionRef} className="relative py-16 px-8 overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-tl from-black via-black to-teal-900"></div>
+      
+      {/* Map Background - Right side only, contained within padding */}
+      <div className="absolute top-0 right-0 w-1/2 h-full overflow-hidden">
+        <img 
+          src="/images/map.png" 
+          alt="World Map" 
+          className="w-full h-full object-contain opacity-50 invert"
+        />
+      </div>
+      
+      {/* Content Layer */}
+      <div className='relative z-10 max-w-7xl mx-auto text-white'>
+        <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
+        <h1 className="text-3xl md:text-5xl font-light mb-8 md:mb-12">Grow around the world</h1>
+
+        {/* Mobile Layout - Flags above cards */}
+        <div className={isSmallScreen ? 'block' : 'lg:hidden'}>
+          {/* Flags Row - Horizontal on mobile */}
+          <div
+            id="flags-row-mobile"
+            className="flex items-center justify-center mb-8 relative"
+            onWheel={handleWheel}
+          >
+            {visibleCountries.map(({ country, position, index }, displayIndex) => (
+              <div
+                key={`${country.code}-${index}`}
+                className={`w-12 h-10 mx-2 transition-all duration-500 ease-in-out cursor-pointer 
+                  ${position === 'middle' ? 'transform scale-110 z-10' : ''}
+                  ${position === 'top' || position === 'bottom' ? 'transform scale-95 z-0 filter blur-[2px] opacity-60' : ''}
+                  ${position === 'topmost' || position === 'bottommost' ? 'transform scale-90 z-0 filter blur-sm opacity-30' : ''}`}
+                style={{
+                  background: position !== 'middle' ? `linear-gradient(${position === 'top' || position === 'topmost' ? '90deg' : '270deg'}, rgba(0,31,41,0.6) 0%, transparent 100%)` : 'transparent'
+                }}
+              >
+                <button
+                  onClick={() => handleCountryClick(index)}
+                  className={`w-full cursor-pointer h-full rounded-lg p-1 overflow-hidden transition-all duration-300 relative ${position === 'middle' ? 'bg-white/20' : 'bg-white/20 hover:scale-105 hover:opacity-70'}`}
+                >
+                  <ReactCountryFlag
+                    countryCode={country.code}
+                    svg
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
+                    title={country.name}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Product Card Stack - Mobile */}
+          <div className="relative w-full max-w-sm mx-auto h-80 mb-8">
+            {visibleCards.map(({ country, position, index }) => (<div
               key={`card-${country.code}-${index}`}
-              className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
-                position === 'center'
+              className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${position === 'center'
                   ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
                   : position === 'left'
-                  ? 'left-0 -translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
-                  : 'right-0 translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
-              }`}
+                    ? 'left-0 -translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+                    : 'right-0 translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+                }`}
             >
-              <img 
-                src={country.image} 
-                alt={`Product for ${country.name}`} 
-                className="w-full h-full object-cover" 
+              <img
+                src={country.image}
+                alt={`Product for ${country.name}`}
+                className="w-full h-full object-cover"
               />
-              
+
               {position !== 'center' && (
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001F29]/40 to-transparent" />
               )}
-              
-              <button 
-                className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${
-                  position === 'center'
+
+              <button
+                className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${position === 'center'
                     ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
                     : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
-                }`}
+                  }`}
               >
                 {country.buyNow}
               </button>
             </div>
-          ))}
+            ))}
 
-          {/* Price bubble - Mobile positioning */}
-          <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white text-black rounded-full px-3 py-2 flex items-center text-xs shadow-lg transition-all duration-300 z-20">
-            <ReactCountryFlag 
-              countryCode={curr.code} 
-              svg
-              style={{
-                width: '14px',
-                height: '10px',
-                marginRight: '6px'
-              }}
-            />
-            <span className="font-bold mr-1">{curr.code}</span>
-            <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
-          </div>
-        </div>        {/* Shipping Modal - Below cards on mobile */}
-        <div className="bg-white text-black rounded-xl shadow-2xl w-full max-w-md mx-auto p-4 relative">
-          <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
-          <h3 className="font-medium mb-4">Buy 3 shipping labels</h3>
-          <ul className="space-y-2 mb-4">
-            {[
-              { carrier: 'USPS Ground Advantage', basePrice: 8.50 },
-              { carrier: 'UPS® Ground Saver', basePrice: 12.75 },
-              { carrier: 'DHL Express Worldwide', basePrice: 25.00 },
-            ].map((item) => (
-              <li key={item.carrier} className="flex justify-between">
-                <div className="flex items-center space-x-2">
-                  <ReactCountryFlag 
-                    countryCode={curr.code} 
-                    svg
-                    style={{ width: '16px', height: '12px' }}
+            {/* Price bubble - Mobile positioning */}
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white text-black rounded-full px-3 py-2 flex items-center text-xs shadow-lg transition-all duration-300 z-20">
+              <ReactCountryFlag
+                countryCode={curr.code}
+                svg
+                style={{
+                  width: '14px',
+                  height: '10px',
+                  marginRight: '6px'
+                }}
+              />
+              <span className="font-bold mr-1">{curr.code}</span>
+              <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
+            </div>
+          </div>        {/* Shipping Modal - Below cards on mobile */}
+          <div className="bg-white text-black rounded-xl shadow-2xl w-full max-w-md mx-auto p-6 relative">
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-lg font-medium">Order summary</h3>
+              <button className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            </div>
+            
+            {/* Product Section */}
+            <div className="mb-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-30 h-30 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="/images/section6images/CA1.PNG" 
+                    alt="Product" 
+                    className="w-full h-full object-cover rounded"
                   />
-                  <span className="text-sm">1 × {item.carrier}</span>
                 </div>
-                <span className="text-sm">
-                  <AnimatedNumber 
-                    value={convertCurrency(item.basePrice)} 
+                <div>
+                  <p className="font-medium">Black dress</p>
+                  <p className="text-sm text-gray-500">Size: M</p>
+                </div>
+                <div className="ml-auto text-right">
+                  <p className="font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(125.00)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Shipping Options */}
+            <div className="mb-6">
+              <h4 className="font-medium mb-3">Shipping</h4>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <input type="radio" name="shipping" className="w-4 h-4" defaultChecked />
+                  <div className="flex-1">
+                    <p className="text-sm">Standard</p>
+                    <p className="text-xs text-gray-500">5-7 business days</p>
+                  </div>
+                  <p className="text-sm font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(8.50)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <input type="radio" name="shipping" className="w-4 h-4" />
+                  <div className="flex-1">
+                    <p className="text-sm">Express</p>
+                    <p className="text-xs text-gray-500">2-3 business days</p>
+                  </div>
+                  <p className="text-sm font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(15.00)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="border-t pt-4 mb-6">
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(125.00)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Shipping</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(8.50)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tax</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(10.67)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
+                <span>Total</span>
+                <span>
+                  <AnimatedNumber
+                    value={convertCurrency(144.17)}
                     currency={curr.currency}
                   />
                 </span>
-              </li>
-            ))}
-          </ul>
-          <div className="border-t pt-2 mb-4 text-sm">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>
-                <AnimatedNumber 
-                  value={convertCurrency(46.25)} 
-                  currency={curr.currency}
-                />
-              </span>
+              </div>
             </div>
-            <div className="flex justify-between bg-gradient-to-r from-green-100 to-transparent py-1">
-              <span>Octane Plan Discount</span>
-              <span>
-                -<AnimatedNumber 
-                  value={convertCurrency(5.00)} 
-                  currency={curr.currency}
-                />
-              </span>
-            </div>
-            <div className="flex justify-between"><span>Insurance</span><span>Included</span></div>
-          </div>
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-bold">Total</span>
-            <span className="font-bold text-xl">
-              <AnimatedNumber 
-                value={convertCurrency(41.25)} 
-                currency={curr.currency}
-              />
-            </span>
-          </div>
-          <label className="block mb-4">
-            <span className="block text-sm text-gray-600">Shipping date</span>
-            <select className="mt-1 block w-full border rounded px-2 py-1 text-sm">
-              <option>Today</option>
-            </select>
-          </label>
-          <div className="flex justify-end space-x-2">
-            <button className="px-3 py-1 rounded border text-sm">Cancel</button>
-            <button className="px-3 py-1 rounded bg-[#00282F] text-white text-sm">Buy 3 shipping labels</button>
+
+            {/* Checkout Button */}
+            <button className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors">
+              Continue to checkout
+            </button>
           </div>
         </div>
-      </div>      {/* Desktop Layout - Original layout */}
-      <div className={`${isSmallScreen ? 'hidden' : 'hidden lg:flex'} relative items-center justify-between`}>{/* Flags Column - Dial Effect */}
-        <div 
-          className="flex flex-col items-center mr-8 h-48 justify-center relative"
-          onWheel={handleWheel}
-        >          {visibleCountries.map(({ country, position, index }, displayIndex) => (
-            <div
-              key={`${country.code}-${index}`}
-              className={`w-14 h-12 mb-4 last:mb-0 transition-all duration-500 ease-in-out cursor-pointer ${
-                position === 'middle' ? 'transform scale-110 z-10' : 'transform scale-90'
-              }`}
-              style={{
-                opacity: position === 'middle' ? 1 : 0.4,
-                background: position !== 'middle' 
-                  ? `linear-gradient(${position === 'top' ? '180deg' : '0deg'}, rgba(0,31,41,0.6) 0%, transparent 100%)`
-                  : 'transparent'
-              }}
-            >
-              <button
-                onClick={() => handleCountryClick(index)}
-                className={`w-full cursor-pointer h-full rounded-lg p-2 overflow-hidden transition-all duration-300 relative ${
-                  position === 'middle'
-                    ? 'bg-white/20'
-                    : 'bg-white/20 hover:scale-105 hover:opacity-70'
-                }`}              >
-                <ReactCountryFlag 
-                  countryCode={country.code} 
-                  svg
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                  }}
-                  title={country.name}
-                />
-                {position !== 'middle' && (
-                  <div className={`absolute inset-0 bg-gradient-to-${position === 'top' ? 'b' : 't'} from-[#001F29]/60 to-transparent pointer-events-none`} />
-                )}
-              </button>
-            </div>
-          ))}
-        </div>        {/* Product Card Stack - Dial Effect */}
-        <div className="relative w-80 h-96 flex-shrink-0">
-          {visibleCards.map(({ country, position, index }) => (            <div
+
+        {/* Desktop Layout - Original layout */}
+        <div className={`${isSmallScreen ? 'hidden' : 'hidden lg:flex'} relative items-center justify-between`}>
+          {/* Flags Column - Dial Effect */}
+          <div
+            className="flex flex-col items-center mr-8 h-80 justify-center relative"
+            onWheel={handleWheel}
+          >
+            {visibleCountries.map(({ country, position, index }, displayIndex) => (
+              <div
+                key={`${country.code}-${index}`}
+                className={`w-14 h-12 mb-4 last:mb-0 transition-all duration-500 ease-in-out cursor-pointer 
+                  ${position === 'middle' ? 'transform scale-110 z-10' : ''}
+                  ${position === 'top' || position === 'bottom' ? 'transform scale-95 z-0 filter blur-[2px] opacity-60' : ''}
+                  ${position === 'topmost' || position === 'bottommost' ? 'transform scale-90 z-0 filter blur-sm opacity-30' : ''}`}
+                style={{
+                  background: position !== 'middle' ? `linear-gradient(${position === 'top' || position === 'topmost' ? '180deg' : '0deg'}, rgba(0,31,41,0.6) 0%, transparent 100%)` : 'transparent'
+                }}
+              >
+                <button
+                  onClick={() => handleCountryClick(index)}
+                  className={`w-full cursor-pointer h-full rounded-lg p-2 overflow-hidden transition-all duration-300 relative ${position === 'middle' ? 'bg-white/20' : 'bg-white/20 hover:scale-105 hover:opacity-70'}`}
+                >
+                  <ReactCountryFlag
+                    countryCode={country.code}
+                    svg
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
+                    title={country.name}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>        {/* Product Card Stack - Dial Effect */}
+          <div className="relative w-80 h-96 flex-shrink-0">
+            {visibleCards.map(({ country, position, index }) => (<div
               key={`card-${country.code}-${index}`}
-              className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
-                position === 'center'
+              className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${position === 'center'
                   ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
                   : position === 'left'
-                  ? 'left-0 -translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
-                  : 'right-0 translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
-              }`}
+                    ? 'left-0 -translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
+                    : 'right-0 translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
+                }`}
             >
-              <img 
-                src={country.image} 
-                alt={`Product for ${country.name}`} 
-                className="w-full h-full object-cover" 
+              <img
+                src={country.image}
+                alt={`Product for ${country.name}`}
+                className="w-full h-full object-cover"
               />
-              
+
               {/* Gradient overlay for non-center cards */}              {position !== 'center' && (
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001F29]/40 to-transparent" />
               )}
-              
+
               {/* Buy now button */}
-              <button 
-                className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${
-                  position === 'center'
+              <button
+                className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${position === 'center'
                     ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
                     : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
-                }`}
+                  }`}
               >
                 {country.buyNow}
               </button>
-            
-            </div>
-          ))}
 
-          {/* Price bubble - now updates with selected country */}
-          <div className="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-white text-black rounded-full px-4 py-2 flex items-center text-sm shadow-lg transition-all duration-300 z-20">
-            <ReactCountryFlag 
-              countryCode={curr.code} 
-              svg
-              style={{
-                width: '16px',
-                height: '12px',
-                marginRight: '8px'
-              }}
-            />
-            <span className="font-bold mr-2">{curr.code}</span>
-            <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
-          </div>
-        </div>        {/* Shipping Modal (on map) */}
-        <div className="ml-16 bg-white text-black rounded-xl shadow-2xl w-96 p-6 relative">
-          <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
-          <h3 className="font-medium mb-4">Buy 3 shipping labels</h3>
-          <ul className="space-y-2 mb-4">
-            {[
-              { carrier: 'USPS Ground Advantage', basePrice: 8.50 },
-              { carrier: 'UPS® Ground Saver', basePrice: 12.75 },
-              { carrier: 'DHL Express Worldwide', basePrice: 25.00 },
-            ].map((item) => (
-              <li key={item.carrier} className="flex justify-between">
-                <div className="flex items-center space-x-2">
-                  <ReactCountryFlag 
-                    countryCode={curr.code} 
-                    svg
-                    style={{ width: '20px', height: '15px' }}
+            </div>
+            ))}
+
+            {/* Price bubble - now updates with selected country */}
+            <div className="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-white text-black rounded-full px-4 py-2 flex items-center text-sm shadow-lg transition-all duration-300 z-20">
+              <ReactCountryFlag
+                countryCode={curr.code}
+                svg
+                style={{
+                  width: '16px',
+                  height: '12px',
+                  marginRight: '8px'
+                }}
+              />
+              <span className="font-bold mr-2">{curr.code}</span>
+              <span>Order for {curr.currency}{curr.price.toLocaleString()}</span>
+            </div>
+          </div>        {/* Shipping Modal (on map) */}
+          <div className="ml-16 bg-white text-black rounded-xl shadow-2xl w-96 p-6 relative">
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-lg font-medium">Order summary</h3>
+              <button className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            </div>
+            
+            {/* Product Section */}
+            <div className="mb-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="/images/section6images/CA1.PNG" 
+                    alt="Product" 
+                    className="w-full h-full object-cover rounded"
                   />
-                  <span>1 × {item.carrier}</span>
                 </div>
+                <div>
+                  <p className="font-medium">Black dress</p>
+                  <p className="text-sm text-gray-500">Size: M</p>
+                </div>
+                <div className="ml-auto text-right">
+                  <p className="font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(125.00)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Shipping Options */}
+            <div className="mb-6">
+              <h4 className="font-medium mb-3">Shipping</h4>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <input type="radio" name="shipping" className="w-4 h-4" defaultChecked />
+                  <div className="flex-1">
+                    <p className="text-sm">Standard</p>
+                    <p className="text-xs text-gray-500">5-7 business days</p>
+                  </div>
+                  <p className="text-sm font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(8.50)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <input type="radio" name="shipping" className="w-4 h-4" />
+                  <div className="flex-1">
+                    <p className="text-sm">Express</p>
+                    <p className="text-xs text-gray-500">2-3 business days</p>
+                  </div>
+                  <p className="text-sm font-medium">
+                    <AnimatedNumber
+                      value={convertCurrency(15.00)}
+                      currency={curr.currency}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="border-t pt-4 mb-6">
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(125.00)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Shipping</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(8.50)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tax</span>
+                  <span>
+                    <AnimatedNumber
+                      value={convertCurrency(10.67)}
+                      currency={curr.currency}
+                    />
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
+                <span>Total</span>
                 <span>
-                  <AnimatedNumber 
-                    value={convertCurrency(item.basePrice)} 
+                  <AnimatedNumber
+                    value={convertCurrency(144.17)}
                     currency={curr.currency}
                   />
                 </span>
-              </li>
-            ))}
-          </ul>
-          <div className="border-t pt-2 mb-4">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>
-                <AnimatedNumber 
-                  value={convertCurrency(46.25)} 
-                  currency={curr.currency}
-                />
-              </span>
+              </div>
             </div>
-            <div className="flex justify-between bg-gradient-to-r from-green-100 to-transparent py-1">
-              <span>Octane Plan Discount</span>
-              <span>
-                -<AnimatedNumber 
-                  value={convertCurrency(5.00)} 
-                  currency={curr.currency}
-                />
-              </span>
-            </div>
-            <div className="flex justify-between"><span>Insurance</span><span>Included</span></div>
+
+            {/* Checkout Button */}
+            <button className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors">
+              Continue to checkout
+            </button>
           </div>
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-bold text-lg">Total</span>
-            <span className="font-bold text-2xl">
-              <AnimatedNumber 
-                value={convertCurrency(41.25)} 
-                currency={curr.currency}
-              />
-            </span>
-          </div>
-          <label className="block mb-4">
-            <span className="block text-sm text-gray-600">Shipping date</span>
-            <select className="mt-1 block w-full border rounded px-2 py-1">
-              <option>Today</option>
-            </select>
-          </label>
-          <div className="flex justify-end space-x-2">
-            <button className="px-4 py-1 rounded border">Cancel</button>
-            <button className="px-4 py-1 rounded bg-[#00282F] text-white">Buy 3 shipping labels</button>
-          </div>
+        </div>      {/* Footer text */}
+        <div className="mt-16 max-w-xl">
+          <h4 className="text-xl font-semibold mb-2">Sell and ship everywhere</h4>
+          <p className="text-gray-300">
+            Octane takes the complexity out of international selling, from delivering products faster and more affordably with{' '}
+            <a href="#" className="underline">Octane Shipping</a> to localizing your experience with{' '}
+            <a href="#" className="underline">Octane Markets</a>.
+          </p>
         </div>
-      </div>      {/* Footer text */}
-      <div className="mt-16 max-w-xl">
-        <h4 className="text-xl font-semibold mb-2">Sell and ship everywhere</h4>
-        <p className="text-gray-300">
-          Octane takes the complexity out of international selling, from delivering products faster and more affordably with{' '}
-          <a href="#" className="underline">Octane Shipping</a> to localizing your experience with{' '}
-          <a href="#" className="underline">Octane Markets</a>.
-        </p>
       </div>
     </section>
   )

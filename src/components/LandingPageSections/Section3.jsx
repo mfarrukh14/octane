@@ -27,10 +27,27 @@ const cards = [
 
 const Card = ({ icon, hoverIcon, title, description }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 1200);
+    };
+
+    // Check initial size
+    checkScreenSize();
+
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
   
   return (
-    <div className="p-1 flex flex-col items-start">      <div 
-        className="relative w-full h-64 rounded-lg overflow-hidden bg-white"
+    <div className={`p-1 flex flex-col items-start ${isSmallScreen ? 'h-[75vh]' : ''}`}>
+      <div 
+        className={`relative w-full rounded-lg overflow-hidden bg-white ${isSmallScreen ? 'flex-1' : 'h-64'}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -73,14 +90,14 @@ const Section3 = () => {
   return (
   <section className="relative bg-black pb-20 z-40">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col lg:flex-row text-white">
-        <div className="lg:w-2/3">
-          <h1 className="text-6xl mb-6 tracking-tighter font-light leading-tight">
+      <div className="flex flex-col xl:flex-row text-white gap-6">
+        <div className="w-full xl:w-2/3">
+          <h1 className="text-4xl md:text-6xl mb-6 tracking-tighter font-light leading-tight">
             One platform, for scaling and business
           </h1>
         </div>
-        <div className="lg:w-1/3 relative p-10">
-          <span className="text-gray-400 text-lg absolute bottom-0 right-0">
+        <div className="w-full xl:w-1/3 flex items-end">
+          <span className="text-gray-400 text-base md:text-lg">
             Whether you're just getting started or running a full-scale operation, Octane gives you the tools to launch, grow, and streamline your business--all in one place.
           </span>
         </div>
