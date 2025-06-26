@@ -113,7 +113,7 @@ const Section2 = () => {
                                                         className={
                                                             (item.type === 'square'
                                                                 ? 'carousel-card-square'
-                                                                : 'carousel-card-rectangle') + ' rounded-2xl overflow-hidden flex-shrink-0 relative group'
+                                                                : 'carousel-card-rectangle') + ' rounded-xl overflow-hidden flex-shrink-0 relative group'
                                                         }
                                                         style={{
                                                             backgroundImage: `url(${item.image})`,
