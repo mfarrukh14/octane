@@ -214,16 +214,16 @@ const Section10 = () => {
     <section ref={sectionRef} className="relative py-16 px-8 overflow-hidden">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-tl from-black via-black to-teal-900"></div>
-      
+
       {/* Map Background - Right side only, contained within padding */}
       <div className="absolute top-0 right-0 w-1/2 h-full overflow-hidden">
-        <img 
-          src="/images/map.png" 
-          alt="World Map" 
+        <img
+          src="/images/map.png"
+          alt="World Map"
           className="w-full h-full object-contain opacity-50 invert"
         />
       </div>
-      
+
       {/* Content Layer */}
       <div className='relative z-10 max-w-7xl mx-auto text-white'>
         <h2 className="text-cyan-400 text-sm uppercase mb-2">Local and global</h2>
@@ -273,10 +273,10 @@ const Section10 = () => {
             {visibleCards.map(({ country, position, index }) => (<div
               key={`card-${country.code}-${index}`}
               className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${position === 'center'
-                  ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
-                  : position === 'left'
-                    ? 'left-0 -translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
-                    : 'right-0 translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+                ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
+                : position === 'left'
+                  ? 'left-0 -translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
+                  : 'right-0 translate-x-4 scale-90 opacity-50 bg-gray-800 z-0'
                 }`}
             >
               <img
@@ -291,8 +291,8 @@ const Section10 = () => {
 
               <button
                 className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${position === 'center'
-                    ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
-                    : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
+                  ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
+                  : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
                   }`}
               >
                 {country.buyNow}
@@ -320,14 +320,14 @@ const Section10 = () => {
               <h3 className="text-lg font-medium">Order summary</h3>
               <button className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
-            
+
             {/* Product Section */}
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-30 h-30 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/images/section6images/CA1.PNG" 
-                    alt="Product" 
+                  <img
+                    src="/images/section6images/CA1.PNG"
+                    alt="Product"
                     className="w-full h-full object-cover rounded"
                   />
                 </div>
@@ -339,39 +339,6 @@ const Section10 = () => {
                   <p className="font-medium">
                     <AnimatedNumber
                       value={convertCurrency(125.00)}
-                      currency={curr.currency}
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Shipping Options */}
-            <div className="mb-6">
-              <h4 className="font-medium mb-3">Shipping</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <input type="radio" name="shipping" className="w-4 h-4" defaultChecked />
-                  <div className="flex-1">
-                    <p className="text-sm">Standard</p>
-                    <p className="text-xs text-gray-500">5-7 business days</p>
-                  </div>
-                  <p className="text-sm font-medium">
-                    <AnimatedNumber
-                      value={convertCurrency(8.50)}
-                      currency={curr.currency}
-                    />
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <input type="radio" name="shipping" className="w-4 h-4" />
-                  <div className="flex-1">
-                    <p className="text-sm">Express</p>
-                    <p className="text-xs text-gray-500">2-3 business days</p>
-                  </div>
-                  <p className="text-sm font-medium">
-                    <AnimatedNumber
-                      value={convertCurrency(15.00)}
                       currency={curr.currency}
                     />
                   </p>
@@ -400,15 +367,19 @@ const Section10 = () => {
                     />
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>
-                    <AnimatedNumber
-                      value={convertCurrency(10.67)}
-                      currency={curr.currency}
-                    />
-                  </span>
-                </div>
+                {/* Only show custom charges if not Pakistan */}
+                {curr.code !== 'PK' && (
+                  <div className="flex justify-between">
+                    <span>Custom charges</span>
+                    <span>
+                      <AnimatedNumber
+                        value={convertCurrency(10.67)}
+                        currency={curr.currency}
+                      />
+                    </span>
+                  </div>
+                )}
+
               </div>
               <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
                 <span>Total</span>
@@ -469,10 +440,10 @@ const Section10 = () => {
             {visibleCards.map(({ country, position, index }) => (<div
               key={`card-${country.code}-${index}`}
               className={`absolute top-0 w-full h-full rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${position === 'center'
-                  ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
-                  : position === 'left'
-                    ? 'left-0 -translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
-                    : 'right-0 translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
+                ? 'left-0 scale-100 opacity-100 bg-white shadow-2xl z-10'
+                : position === 'left'
+                  ? 'left-0 -translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
+                  : 'right-0 translate-x-8 scale-90 opacity-50 bg-gray-800 z-0'
                 }`}
             >
               <img
@@ -488,8 +459,8 @@ const Section10 = () => {
               {/* Buy now button */}
               <button
                 className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-lg cursor-pointer w-4/5 py-3 font-medium transition-all duration-300 ${position === 'center'
-                    ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
-                    : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
+                  ? 'bg-[#00282F] text-white hover:bg-[#003A45] shadow-lg'
+                  : 'bg-gradient-to-t from-[#001F29] to-transparent text-white/80'
                   }`}
               >
                 {country.buyNow}
@@ -518,14 +489,14 @@ const Section10 = () => {
               <h3 className="text-lg font-medium">Order summary</h3>
               <button className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
-            
+
             {/* Product Section */}
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/images/section6images/CA1.PNG" 
-                    alt="Product" 
+                  <img
+                    src="/images/section6images/CA1.PNG"
+                    alt="Product"
                     className="w-full h-full object-cover rounded"
                   />
                 </div>
@@ -544,38 +515,6 @@ const Section10 = () => {
               </div>
             </div>
 
-            {/* Shipping Options */}
-            <div className="mb-6">
-              <h4 className="font-medium mb-3">Shipping</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <input type="radio" name="shipping" className="w-4 h-4" defaultChecked />
-                  <div className="flex-1">
-                    <p className="text-sm">Standard</p>
-                    <p className="text-xs text-gray-500">5-7 business days</p>
-                  </div>
-                  <p className="text-sm font-medium">
-                    <AnimatedNumber
-                      value={convertCurrency(8.50)}
-                      currency={curr.currency}
-                    />
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <input type="radio" name="shipping" className="w-4 h-4" />
-                  <div className="flex-1">
-                    <p className="text-sm">Express</p>
-                    <p className="text-xs text-gray-500">2-3 business days</p>
-                  </div>
-                  <p className="text-sm font-medium">
-                    <AnimatedNumber
-                      value={convertCurrency(15.00)}
-                      currency={curr.currency}
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
 
             {/* Order Summary */}
             <div className="border-t pt-4 mb-6">
@@ -598,15 +537,17 @@ const Section10 = () => {
                     />
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>
-                    <AnimatedNumber
-                      value={convertCurrency(10.67)}
-                      currency={curr.currency}
-                    />
-                  </span>
-                </div>
+                {curr.code !== 'PK' && (
+                  <div className="flex justify-between">
+                    <span>Custom charges</span>
+                    <span>
+                      <AnimatedNumber
+                        value={convertCurrency(10.67)}
+                        currency={curr.currency}
+                      />
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
                 <span>Total</span>
