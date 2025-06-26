@@ -55,9 +55,9 @@ const stepCards = [
 ];
 
 const steps = [
-  { label: 'Add your first product', cards: stepCards[0] },
-  { label: 'Customize your store', cards: stepCards[1] },
-  { label: 'Set up payments', cards: stepCards[2] },
+  { label: 'Upload your products with ease', cards: stepCards[0] },
+  { label: 'Design your store front', cards: stepCards[1] },
+  { label: 'Raise Pickup request', cards: stepCards[2] },
 ];
 
 export default function Section9() {
