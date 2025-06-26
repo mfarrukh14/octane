@@ -4,7 +4,6 @@ const Section4 = () => (
     <section className="relative bg-black pb-20 z-40 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
 
-            <p className="text-teal-400 text-lg mb-2">Online and in person</p>
             <div className="flex flex-col xl:flex-row w-full gap-6">
                 <div className="w-full xl:w-1/2">
                     <h2 className="text-white text-4xl md:text-5xl tracking-tighter font-normal">

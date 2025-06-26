@@ -97,56 +97,63 @@ const Section2 = () => {
                                 >
                                     {Array.from({ length: totalSets }).map((_, setIndex) => (
                                         <div key={setIndex} className="flex gap-6 w-full justify-center">
-                                            {getCurrentItems(setIndex).map((item) => (
-                                                <div
-                                                    key={item.id}
-                                                    className={`
-                                                        ${item.type === 'square'
-                                                            ? 'w-[480px] h-[400px]'
-                                                            : 'w-[200px] h-[400px]'
+                                            {getCurrentItems(setIndex).map((item) => {
+                                                let cardWidth = '';
+                                                let cardHeight = '';
+                                                if (typeof window !== 'undefined' && window.innerWidth < 1200) {
+                                                    cardWidth = item.type === 'square' ? '250px' : '100px';
+                                                    cardHeight = '230px';
+                                                } else {
+                                                    cardWidth = item.type === 'square' ? '480px' : '200px';
+                                                    cardHeight = '400px';
+                                                }
+                                                return (
+                                                    <div
+                                                        key={item.id}
+                                                        className={
+                                                            (item.type === 'square'
+                                                                ? 'carousel-card-square'
+                                                                : 'carousel-card-rectangle') + ' rounded-2xl overflow-hidden flex-shrink-0 relative group'
                                                         }
-                                                        rounded-2xl overflow-hidden
-                                                        flex-shrink-0 relative group
-                                                    `}
-                                                    style={{
-                                                        backgroundImage: `url(${item.image})`,
-                                                        backgroundSize: 'cover',
-                                                        backgroundPosition: 'center'
-                                                    }}
-                                                    onMouseEnter={() => setIsPaused(true)}
-                                                    onMouseLeave={() => setIsPaused(false)}
-                                                >
-                                                    
-                                                    {/* Green gradient overlay that appears on hover */}
-                                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-98 transition-opacity duration-300" 
-                                                         style={{
-                                                             background: 'linear-gradient(180deg, rgba(1, 27, 14, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%)'
-                                                         }}>
+                                                        style={{
+                                                            backgroundImage: `url(${item.image})`,
+                                                            backgroundSize: 'cover',
+                                                            backgroundPosition: 'center',
+                                                            width: cardWidth,
+                                                            height: cardHeight,
+                                                        }}
+                                                        onMouseEnter={() => setIsPaused(true)}
+                                                        onMouseLeave={() => setIsPaused(false)}
+                                                    >
+                                                        {/* Green gradient overlay that appears on hover */}
+                                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-98 transition-opacity duration-300"
+                                                            style={{
+                                                                background: 'linear-gradient(180deg, rgba(1, 27, 14, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%)'
+                                                            }}>
+                                                        </div>
+                                                        {/* Brand logo in the center, hidden by default */}
+                                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                            <img
+                                                                src={item.logo}
+                                                                alt={item.title}
+                                                                className={`max-h-full object-contain ${item.logo.includes('l8') ? '' : 'brightness-0 invert'}
+                                                                ${item.type === 'rectangle' ? 'px-4 max-w-[85%]' : 'max-w-full'}`}
+                                                            />
+                                                        </div>
+                                                        {/* URL display that appears at the bottom when hovered */}
+                                                        <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                            <a
+                                                                href={item.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-center text-sm md:text-base text-white rounded-full py-2 px-4 transition-all duration-300"
+                                                            >
+                                                                {item.title}
+                                                            </a>
+                                                        </div>
                                                     </div>
-
-                                                    {/* Brand logo in the center, hidden by default */}
-                                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                        <img 
-                                                            src={item.logo} 
-                                                            alt={item.title} 
-                                                            className={`max-h-full object-contain ${item.logo.includes('l8') ? '' : 'brightness-0 invert'} 
-                                                            ${item.type === 'rectangle' ? 'px-4 max-w-[85%]' : 'max-w-full'}`} 
-                                                        />
-                                                    </div>
-
-                                                    {/* URL display that appears at the bottom when hovered */}
-                                                    <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                        <a 
-                                                            href={item.url} 
-                                                            target="_blank" 
-                                                            rel="noopener noreferrer"
-                                                            className="text-center text-sm md:text-base text-white rounded-full py-2 px-4 transition-all duration-300"
-                                                        >
-                                                            {item.title}
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     ))}
                                 </div>
