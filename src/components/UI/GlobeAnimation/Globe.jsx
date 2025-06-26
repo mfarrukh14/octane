@@ -316,7 +316,7 @@ export function Globe({
         ["lat", "lng"].every((k) => v2[k] === v[k])) === i);
     globeRef.current
       .hexPolygonsData(countries.features)
-      .hexPolygonResolution(isLowEndDevice ? 2 : 4)
+      .hexPolygonResolution(4)
       .hexPolygonMargin(0)
       .showAtmosphere(defaultProps.showAtmosphere)
       .atmosphereColor(defaultProps.atmosphereColor)
