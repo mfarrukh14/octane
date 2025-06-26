@@ -15,7 +15,7 @@ const cameraZ = 300;
 const getResponsiveCameraZ = () => {
   if (typeof window !== 'undefined') {
     const width = window.innerWidth;
-    if (width < 768) return 600; // Mobile - move camera further back
+    if (width < 768) return 300; // Mobile - move camera further back
     if (width < 1024) return 350; // Tablet - slightly further back
     return 300; // Desktop - original distance
   }
