@@ -24,43 +24,38 @@ const getResponsiveCameraZ = () => {
 
 let numbersOfRings = [0];
 
+// Detect low-end device for performance mode
+const isLowEndDevice = typeof window !== 'undefined' && (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+
 // Pixelated Noise Mask Component
 function PixelatedNoiseMask() {
   const meshRef = useRef();
   const [noiseTexture, setNoiseTexture] = useState(null);
 
   useEffect(() => {
-    // Create a pixelated noise texture
-    const size = 1800; // Higher resolution for better coverage
+    // Lower resolution for low-end devices
+    const size = isLowEndDevice ? 512 : 1024;
     const data = new Uint8Array(size * size * 4);
-
     for (let i = 0; i < size * size; i++) {
       const stride = i * 4;
       const noise = Math.random();
-      
-      // 1 out of every 5 pixels should be gray (noise)
-      const shouldBeNoise = noise < 0.65; // 20% chance = 1 out of 5
-      
+      const shouldBeNoise = noise < 0.65;
       if (shouldBeNoise) {
-        // 50% gray noise pixel
-        data[stride] = 128;     // R (50% gray = 128/255)
-        data[stride + 1] = 128; // G (50% gray = 128/255)
-        data[stride + 2] = 128; // B (50% gray = 128/255)
-        data[stride + 3] = 100; // A (fully opaque)
+        data[stride] = 128;
+        data[stride + 1] = 128;
+        data[stride + 2] = 128;
+        data[stride + 3] = 100;
       } else {
-        // Transparent pixel
-        data[stride] = 0;       // R
-        data[stride + 1] = 0;   // G  
-        data[stride + 2] = 0;   // B
-        data[stride + 3] = 0;   // A (fully transparent)
+        data[stride] = 0;
+        data[stride + 1] = 0;
+        data[stride + 2] = 0;
+        data[stride + 3] = 0;
       }
     }
-
     const texture = new DataTexture(data, size, size, RGBAFormat);
     texture.needsUpdate = true;
-    texture.magFilter = NearestFilter; // NearestFilter for pixelated effect
-    texture.minFilter = NearestFilter; // NearestFilter for pixelated effect
-    
+    texture.magFilter = NearestFilter;
+    texture.minFilter = NearestFilter;
     setNoiseTexture(texture);
   }, []);
 
@@ -77,7 +72,8 @@ function PixelatedNoiseMask() {
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[102, 64, 64]} />
+      {/* Lower geometry segments for performance */}
+      <sphereGeometry args={[102, isLowEndDevice ? 24 : 48, isLowEndDevice ? 24 : 48]} />
       <meshBasicMaterial 
         map={noiseTexture}
         transparent={true}
@@ -249,18 +245,18 @@ export function Globe({
   const [isInitialized, setIsInitialized] = useState(false);
 
   const defaultProps = {
-    pointSize: 1,
+    pointSize: isLowEndDevice ? 0.7 : 1,
     atmosphereColor: "#5f8acf",
     atmosphereAltitude: 10,
-    showAtmosphere: true,
+    showAtmosphere: !isLowEndDevice,
     atmosphereAltitude: 0.1,
     polygonColor: "rgba(255,255,255,0.7)",
-    landColor: "#20b2aa", // Teal color for the landmass
+    landColor: "#20b2aa",
     globeColor: "#1d072e",
     emissive: "#000000",
     emissiveIntensity: 0.9,
     shininess: 0.9,
-    arcTime: 2000,
+    arcTime: isLowEndDevice ? 3000 : 2000,
     arcLength: 0.9,
     rings: 1,
     maxRings: 3,
@@ -296,12 +292,10 @@ export function Globe({
   // Build data when globe is initialized or when data changes
   useEffect(() => {
     if (!globeRef.current || !isInitialized || !data) return;
-
-    const arcs = data;
+    const arcs = isLowEndDevice ? data.slice(0, 10) : data;
     let points = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
-      const rgb = hexToRgb(arc.color);
       points.push({
         size: defaultProps.pointSize,
         order: arc.order,
@@ -317,23 +311,19 @@ export function Globe({
         lng: arc.endLng,
       });
     }
-
-    // remove duplicates for same lat and lng
     const filteredPoints = points.filter((v, i, a) =>
       a.findIndex((v2) =>
         ["lat", "lng"].every((k) => v2[k] === v[k])) === i);
-
     globeRef.current
       .hexPolygonsData(countries.features)
-      .hexPolygonResolution(4)
-      .hexPolygonMargin(0)  // Set margin to 0 to make polygons solid
+      .hexPolygonResolution(isLowEndDevice ? 2 : 4)
+      .hexPolygonMargin(0)
       .showAtmosphere(defaultProps.showAtmosphere)
       .atmosphereColor(defaultProps.atmosphereColor)
       .atmosphereAltitude(defaultProps.atmosphereAltitude)
-      .hexPolygonColor(() => defaultProps.landColor);  // Use teal color for landmass
-
+      .hexPolygonColor(() => defaultProps.landColor);
     globeRef.current
-      .arcsData(data)
+      .arcsData(arcs)
       .arcStartLat((d) => (d).startLat * 1)
       .arcStartLng((d) => (d).startLng * 1)
       .arcEndLat((d) => (d).endLat * 1)
@@ -345,14 +335,12 @@ export function Globe({
       .arcDashInitialGap((e) => (e).order * 1)
       .arcDashGap(15)
       .arcDashAnimateTime(() => defaultProps.arcTime);
-
     globeRef.current
       .pointsData(filteredPoints)
       .pointColor((e) => (e).color)
       .pointsMerge(true)
       .pointAltitude(0.0)
-      .pointRadius(2);
-
+      .pointRadius(isLowEndDevice ? 1 : 2);
     globeRef.current
       .ringsData([])
       .ringColor(() => defaultProps.polygonColor)
@@ -410,33 +398,28 @@ export function Globe({
 
 export function WebGLRendererConfig() {
   const { gl, size } = useThree();
-
   useEffect(() => {
-    gl.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+    // Lower pixel ratio for low-end devices
+    gl.setPixelRatio(isLowEndDevice ? 1.2 : Math.min(window.devicePixelRatio, 2));
     gl.setSize(size.width, size.height);
     gl.setClearColor(0xffaaff, 0);
   }, [gl, size]);
-
   return null;
 }
 
 export function World(props) {
   const { globeConfig } = props;
   const [cameraDistance, setCameraDistance] = useState(getResponsiveCameraZ());
-  
-  // Update camera distance on resize
   useEffect(() => {
     const handleResize = () => {
       setCameraDistance(getResponsiveCameraZ());
     };
-    
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  // Remove fog for low-end devices
   const scene = new Scene();
-  scene.fog = new Fog(0xffffff, 400, 2000);
-  
+  if (!isLowEndDevice) scene.fog = new Fog(0xffffff, 400, 2000);
   // Calculate responsive aspect ratio
   const getAspect = () => {
     if (typeof window !== 'undefined') {
