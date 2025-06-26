@@ -1036,7 +1036,7 @@ export default function LaptopMockup() {
   };
 
   return (
-    <div className="flex justify-center p-8 bg-transparent">
+    <div className="flex justify-center p-8 bg-transparent" style={{ fontFamily: 'Inter, Arial, sans-serif' }}>
       <div className="relative w-[1000px] h-[700px] bg-black rounded-[30px] shadow-xl overflow-hidden border-[8px] border-black">
         {/* MacBook notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-black rounded-b-xl z-10" />

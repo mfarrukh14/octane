@@ -39,7 +39,7 @@ function PixelatedNoiseMask() {
     for (let i = 0; i < size * size; i++) {
       const stride = i * 4;
       const noise = Math.random();
-      const shouldBeNoise = noise < 0.65;
+      const shouldBeNoise = noise < 0.5
       if (shouldBeNoise) {
         data[stride] = 128;
         data[stride + 1] = 128;
@@ -78,7 +78,7 @@ function PixelatedNoiseMask() {
         map={noiseTexture}
         transparent={true}
         opacity={1}
-        color="rgb(148, 148, 148)"
+        color="rgb(146, 146, 146)"
       />
     </mesh>
   );
