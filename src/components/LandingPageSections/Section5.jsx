@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OrbitAnimation from '../UI/OrbitAnimations';
+import BusinessAnimation from '../UI/BusinessAnimation';
 
 const Section5 = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -44,7 +45,7 @@ const Section5 = () => {
         </div>  
         <div className="rounded-2xl p-8 bg-gradient-to-bl from-teal-800 to-black/20 text-white shadow-lg overflow-hidden flex flex-col h-[600px] relative">
           <div className="flex-1 flex items-center justify-center min-h-0">
-            <OrbitAnimation />
+            <BusinessAnimation />
           </div>
           <div className="relative z-10 flex-shrink-0">
             <h3 className="text-xl tracking-tighter mb-2">Go Live  Everywhere — Powered by Smart Integrations</h3>

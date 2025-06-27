@@ -35,13 +35,13 @@ const useCountUp = (endValue, duration = 1000, startValue = 0) => {
 }
 
 const countries = [
-  { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 32500, buyNow: 'ابھی خریدیں', image: '/images/section6images/CA1.PNG' },
-  { code: 'AE', name: 'UAE', currency: 'AED', price: 459, buyNow: 'اشتري الآن', image: '/images/section6images/CA2.PNG' },
-  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 469, buyNow: 'اشتري الآن', image: '/images/section6images/CA1.PNG' },
-  { code: 'CA', name: 'Canada', currency: 'CAD', price: 159.99, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
-  { code: 'US', name: 'United States', currency: 'USD', price: 125.00, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
-  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 89.50, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
-  { code: 'AU', name: 'Australia', currency: 'AUD', price: 169.99, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
+  { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 5389, buyNow: 'ابھی خریدیں', image: '/images/section6images/CA1.PNG' },
+  { code: 'AE', name: 'UAE', currency: 'AED', price: 111.86, buyNow: 'اشتري الآن', image: '/images/section6images/CA2.PNG' },
+  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 144.22, buyNow: 'اشتري الآن', image: '/images/section6images/CA1.PNG' },
+  { code: 'CA', name: 'Canada', currency: 'CAD', price: 78.35, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
+  { code: 'US', name: 'United States', currency: 'USD', price: 55.44, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
+  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 34.49, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
+  { code: 'AU', name: 'Australia', currency: 'AUD', price: 81.71, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
 ]
 
 const Section10 = () => {
@@ -56,21 +56,6 @@ const Section10 = () => {
   const prevIdx = (i) => (i - 1 + total) % total
   const nextIdx = (i) => (i + 1) % total
 
-  // Add currency conversion rates (base: USD)
-  const currencyRates = {
-    PKR: 278.5,
-    AED: 3.67,
-    SAR: 3.75,
-    CAD: 1.35,
-    USD: 1.0,
-    GBP: 0.79,
-    AUD: 1.48
-  }
-  // Convert USD amounts to local currency
-  const convertCurrency = (usdAmount) => {
-    const rate = currencyRates[curr.currency]
-    return (usdAmount * rate).toFixed(2)
-  }
   // Animated number component
   const AnimatedNumber = ({ value, currency, decimals = 2 }) => {
     const shouldAnimate = isInView || hasAnimated
@@ -83,6 +68,31 @@ const Section10 = () => {
   }
 
   const curr = countries[selected]
+
+  // Calculate order summary breakdown so that subtotal + shipping (+ custom) = price
+  const getOrderBreakdown = (country) => {
+    const total = country.price
+    let subtotal, shipping, customCharges
+    if (country.code === 'PK') {
+      // No custom charges for Pakistan
+      shipping = +(total * 0.04).toFixed(2) // 4% shipping
+      subtotal = +(total - shipping).toFixed(2)
+      customCharges = 0
+    } else {
+      customCharges = +(total * 0.018).toFixed(2) // 1.8% custom
+      shipping = +(total * 0.035).toFixed(2) // 3.5% shipping
+      subtotal = +(total - shipping - customCharges).toFixed(2)
+    }
+    // Adjust subtotal to ensure sum matches total (fix floating point)
+    const sum = subtotal + shipping + customCharges
+    if (sum !== total) {
+      subtotal = +(subtotal + (total - sum)).toFixed(2)
+    }
+    return { subtotal, shipping, customCharges, total }
+  }
+
+  const order = getOrderBreakdown(curr)
+
   // Get the 5 visible countries (two above, current, two below)
   const getVisibleCountries = () => {
     return [
@@ -338,7 +348,7 @@ const Section10 = () => {
                 <div className="ml-auto text-right">
                   <p className="font-medium">
                     <AnimatedNumber
-                      value={convertCurrency(125.00)}
+                      value={order.subtotal}
                       currency={curr.currency}
                     />
                   </p>
@@ -353,7 +363,7 @@ const Section10 = () => {
                   <span>Subtotal</span>
                   <span>
                     <AnimatedNumber
-                      value={convertCurrency(125.00)}
+                      value={order.subtotal}
                       currency={curr.currency}
                     />
                   </span>
@@ -362,7 +372,7 @@ const Section10 = () => {
                   <span>Shipping</span>
                   <span>
                     <AnimatedNumber
-                      value={convertCurrency(8.50)}
+                      value={order.shipping}
                       currency={curr.currency}
                     />
                   </span>
@@ -373,7 +383,7 @@ const Section10 = () => {
                     <span>Custom charges</span>
                     <span>
                       <AnimatedNumber
-                        value={convertCurrency(10.67)}
+                        value={order.customCharges}
                         currency={curr.currency}
                       />
                     </span>
@@ -385,7 +395,7 @@ const Section10 = () => {
                 <span>Total</span>
                 <span>
                   <AnimatedNumber
-                    value={convertCurrency(144.17)}
+                    value={order.total}
                     currency={curr.currency}
                   />
                 </span>
@@ -507,7 +517,7 @@ const Section10 = () => {
                 <div className="ml-auto text-right">
                   <p className="font-medium">
                     <AnimatedNumber
-                      value={convertCurrency(125.00)}
+                      value={order.subtotal}
                       currency={curr.currency}
                     />
                   </p>
@@ -523,7 +533,7 @@ const Section10 = () => {
                   <span>Subtotal</span>
                   <span>
                     <AnimatedNumber
-                      value={convertCurrency(125.00)}
+                      value={order.subtotal}
                       currency={curr.currency}
                     />
                   </span>
@@ -532,7 +542,7 @@ const Section10 = () => {
                   <span>Shipping</span>
                   <span>
                     <AnimatedNumber
-                      value={convertCurrency(8.50)}
+                      value={order.shipping}
                       currency={curr.currency}
                     />
                   </span>
@@ -542,7 +552,7 @@ const Section10 = () => {
                     <span>Custom charges</span>
                     <span>
                       <AnimatedNumber
-                        value={convertCurrency(10.67)}
+                        value={order.customCharges}
                         currency={curr.currency}
                       />
                     </span>
@@ -553,7 +563,7 @@ const Section10 = () => {
                 <span>Total</span>
                 <span>
                   <AnimatedNumber
-                    value={convertCurrency(144.17)}
+                    value={order.total}
                     currency={curr.currency}
                   />
                 </span>
