@@ -3,22 +3,22 @@ import React, { useState, useEffect } from 'react';
 const cards = [
   {
     id: 1,
-    icon: '/images/section3images/haseens1.jpeg',        
-    hoverIcon: '/images/section3images/haseens2.PNG',    // Second image to show on hover
+    icon: '/images/section3images/reh1.PNG',
+    hoverIcon: '/images/section3images/reh2.PNG',    // Second image to show on hover
     title: 'Start fast',
-    description: 'STarting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
+    description: 'Starting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
   },
   {
     id: 2,
-    icon: '/images/section3images/hsy1.PNG',
+    icon: '/images/section3images/hsy1.png',
     hoverIcon: '/images/section3images/hsy2.PNG',    // Second image to show on hover
     title: 'Elevate your brand',
     description: 'With Octane, HSY can focus on design while reaching diaspora markets (USA, UK, UAE) with zero backend headaches.',
   },
   {
     id: 3,
-    icon: '/images/section3images/reh1.PNG',
-    hoverIcon: '/images/section3images/reh2.PNG',    // Second image to show on hover
+    icon: '/images/section3images/haseens1.jpeg',
+    hoverIcon: '/images/section3images/haseens2.jpg',    // Second image to show on hover
     title: 'Scale efficiently',
     description: 'Enterprises like Haseens rely on Octane to handle high-volume worldwide orders, warehousing, logistics and payments.',
   },
@@ -54,13 +54,13 @@ const Card = ({ icon, hoverIcon, title, description }) => {
         <img 
           src={icon} 
           alt="" 
-          className="w-full h-full object-contain transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
+          className="w-full h-full object-cover transition-opacity duration-100 absolute inset-0"
           style={{ opacity: isHovered ? 0 : 1 }}
         />
         <img 
           src={hoverIcon} 
           alt="" 
-          className="w-full h-full object-contain transition-opacity duration-100 absolute inset-0 filter blur-[0.5px]"
+          className="w-full h-full object-cover transition-opacity duration-100 absolute inset-0"
           style={{ opacity: isHovered ? 1 : 0 }}
         />
       </div>
@@ -115,7 +115,7 @@ const Section3 = () => {
       </div>        {/* Action button */}
       <div className="flex justify-center mt-8">
         <button className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg transition-all duration-300 bg-black hover:bg-white hover:text-black">
-          Start Now!
+          Get in touch
         </button>
       </div>
     </div>

@@ -20,7 +20,7 @@ const stepCards = [
     {
       title: 'Product Added',
       subtitle: 'First Item Ready',
-      image: '/images/BrandWebsiteImages/r3.png'
+      image: '/images/BrandWebsiteImages/r1.png'
     },
     {
       title: 'Inventory Set',
@@ -37,14 +37,14 @@ const stepCards = [
     {
       title: 'Theme Applied',
       subtitle: 'Visual Complete',
-      image: '/images/BrandWebsiteImages/sq3.png'
+      image: '/images/BrandWebsiteImages/sq3.jpg'
     }
   ],
   [
     {
       title: 'Payment Ready',
       subtitle: 'Secure Checkout',
-      image: '/images/BrandWebsiteImages/sq4.png'
+      image: '/images/BrandWebsiteImages/sq4.jpg'
     },
     {
       title: 'Gateway Active',
@@ -142,7 +142,7 @@ export default function Section9() {
                 className={`flex items-center cursor-pointer ${isSmallScreen ? '' : ''}`}
               ><span
                 className={
-                  `text-3xl lg:text-4xl font-mono w-10 lg:w-12 transition-colors duration-300 ease-in-out ` +
+                  `text-3xl lg:text-2xl font-mono w-10 lg:w-12 ml-6 transition-colors duration-300 ease-in-out ` +
                   (isActive ? 'text-green-300' : 'text-green-300')
                 }
               >
@@ -150,7 +150,7 @@ export default function Section9() {
                 </span>
                 <span
                   className={
-                    `ml-4 lg:ml-6 text-3xl lg:text-5xl tracking-tighter pb-1 transition-colors duration-300 ease-in-out ` +
+                    `ml-2 lg:ml-4 text-2xl lg:text-3xl tracking-tighter pb-1 transition-colors duration-300 ease-in-out ` +
                     (shouldBeUnderlined ? 'border-b border-gray-400 ' : '') +
                     (isAnyActive
                       ? (isActive ? 'text-white' : 'text-gray-400')

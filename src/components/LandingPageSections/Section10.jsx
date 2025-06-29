@@ -69,7 +69,7 @@ const Section10 = () => {
 
   const curr = countries[selected]
 
-  // Calculate order summary breakdown so that subtotal + shipping (+ custom) = price
+  // Calculate order summary breakdown so that subtotal + shipping = price (custom charges are not added)
   const getOrderBreakdown = (country) => {
     const total = country.price
     let subtotal, shipping, customCharges
@@ -79,12 +79,12 @@ const Section10 = () => {
       subtotal = +(total - shipping).toFixed(2)
       customCharges = 0
     } else {
-      customCharges = +(total * 0.018).toFixed(2) // 1.8% custom
+      customCharges = +(total * 0.018).toFixed(2) // 1.8% custom (display only)
       shipping = +(total * 0.035).toFixed(2) // 3.5% shipping
-      subtotal = +(total - shipping - customCharges).toFixed(2)
+      subtotal = +(total - shipping).toFixed(2)
     }
     // Adjust subtotal to ensure sum matches total (fix floating point)
-    const sum = subtotal + shipping + customCharges
+    const sum = subtotal + shipping
     if (sum !== total) {
       subtotal = +(subtotal + (total - sum)).toFixed(2)
     }
@@ -347,10 +347,17 @@ const Section10 = () => {
                 </div>
                 <div className="ml-auto text-right">
                   <p className="font-medium">
-                    <AnimatedNumber
-                      value={order.subtotal}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <AnimatedNumber
+                        value={curr.price}
+                        currency={curr.currency}
+                      />
+                    ) : (
+                      <AnimatedNumber
+                        value={order.subtotal}
+                        currency={curr.currency}
+                      />
+                    )}
                   </p>
                 </div>
               </div>
@@ -362,30 +369,38 @@ const Section10 = () => {
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>
-                    <AnimatedNumber
-                      value={order.subtotal}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <AnimatedNumber
+                        value={curr.price}
+                        currency={curr.currency}
+                      />
+                    ) : (
+                      <AnimatedNumber
+                        value={order.subtotal}
+                        currency={curr.currency}
+                      />
+                    )}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
                   <span>
-                    <AnimatedNumber
-                      value={order.shipping}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <span className="font-semibold text-green-600">Free</span>
+                    ) : (
+                      <AnimatedNumber
+                        value={order.shipping}
+                        currency={curr.currency}
+                      />
+                    )}
                   </span>
                 </div>
                 {/* Only show custom charges if not Pakistan */}
                 {curr.code !== 'PK' && (
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span>Custom charges</span>
                     <span>
-                      <AnimatedNumber
-                        value={order.customCharges}
-                        currency={curr.currency}
-                      />
+                      <span className="inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-semibold ml-2">Included</span>
                     </span>
                   </div>
                 )}
@@ -394,10 +409,17 @@ const Section10 = () => {
               <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
                 <span>Total</span>
                 <span>
-                  <AnimatedNumber
-                    value={order.total}
-                    currency={curr.currency}
-                  />
+                  {curr.code === 'PK' ? (
+                    <AnimatedNumber
+                      value={curr.price}
+                      currency={curr.currency}
+                    />
+                  ) : (
+                    <AnimatedNumber
+                      value={order.total}
+                      currency={curr.currency}
+                    />
+                  )}
                 </span>
               </div>
             </div>
@@ -516,10 +538,17 @@ const Section10 = () => {
                 </div>
                 <div className="ml-auto text-right">
                   <p className="font-medium">
-                    <AnimatedNumber
-                      value={order.subtotal}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <AnimatedNumber
+                        value={curr.price}
+                        currency={curr.currency}
+                      />
+                    ) : (
+                      <AnimatedNumber
+                        value={order.subtotal}
+                        currency={curr.currency}
+                      />
+                    )}
                   </p>
                 </div>
               </div>
@@ -532,29 +561,37 @@ const Section10 = () => {
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>
-                    <AnimatedNumber
-                      value={order.subtotal}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <AnimatedNumber
+                        value={curr.price}
+                        currency={curr.currency}
+                      />
+                    ) : (
+                      <AnimatedNumber
+                        value={order.subtotal}
+                        currency={curr.currency}
+                      />
+                    )}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
                   <span>
-                    <AnimatedNumber
-                      value={order.shipping}
-                      currency={curr.currency}
-                    />
+                    {curr.code === 'PK' ? (
+                      <span className="font-semibold text-green-600">Free</span>
+                    ) : (
+                      <AnimatedNumber
+                        value={order.shipping}
+                        currency={curr.currency}
+                      />
+                    )}
                   </span>
                 </div>
                 {curr.code !== 'PK' && (
                   <div className="flex justify-between">
                     <span>Custom charges</span>
                     <span>
-                      <AnimatedNumber
-                        value={order.customCharges}
-                        currency={curr.currency}
-                      />
+                      <span className="inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-semibold ml-2">Included</span>
                     </span>
                   </div>
                 )}
@@ -562,10 +599,17 @@ const Section10 = () => {
               <div className="flex justify-between items-center mt-4 pt-2 border-t font-bold text-lg">
                 <span>Total</span>
                 <span>
-                  <AnimatedNumber
-                    value={order.total}
-                    currency={curr.currency}
-                  />
+                  {curr.code === 'PK' ? (
+                    <AnimatedNumber
+                      value={curr.price}
+                      currency={curr.currency}
+                    />
+                  ) : (
+                    <AnimatedNumber
+                      value={order.total}
+                      currency={curr.currency}
+                    />
+                  )}
                 </span>
               </div>
             </div>

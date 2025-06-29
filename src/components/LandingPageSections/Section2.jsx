@@ -7,10 +7,10 @@ const Section2 = () => {
         { id: 1, type: 'square', title: 'fourseason.pk', subtitle: 'Real-time insights', image: '/images/BrandWebsiteImages/sq1.png', logo: '/images/BrandLogos/l2.png', url: 'https://www.fourseason.pk/' },
         { id: 2, type: 'square', title: 'bintayyab.com', subtitle: 'Enterprise grade', image: '/images/BrandWebsiteImages/sq2.png', logo: '/images/BrandLogos/l3.png', url: 'https://bintayyab.com/' },
         { id: 3, type: 'rectangle', title: 'meerak.pk', subtitle: 'Lightning fast delivery', image: '/images/BrandWebsiteImages/r1.png', logo: '/images/BrandLogos/l7.png', url: 'https://meerak.pk/' },
-        { id: 4, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.png', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
+        { id: 4, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.jpg', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
         { id: 5, type: 'rectangle', title: 'sahibas.com', subtitle: 'Grows with your business', image: '/images/BrandWebsiteImages/r2.png', logo: '/images/BrandLogos/l9.png', url: 'https://sahibas.com/' },
-        { id: 6, type: 'square', title: 'haseensofficial.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sq4.png', logo: '/images/BrandLogos/l8.png', url: 'https://haseensofficial.com/' },
-        { id: 7, type: 'rectangle', title: 'sairashakira.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.png', logo: '/images/BrandLogos/l1.png', url: 'https://www.sairashakira.com/' },
+        { id: 6, type: 'square', title: 'haseensofficial.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sq4.jpg', logo: '/images/BrandLogos/l8.png', url: 'https://haseensofficial.com/' },
+        { id: 7, type: 'rectangle', title: 'sairashakira.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.mp4', logo: '/images/BrandLogos/l1.png', url: 'https://www.sairashakira.com/' },
         { id: 8, type: 'square', title: 'bkclothings.ca', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l6.png', url: 'https://bkclothings.ca/' },
         { id: 9, type: 'square', title: 'sarajahanonline.com', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
     ];
@@ -53,27 +53,21 @@ const Section2 = () => {
                     <div className="flex flex-wrap">
                         <div className="w-full">
                             <h1 className="text-5xl md:text-5xl tracking-tighter text-gray-500 w-full">
-                                <span 
-                                    className={`inline ${currentIndex === 0 ? 'text-white' : ''} hover:bg-gradient-to-r hover:from-teal-400 hover:via-blue-500 hover:to-purple-600 hover:bg-clip-text hover:text-transparent cursor-pointer`}
-                                    onClick={() => setCurrentIndex(0)}
-                            >
-                                Sell online and direct.&nbsp;
-                            </span>
                             <span 
-                                className={`inline ${currentIndex === 1 ? 'text-white' : ''} hover:bg-gradient-to-br hover:from-teal-300 hover:via-blue-400 hover:to-purple-500 hover:bg-clip-text hover:text-transparent cursor-pointer`}
-                                onClick={() => setCurrentIndex(1)}
+                                className={`inline ${currentIndex === 0 ? 'text-white' : ''} hover:bg-gradient-to-br hover:from-teal-300 hover:via-blue-400 hover:to-purple-500 hover:bg-clip-text hover:text-transparent cursor-pointer`}
+                                onClick={() => setCurrentIndex(0)}
                             >
                                 Sell in-stock and on-demand.&nbsp;
                             </span>
                             <span 
-                                className={`inline ${currentIndex === 2 ? 'text-white' : ''} hover:bg-gradient-to-l hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 hover:bg-clip-text hover:text-transparent cursor-pointer`}
-                                onClick={() => setCurrentIndex(2)}
+                                className={`inline ${currentIndex === 1 ? 'text-white' : ''} hover:bg-gradient-to-l hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 hover:bg-clip-text hover:text-transparent cursor-pointer`}
+                                onClick={() => setCurrentIndex(1)}
                             >
                                 Sell locally and globally.&nbsp;
                             </span>
                             <span 
-                                className={`inline ${currentIndex === 3 ? 'text-white' : ''} hover:bg-gradient-to-t hover:from-teal-200 hover:via-blue-300 hover:to-purple-400 hover:bg-clip-text hover:text-transparent cursor-pointer`}
-                                onClick={() => setCurrentIndex(3 < totalSets ? 3 : totalSets - 1)}
+                                className={`inline ${currentIndex === 2 ? 'text-white' : ''} hover:bg-gradient-to-t hover:from-teal-200 hover:via-blue-300 hover:to-purple-400 hover:bg-clip-text hover:text-transparent cursor-pointer`}
+                                onClick={() => setCurrentIndex(2 < totalSets ? 2 : totalSets - 1)}
                             >
                                 Sell on desktop and mobile.
                             </span>
@@ -116,15 +110,29 @@ const Section2 = () => {
                                                                 : 'carousel-card-rectangle') + ' rounded-xl overflow-hidden flex-shrink-0 relative group'
                                                         }
                                                         style={{
-                                                            backgroundImage: `url(${item.image})`,
+                                                            background: item.image.endsWith('.mp4') ? 'black' : `url(${item.image})`,
                                                             backgroundSize: 'cover',
                                                             backgroundPosition: 'center',
                                                             width: cardWidth,
                                                             height: cardHeight,
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
                                                         }}
                                                         onMouseEnter={() => setIsPaused(true)}
                                                         onMouseLeave={() => setIsPaused(false)}
                                                     >
+                                                        {/* If the item is a video, render a video element */}
+                                                        {item.image.endsWith('.mp4') ? (
+                                                            <video
+                                                                src={item.image}
+                                                                autoPlay
+                                                                loop
+                                                                muted
+                                                                playsInline
+                                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                            />
+                                                        ) : null}
                                                         {/* Green gradient overlay that appears on hover */}
                                                         <div className="absolute inset-0 opacity-0 group-hover:opacity-98 transition-opacity duration-300"
                                                             style={{
