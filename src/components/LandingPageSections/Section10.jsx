@@ -37,11 +37,11 @@ const useCountUp = (endValue, duration = 1000, startValue = 0) => {
 const countries = [
   { code: 'PK', name: 'Pakistan', currency: 'PKR', price: 5389, buyNow: 'ابھی خریدیں', image: '/images/section6images/CA1.PNG' },
   { code: 'AE', name: 'UAE', currency: 'AED', price: 111.86, buyNow: 'اشتري الآن', image: '/images/section6images/CA2.PNG' },
-  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 144.22, buyNow: 'اشتري الآن', image: '/images/section6images/CA1.PNG' },
-  { code: 'CA', name: 'Canada', currency: 'CAD', price: 78.35, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
-  { code: 'US', name: 'United States', currency: 'USD', price: 55.44, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
-  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 34.49, buyNow: 'Buy now', image: '/images/section6images/CA2.PNG' },
-  { code: 'AU', name: 'Australia', currency: 'AUD', price: 81.71, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
+  { code: 'SA', name: 'Saudi Arabia', currency: 'SAR', price: 144.22, buyNow: 'اشتري الآن', image: '/images/section6images/CA3.PNG' },
+  { code: 'CA', name: 'Canada', currency: 'CAD', price: 78.35, buyNow: 'Buy now', image: '/images/section6images/CA4.png' },
+  { code: 'US', name: 'United States', currency: 'USD', price: 55.44, buyNow: 'Buy now', image: '/images/section6images/CA5.PNG' },
+  { code: 'GB', name: 'United Kingdom', currency: 'GBP', price: 34.49, buyNow: 'Buy now', image: '/images/section6images/CA1.PNG' },
+  { code: 'AU', name: 'Australia', currency: 'AUD', price: 81.71, buyNow: 'Buy now', image: '/images/section6images/CA6.PNG' },
 ]
 
 const Section10 = () => {
@@ -396,7 +396,7 @@ const Section10 = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Shipping</span>
+                  <span>Flat Shipping</span>
                   <span>
                     {curr.code === 'PK' ? (
                       <span className="font-semibold text-green-600">Free</span>
@@ -588,7 +588,7 @@ const Section10 = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Shipping</span>
+                  <span>Flat Shipping</span>
                   <span>
                     {curr.code === 'PK' ? (
                       <span className="font-semibold text-green-600">Free</span>
