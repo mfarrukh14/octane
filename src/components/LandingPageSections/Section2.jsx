@@ -10,9 +10,9 @@ const Section2 = () => {
         { id: 4, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.jpg', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
         { id: 5, type: 'rectangle', title: 'sahibas.com', subtitle: 'Grows with your business', image: '/images/BrandWebsiteImages/r2.png', logo: '/images/BrandLogos/l9.png', url: 'https://sahibas.com/' },
         { id: 6, type: 'square', title: 'haseensofficial.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sq4.jpg', logo: '/images/BrandLogos/l8.png', url: 'https://haseensofficial.com/' },
-        { id: 7, type: 'rectangle', title: 'sairashakira.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.mp4', logo: '/images/BrandLogos/l1.png', url: 'https://www.sairashakira.com/' },
-        { id: 8, type: 'square', title: 'bkclothings.ca', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l6.png', url: 'https://bkclothings.ca/' },
-        { id: 9, type: 'square', title: 'sarajahanonline.com', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
+        { id: 7, type: 'rectangle', title: 'jahaan.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.mp4', logo: '/images/BrandLogos/jahaan.png', url: 'https://jahaan.com.pk/' },
+        { id: 8, type: 'square', title: 'sarajahan.online', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
+        { id: 9, type: 'square', title: 'laam.pk', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/laam.png', url: 'https://laam.pk/' },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
