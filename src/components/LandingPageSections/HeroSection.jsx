@@ -37,19 +37,15 @@ const HeroSection = () => {
 
     // Rotating texts for the second heading
     const rotatingTexts = [
-        "startup to look out for!",
-        "experience customers love",
+        "global brand to look out for!",
+        "delivery experience customers love",
         "supply chain that runs itself",
         "business that works while you sleep",
         "store that never misses an order",
         "checkout experience that converts",
         "logistics engine without overhead",
-        "warehouse with zero guesswork",
-        "backend built for scale",
-        "next-day delivery promise",
-        "store that ships nationwide",
         "platform that grows with you",
-        "journey from click to door"
+        "customer journey from click to door"
     ];
 
     // Check if device is mobile
