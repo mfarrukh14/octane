@@ -4,16 +4,16 @@ const cards = [
   {
     id: 1,
     icon: '/images/section3images/reh1.PNG',
-    hoverIcon: '/images/section3images/reh2.PNG',    // Second image to show on hover
+    hoverIcon: '/images/section3images/reh2.png',    // Second image to show on hover
     title: 'Start fast',
     description: 'Starting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
   },
   {
     id: 2,
-    icon: '/images/section3images/hsy1.png',
+    icon: '/images/section3images/hsy1.PNG',
     hoverIcon: '/images/section3images/hsy2.PNG',    // Second image to show on hover
     title: 'Elevate your brand',
-    description: 'With Octane, HSY can focus on design while reaching diaspora markets (USA, UK, UAE) with zero backend headaches.',
+    description: 'With Octane handling operations, HSY focuses on making  iconic designs ,while his brand reaches customers worldwide.',
   },
   {
     id: 3,

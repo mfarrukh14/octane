@@ -73,16 +73,29 @@ const Section10 = () => {
   const getOrderBreakdown = (country) => {
     const total = country.price
     let subtotal, shipping, customCharges
+    
+    // Define specific shipping rates by country
+    const shippingRates = {
+      'PK': 0, // Free shipping for Pakistan
+      'US': 34.99,
+      'AU': 49.99,
+      'AE': 29,
+      'GB': 20,
+      'CA': 24.99,
+      'SA': 65
+    }
+    
     if (country.code === 'PK') {
-      // No custom charges for Pakistan
-      shipping = +(total * 0.04).toFixed(2) // 4% shipping
-      subtotal = +(total - shipping).toFixed(2)
+      // No custom charges for Pakistan, free shipping
+      shipping = 0
+      subtotal = total
       customCharges = 0
     } else {
       customCharges = +(total * 0.018).toFixed(2) // 1.8% custom (display only)
-      shipping = +(total * 0.035).toFixed(2) // 3.5% shipping
+      shipping = shippingRates[country.code] || 0
       subtotal = +(total - shipping).toFixed(2)
     }
+    
     // Adjust subtotal to ensure sum matches total (fix floating point)
     const sum = subtotal + shipping
     if (sum !== total) {
