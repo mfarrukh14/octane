@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { FaMoneyCheckAlt, FaShareAlt, FaCogs, FaChartLine } from 'react-icons/fa';
 import logo from '/images/octaneLogo.png'; // Replace with your actual logo path
@@ -40,70 +40,101 @@ const tilePositionStyles = {
 export default function BusinessAnimation() {
 	const [hoveredTile, setHoveredTile] = useState(null);
 
+	// Memoize expensive calculations
+	const tileTransforms = useMemo(() => {
+		const containerPx = 448;
+		const tilePx = 0.48 * containerPx;
+		const centerOffset = (containerPx - tilePx) / 2;
+		
+		return {
+			'top-left': { x: centerOffset, y: centerOffset },
+			'top-right': { x: -centerOffset, y: centerOffset },
+			'bottom-left': { x: centerOffset, y: -centerOffset },
+			'bottom-right': { x: -centerOffset, y: -centerOffset },
+		};
+	}, []);
+
+	// Memoize payment logos to prevent recreation
+	const paymentLogos = useMemo(() => [
+		'/images/BrandLogos/l1.png',
+		'/images/BrandLogos/l2.png',
+		'/images/BrandLogos/l3.png',
+	], []);
+
 	return (
 		<div className="relative w-[28rem] h-[28rem] mx-auto grid grid-cols-2 grid-rows-2 place-items-center">
 			{tiles.map((tile) => {
 				const isActive = hoveredTile === tile.id;
 				const isInactive = hoveredTile && hoveredTile !== tile.id;
-
-				// Calculate center offset in px for transform
-				// Container: 28rem (448px), Tile: 48% of 448px ≈ 215px, Center: (448-215)/2 = 116.5px
-				const containerPx = 448;
-				const tilePx = 0.48 * containerPx; // ≈ 215px
-				const centerOffset = (containerPx - tilePx) / 2; // ≈ 116.5px
-				let x = 0;
-				let y = 0;
-				if (isActive) {
-					if (tile.position === 'top-left') {
-						x = centerOffset;
-						y = centerOffset;
-					} else if (tile.position === 'top-right') {
-						x = -centerOffset;
-						y = centerOffset;
-					} else if (tile.position === 'bottom-left') {
-						x = centerOffset;
-						y = -centerOffset;
-					} else if (tile.position === 'bottom-right') {
-						x = -centerOffset;
-						y = -centerOffset;
-					}
-				}
-
-				// Payment logos for Payment Options tile
-				const paymentLogos = [
-					'/images/BrandLogos/l1.png', // Visa
-					'/images/BrandLogos/l2.png', // Mastercard
-					'/images/BrandLogos/l3.png', // Add more if needed
-				];
+				
+				const transform = isActive ? tileTransforms[tile.position] : { x: 0, y: 0 };
 
 				return (
 					<motion.div
 						key={tile.id}
 						onMouseEnter={() => setHoveredTile(tile.id)}
 						onMouseLeave={() => setHoveredTile(null)}
-						className={`absolute w-[48%] h-[48%] backdrop-blur-lg bg-white/10 border-none shadow-lg flex flex-col items-center justify-center text-white transition-all duration-300 cursor-pointer ${tilePositionStyles[tile.position]} ${isInactive ? 'blur-sm opacity-50' : ''}`}
-						animate={isActive ? { scale: 2, x, y, zIndex: 50 } : { scale: 1, x: 0, y: 0, zIndex: 10 }}
-						transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-						style={{ borderRadius: '1rem' }}
+						className={`absolute w-[48%] h-[48%] backdrop-blur-lg bg-white/10 border-none shadow-lg flex flex-col items-center justify-center text-white cursor-pointer ${tilePositionStyles[tile.position]} ${isInactive ? 'blur-sm' : ''}`}
+						animate={{
+							scale: isActive ? 2 : 1,
+							x: transform.x,
+							y: transform.y,
+							zIndex: isActive ? 50 : 10,
+							opacity: isInactive ? 0.4 : 1,
+						}}
+						transition={{ 
+							type: 'spring', 
+							stiffness: 300, 
+							damping: 25,
+							mass: 0.8,
+							duration: 0.3
+						}}
+						style={{ 
+							borderRadius: '1rem',
+							willChange: 'transform, opacity',
+							transform: 'translateZ(0)',
+							backfaceVisibility: 'hidden',
+							perspective: '1000px'
+						}}
 					>
 						<motion.div
-							animate={isActive && tile.id === 'payment' ? { y: -24 } : { y: 0 }}
-							transition={{ type: 'spring', stiffness: 200, damping: 30 }}
+							animate={isActive && tile.id === 'payment' ? { y: -20 } : { y: 0 }}
+							transition={{ 
+								type: 'spring', 
+								stiffness: 300, 
+								damping: 25,
+								duration: 0.2
+							}}
 							className="mb-2 flex flex-col items-center"
 						>
 							{tile.icon}
 							<div className="text-base font-medium mt-1">{tile.label}</div>
 						</motion.div>
+						
 						{/* Show payment logos if Payment Options is active */}
 						{isActive && tile.id === 'payment' && (
 							<motion.div
-								initial={{ opacity: 0, y: 20 }}
+								initial={{ opacity: 0, y: 10 }}
 								animate={{ opacity: 1, y: 0 }}
-								transition={{ delay: 0.1, duration: 0.4 }}
+								exit={{ opacity: 0, y: 10 }}
+								transition={{ 
+									delay: 0.1, 
+									duration: 0.25,
+									ease: "easeOut"
+								}}
 								className="flex gap-3 mt-4"
 							>
 								{paymentLogos.map((src, idx) => (
-									<img key={src} src={src} alt="Payment Logo" className="w-10 h-7 object-contain rounded shadow" style={{ background: 'white' }} />
+									<img 
+										key={src} 
+										src={src} 
+										alt="Payment Logo" 
+										className="w-10 h-7 object-contain rounded shadow" 
+										style={{ 
+											background: 'white',
+											transform: 'translateZ(0)' // Force hardware acceleration
+										}} 
+									/>
 								))}
 							</motion.div>
 						)}
@@ -113,7 +144,12 @@ export default function BusinessAnimation() {
 
 			{/* Central Logo */}
 			<div className="absolute top-1/2 left-1/2 w-32 h-32 rounded-full bg-black/20 backdrop-blur-lg p-2 shadow-lg -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center">
-				<img src={logo} alt="Logo" className="w-full h-full object-contain rounded-full" />
+				<img 
+					src={logo} 
+					alt="Logo" 
+					className="w-full h-full object-contain rounded-full"
+					style={{ transform: 'translateZ(0)' }} // Force hardware acceleration
+				/>
 			</div>
 		</div>
 	);
