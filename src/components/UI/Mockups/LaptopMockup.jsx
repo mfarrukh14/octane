@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
 import {
-  FaHome,
-  FaShoppingCart,
-  FaBox,
-  FaUsers,
-  FaFileAlt,
-  FaTag,
   FaChartBar,
   FaBullhorn,
   FaPercentage,
-  FaMapMarkerAlt,
-  FaStore,
-  FaPlus,
   FaExclamationTriangle,
 } from 'react-icons/fa';
+import {SlArrowUp} from 'react-icons/sl';
+
+import { HouseSimpleIcon, PackageIcon, ReceiptIcon, StarIcon, TagIcon, TruckIcon } from '@phosphor-icons/react';
 
 const sidebarItems = [
-  { id: 'home', label: 'Home', icon: FaHome },
+  { id: 'home', label: 'Home', icon: HouseSimpleIcon },
   { id: 'analytics', label: 'Analytics', icon: FaChartBar },
-  { id: 'customers', label: 'Customer Feedback', icon: FaUsers },
-  { id: 'ledgers', label: 'Ledgers', icon: FaFileAlt },
-  { id: 'orders', label: 'Order Management', icon: FaShoppingCart },
-  { id: 'customermanagement', label: 'Customer Management', icon: FaFileAlt },
-  { id: 'logistics', label: 'Logistics', icon: FaMapMarkerAlt },
-  { id: 'products', label: 'Product Management', icon: FaBox },
+  { id: 'customers', label: 'Customer Feedback', icon: StarIcon },
+  { id: 'ledgers', label: 'Ledgers', icon: ReceiptIcon },
+  { id: 'orders', label: 'Order Management', icon: PackageIcon },
+  { id: 'customermanagement', label: 'Customer Management', icon: PackageIcon },
+    { id: 'products', label: 'Product Management', icon: TagIcon },
+  { id: 'logistics', label: 'Logistics', icon: TruckIcon },
   { id: 'marketing', label: 'Marketing', icon: FaBullhorn },
   { id: 'discounts', label: 'Discounts', icon: FaPercentage },
 ];
@@ -127,17 +121,17 @@ export default function LaptopMockup() {
 
       {/* Metrics cards */}
       <div className="grid grid-cols-4 gap-2">
-        <div className="bg-white p-3 rounded-lg shadow-sm border">
+        <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-300">
           <div className="text-gray-500 text-xs mb-1">Sales (Today)</div>
-          <div className="text-lg font-bold text-gray-900">PKR 443,330</div>
+          <div className="text-lg font-bold text-gray-700">PKR 443,330</div>
           <div className="text-green-600 text-xs mt-1">↗ +20.1% vs yesterday</div>
         </div>
-        <div className="bg-white p-3 rounded-lg shadow-sm border">
+        <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-300">
           <div className="text-gray-500 text-xs mb-1">Items sold</div>
-          <div className="text-lg font-bold text-gray-900">33</div>
+          <div className="text-lg font-bold text-gray-700">33</div>
           <div className="text-green-600 text-xs mt-1">↗ +6.25% vs yesterday</div>
         </div>
-        <div className="bg-white p-3 rounded-lg shadow-sm border">
+        <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-300">
           <div className="text-gray-500 text-xs mb-1">Out of stock products</div>
           <div className="text-lg font-bold text-gray-900">22</div>
         </div>
@@ -169,7 +163,7 @@ export default function LaptopMockup() {
       </div>
 
       {/* Sales chart section */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border">
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-sm font-semibold text-gray-900">Sales</h3>
           <button className="text-blue-600 text-xs hover:underline">Report</button>
@@ -233,7 +227,7 @@ export default function LaptopMockup() {
       </div>
 
       {/* Breakdown Chart */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border">
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
         <h3 className="text-sm font-semibold text-gray-900 mb-2">Breakdown of the Issues Reported</h3>
         <p className="text-xs text-gray-600 mb-4">View the breakdown of issues customers have raised on your products</p>        {/* Chart */}
         <div className="h-40 flex items-end justify-between space-x-1 mb-4 bg-gray-50 rounded p-4">
@@ -334,7 +328,7 @@ export default function LaptopMockup() {
       </div>
 
       {/* Ledger Cycle Card */}
-      <div className="bg-white rounded-lg shadow-sm border p-4">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-sm font-semibold text-gray-900">Ledger Cycle - July 2024</h3>
           <span className="text-xs text-gray-500">Last updated: 2 hours ago</span>
@@ -460,7 +454,7 @@ export default function LaptopMockup() {
       </div>
 
       {/* Status Tabs */}
-      <div className="bg-white rounded-lg shadow-sm border">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300">
         <div className="flex border-b border-gray-200 text-xs">
           <button className="px-4 py-3 text-blue-600 border-b-2 border-blue-600 font-medium">
             Pending • 8
@@ -507,7 +501,7 @@ export default function LaptopMockup() {
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-gray-50 border-b text-xs font-medium text-gray-700">
+        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-gray-50 border-b border-gray-300 text-xs font-medium text-gray-700">
           <div className="col-span-1">
             <input type="checkbox" className="w-3 h-3" />
           </div>
@@ -687,7 +681,7 @@ export default function LaptopMockup() {
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="bg-white rounded-lg shadow-sm border p-4">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-4">
         <div className="flex space-x-3 items-center">
           <div className="flex-1 relative">
             <input 
@@ -710,9 +704,9 @@ export default function LaptopMockup() {
       </div>
 
       {/* Customer Table */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden">
         {/* Table Header */}
-        <div className="grid grid-cols-5 gap-4 px-6 py-4 bg-gray-50 border-b text-sm font-medium text-gray-700">
+        <div className="grid grid-cols-5 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-300 text-sm font-medium text-gray-700">
           <div>Customer name</div>
           <div>Customer email</div>
           <div>Phone no</div>
@@ -769,9 +763,9 @@ export default function LaptopMockup() {
       </div>
 
       {/* Main Content Card */}
-      <div className="bg-white rounded-lg shadow-sm border">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300">
         {/* Status Tabs and Search */}
-        <div className="flex justify-between items-center p-4 border-b">
+        <div className="flex justify-between items-center p-4 border-b border-gray-300">
           <div className="flex space-x-6">
             <button className="text-sm font-medium text-gray-900 border-b-2 border-blue-500 pb-2">
               Active <span className="text-gray-500">306</span>
@@ -806,7 +800,7 @@ export default function LaptopMockup() {
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 border-b text-sm font-medium text-gray-700">
+        <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 border-b border-gray-300 text-sm font-medium text-gray-700">
           <div className="col-span-1">
             <input type="checkbox" className="w-4 h-4" />
           </div>
@@ -967,9 +961,9 @@ export default function LaptopMockup() {
       </div>
 
       {/* Main Content Card */}
-      <div className="bg-white rounded-lg shadow-sm border">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300">
         {/* Search Bar */}
-        <div className="p-4 border-b">
+        <div className="p-4 border-b border-gray-300">
           <div className="relative">
             <input 
               type="text" 
@@ -985,7 +979,7 @@ export default function LaptopMockup() {
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-7 gap-4 px-4 py-3 bg-gray-50 border-b text-sm font-medium text-gray-700">
+        <div className="grid grid-cols-7 gap-4 px-4 py-3 bg-gray-50 border-b border-gray-300 text-sm font-medium text-gray-700">
           <div>Request ID</div>
           <div>Created At</div>
           <div>Received Items</div>
@@ -1046,10 +1040,10 @@ export default function LaptopMockup() {
 
           {/* Main layout */}
           <div className="flex flex-1 overflow-hidden">            {/* Sidebar */}
-            <nav className="w-44 bg-white border-r border-gray-200 flex flex-col text-xs">
+            <nav className="w-40 bg-white border-r border-gray-200 flex flex-col text-xs">
               {/* Monitor your performance section */}
-              <div className="p-3 border-b border-gray-200">
-                <h2 className="text-[8px] font-medium text-gray-500 uppercase tracking-wide">
+              <div className="p-2">
+                <h2 className="text-[9px] font-medium text-gray-500 uppercase tracking-tight">
                   Monitor your performance
                 </h2>
               </div>
@@ -1060,16 +1054,16 @@ export default function LaptopMockup() {
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center space-x-2 px-3 py-2 text-xs border-b border-gray-100 ${
+                    className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] ${
                       active
-                        ? 'bg-gray-50 text-gray-900 font-medium border-l-3 border-l-blue-500'
+                        ? 'bg-black text-white font-medium rounded-md mx-1'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                     }`}
                   >
-                    <Icon className={`w-3 h-3 ${active ? 'text-blue-500' : 'text-gray-400'}`} />
-                    <span>{item.label}</span>
+                    <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
+                    <span className="truncate">{item.label}</span>
                     {item.id === 'analytics' && (
-                      <span className="ml-auto bg-green-100 text-green-800 text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                      <span className="ml-auto bg-green-100 text-green-800 text-[8px] px-1 py-0.5 rounded-full font-medium">
                         NEW
                       </span>
                     )}
@@ -1078,27 +1072,88 @@ export default function LaptopMockup() {
               })}
               
               {/* Manage your business section */}
-              <div className="mt-4 p-3 border-b border-gray-200">
-                <h3 className="text-[8px] font-medium text-gray-500 uppercase tracking-wide">
+              <div className="mt-2 p-2">
+                <h3 className="text-[9px] font-medium text-gray-500 uppercase tracking-tight">
                   Manage your business
                 </h3>
               </div>              {sidebarItems.slice(4, 8).map((item) => {
                 const Icon = item.icon;
                 const active = activeSection === item.id;
+                
+                // Special handling for Product Management
+                if (item.id === 'products') {
+                  return (
+                    <div key={item.id}>
+                      <button
+                        onClick={() => setActiveSection(item.id)}
+                        className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                          active
+                            ? 'bg-black text-white font-medium rounded-md mx-1'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                        }`}
+                      >
+                        <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-semibold' : 'text-gray-400'}`} />
+                        <span className="truncate">{item.label}</span>
+                        <span className={`ml-auto text-xs ${active ? 'text-white' : 'text-gray-400'}`}><SlArrowUp /></span>
+                      </button>
+                      {/* Fixed dropdown for Product Management */}
+                      <div className="bg-gray-50">
+                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                          Drops
+                        </div>
+                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                          Size Charts
+                        </div>
+                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                          Review Funnel
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                
+                // Special handling for Logistics
+                if (item.id === 'logistics') {
+                  return (
+                    <div key={item.id}>
+                      <button
+                        onClick={() => setActiveSection(item.id)}
+                        className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                          active
+                            ? 'bg-black text-white font-medium rounded-md mx-1'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                        }`}
+                      >
+                        <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
+                        <span className="truncate">{item.label}</span>
+                        <span className={`ml-auto text-xs ${active ? 'text-white' : 'text-gray-400'}`}><SlArrowUp /></span>
+                      </button>
+                      {/* Fixed dropdown for Logistics */}
+                      <div className="bg-gray-50">
+                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                          Warehouses
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                
+                // Regular items
                 return (
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center space-x-2 px-3 py-2 text-xs border-b border-gray-100 ${
+                    className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] ${
                       active
-                        ? 'bg-gray-50 text-gray-900 font-medium border-l-3 border-l-blue-500'
+                        ? 'bg-black text-white font-medium rounded-md mx-1'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                     }`}
                   >
-                    <Icon className={`w-3 h-3 ${active ? 'text-blue-500' : 'text-gray-400'}`} />
-                    <span className={item.id === 'customermanagement' ? 'text-[10px]' : ''}>{item.label}</span>
+                    <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
+                    <span className="truncate">{item.label}</span>
                   </button>
-                );})}
+                );
+              })}
             </nav>
 
             {/* Content area */}
