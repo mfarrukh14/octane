@@ -5,14 +5,14 @@ const Section2 = () => {
     // Carousel items with mixed shapes and content
     const carouselItems = [
         { id: 1, type: 'square', title: 'fourseason.pk', subtitle: 'Real-time insights', image: '/images/BrandWebsiteImages/sq1.png', logo: '/images/BrandLogos/l2.png', url: 'https://www.fourseason.pk/' },
-        { id: 2, type: 'square', title: 'bintayyab.com', subtitle: 'Enterprise grade', image: '/images/BrandWebsiteImages/sq2.png', logo: '/images/BrandLogos/l3.png', url: 'https://bintayyab.com/' },
+        { id: 2, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.jpg', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
         { id: 3, type: 'rectangle', title: 'meerak.pk', subtitle: 'Lightning fast delivery', image: '/images/BrandWebsiteImages/r1.png', logo: '/images/BrandLogos/l7.png', url: 'https://meerak.pk/' },
-        { id: 4, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.jpg', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
-        { id: 5, type: 'rectangle', title: 'sahibas.com', subtitle: 'Grows with your business', image: '/images/BrandWebsiteImages/r2.png', logo: '/images/BrandLogos/l9.png', url: 'https://sahibas.com/' },
-        { id: 6, type: 'square', title: 'haseensofficial.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sq4.jpg', logo: '/images/BrandLogos/l8.png', url: 'https://haseensofficial.com/' },
+        { id: 4, type: 'square', title: 'sarajahan.online', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
+        { id: 5, type: 'rectangle', title: 'laam.pk', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/laam.png', url: 'https://laam.pk/' },                
+        { id: 6, type: 'square', title: 'SairaShakira.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sairashakira.png', logo: '/images/BrandLogos/l1.png', url: 'https://www.sairashakira.com/' },
         { id: 7, type: 'rectangle', title: 'jahaan.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.mp4', logo: '/images/BrandLogos/jahaan.png', url: 'https://jahaan.com.pk/' },
-        { id: 8, type: 'square', title: 'sarajahan.online', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
-        { id: 9, type: 'square', title: 'laam.pk', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/laam.png', url: 'https://laam.pk/' },
+        { id: 8, type: 'square', title: 'laleen.pk', subtitle: 'Enterprise grade', image: '/images/BrandWebsiteImages/laleen.png', logo: '/images/BrandLogos/laleen.png', url: 'https://laleen.pk/' },
+        { id: 9, type: 'square', title: 'HEM.com', subtitle: 'Grows with your business', image: '/images/BrandWebsiteImages/hem.png', logo: '/images/BrandLogos/hem.png', url: 'https://hem.com.pk/' },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
