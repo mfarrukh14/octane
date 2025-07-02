@@ -8,7 +8,7 @@ const Section2 = () => {
         { id: 2, type: 'square', title: 'aghajaan.com.pk', subtitle: '24/7 assistance', image: '/images/BrandWebsiteImages/sq3.jpg', logo: '/images/BrandLogos/l4.png', url: 'https://aghajaan.com.pk/' },
         { id: 3, type: 'rectangle', title: 'meerak.pk', subtitle: 'Lightning fast delivery', image: '/images/BrandWebsiteImages/r1.png', logo: '/images/BrandLogos/l7.png', url: 'https://meerak.pk/' },
         { id: 4, type: 'square', title: 'sarajahan.online', subtitle: 'On-the-go access', image: '/images/BrandWebsiteImages/sq5.png', logo: '/images/BrandLogos/l5.png', url: 'https://sarajahanonline.com/' },
-        { id: 5, type: 'rectangle', title: 'laam.pk', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/sq6.png', logo: '/images/BrandLogos/laam.png', url: 'https://laam.pk/' },                
+        { id: 5, type: 'rectangle', title: 'laam.pk', subtitle: 'Never lose data', image: '/images/BrandWebsiteImages/laam.jpeg', logo: '/images/BrandLogos/laam.png', url: 'https://laam.pk/' },                
         { id: 6, type: 'square', title: 'SairaShakira.com', subtitle: 'Connect everything', image: '/images/BrandWebsiteImages/sairashakira.png', logo: '/images/BrandLogos/l1.png', url: 'https://www.sairashakira.com/' },
         { id: 7, type: 'rectangle', title: 'jahaan.com', subtitle: 'Smart workflows', image: '/images/BrandWebsiteImages/r3.mp4', logo: '/images/BrandLogos/jahaan.png', url: 'https://jahaan.com.pk/' },
         { id: 8, type: 'square', title: 'laleen.pk', subtitle: 'Enterprise grade', image: '/images/BrandWebsiteImages/laleen.png', logo: '/images/BrandLogos/laleen.png', url: 'https://laleen.pk/' },
