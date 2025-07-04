@@ -48,6 +48,17 @@ const alerts = [
 
 export default function LaptopMockup() {
   const [activeSection, setActiveSection] = useState('home');
+  const [openDropdowns, setOpenDropdowns] = useState({
+    products: true,
+    logistics: true
+  });
+
+  const toggleDropdown = (dropdown) => {
+    setOpenDropdowns(prev => ({
+      ...prev,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
   const renderHome = () => (
     <div className="p-4 space-y-4">
       {/* Out of stock banner */}
@@ -418,21 +429,21 @@ export default function LaptopMockup() {
               <div className="text-xs font-medium">Payment to Vendor ABC Corp</div>
               <div className="text-[10px] text-gray-500">15 July 2024, 2:30 PM</div>
             </div>
-            <span className="text-xs text-red-600 font-medium">-₹45,680</span>
+            <span className="text-xs text-red-600 font-medium">-PKR45,680</span>
           </div>
           <div className="px-4 py-3 flex justify-between items-center">
             <div>
               <div className="text-xs font-medium">Return Credit Adjustment</div>
               <div className="text-[10px] text-gray-500">14 July 2024, 11:15 AM</div>
             </div>
-            <span className="text-xs text-green-600 font-medium">+₹2,450</span>
+            <span className="text-xs text-green-600 font-medium">+PKR2,450</span>
           </div>
           <div className="px-4 py-3 flex justify-between items-center">
             <div>
               <div className="text-xs font-medium">Logistics Payment</div>
               <div className="text-[10px] text-gray-500">13 July 2024, 9:45 AM</div>
             </div>
-            <span className="text-xs text-red-600 font-medium">-₹8,920</span>
+            <span className="text-xs text-red-600 font-medium">-PKR8,920</span>
           </div>
         </div>
       </div>
@@ -1054,7 +1065,7 @@ export default function LaptopMockup() {
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] ${
+                    className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] ${
                       active
                         ? 'bg-black text-white font-medium rounded-md mx-1'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
@@ -1085,8 +1096,11 @@ export default function LaptopMockup() {
                   return (
                     <div key={item.id}>
                       <button
-                        onClick={() => setActiveSection(item.id)}
-                        className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                        onClick={() => {
+                          setActiveSection(item.id);
+                          toggleDropdown('products');
+                        }}
+                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full ${
                           active
                             ? 'bg-black text-white font-medium rounded-md mx-1'
                             : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
@@ -1094,20 +1108,26 @@ export default function LaptopMockup() {
                       >
                         <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-semibold' : 'text-gray-400'}`} />
                         <span className="truncate">{item.label}</span>
-                        <span className={`ml-auto text-xs ${active ? 'text-white' : 'text-gray-400'}`}><SlArrowUp /></span>
+                        <span className={`ml-auto text-xs transition-transform duration-200 ${
+                          openDropdowns.products ? '' : 'rotate-180'
+                        } ${active ? 'text-white' : 'text-gray-400'}`}>
+                          <SlArrowUp />
+                        </span>
                       </button>
-                      {/* Fixed dropdown for Product Management */}
-                      <div className="bg-gray-50">
-                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
-                          Drops
+                      {/* Collapsible dropdown for Product Management */}
+                      {openDropdowns.products && (
+                        <div className="bg-gray-50">
+                          <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                            Drops
+                          </div>
+                          <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                            Size Charts
+                          </div>
+                          <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                            Review Funnel
+                          </div>
                         </div>
-                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
-                          Size Charts
-                        </div>
-                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
-                          Review Funnel
-                        </div>
-                      </div>
+                      )}
                     </div>
                   );
                 }
@@ -1117,8 +1137,11 @@ export default function LaptopMockup() {
                   return (
                     <div key={item.id}>
                       <button
-                        onClick={() => setActiveSection(item.id)}
-                        className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                        onClick={() => {
+                          setActiveSection(item.id);
+                          toggleDropdown('logistics');
+                        }}
+                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full ${
                           active
                             ? 'bg-black text-white font-medium rounded-md mx-1'
                             : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
@@ -1126,14 +1149,20 @@ export default function LaptopMockup() {
                       >
                         <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
                         <span className="truncate">{item.label}</span>
-                        <span className={`ml-auto text-xs ${active ? 'text-white' : 'text-gray-400'}`}><SlArrowUp /></span>
+                        <span className={`ml-auto text-xs transition-transform duration-200 ${
+                          openDropdowns.logistics ? '' : 'rotate-180'
+                        } ${active ? 'text-white' : 'text-gray-400'}`}>
+                          <SlArrowUp />
+                        </span>
                       </button>
-                      {/* Fixed dropdown for Logistics */}
-                      <div className="bg-gray-50">
-                        <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
-                          Warehouses
+                      {/* Collapsible dropdown for Logistics */}
+                      {openDropdowns.logistics && (
+                        <div className="bg-gray-50">
+                          <div className="px-6 py-1 text-[9px] text-gray-600 hover:text-gray-900 cursor-pointer">
+                            Warehouses
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   );
                 }
@@ -1143,7 +1172,7 @@ export default function LaptopMockup() {
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center space-x-1 px-2 py-1.5 text-[10px] ${
+                    className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] ${
                       active
                         ? 'bg-black text-white font-medium rounded-md mx-1'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'

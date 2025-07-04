@@ -205,10 +205,11 @@ function SatelliteCards() {
                 }}
               >                <div
                   style={{
-                    background: 'rgba(5, 5, 5, 0.43)',
-                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid white`, // White border
+                    background: 'linear-gradient(135deg, rgba(13, 13, 13, 0.8) 0%, rgba(25, 25, 25, 0.9) 50%, rgba(13, 13, 13, 0.8) 100%)',
+                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid`,
+                    borderImage: 'linear-gradient(180deg, rgba(0, 255, 136, 0.3) 0%, rgba(0, 255, 136, 1) 50%, rgba(0, 255, 136, 0.3) 100%) 1',
                     borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Smaller radius on mobile
-                    padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '20px' : '40px', // Less padding on mobile
+                    padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Reduced padding
                     color: 'white',
                     fontFamily: 'Arial, sans-serif',
                     fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '18px' : '28px', // Smaller text on mobile

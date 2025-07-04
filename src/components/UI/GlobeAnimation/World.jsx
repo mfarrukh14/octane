@@ -17,7 +17,7 @@ const GlobeFallback = () => (
 
 export function GlobeDemo() {
     const globeConfig = {
-        pointSize: 4,
+        pointSize: 1,
         globeColor: "#062056",
         showAtmosphere: true,
         atmosphereColor: "rgb(255, 255, 255)",
@@ -29,7 +29,7 @@ export function GlobeDemo() {
         directionalLeftLight: "#ffffff",
         directionalTopLight: "#ffffff",
         pointLight: "#ffffff",
-        arcTime: 1000,
+        arcTime: 800,
         arcLength: 0.9,
         rings: 1,
         maxRings: 3,
@@ -37,7 +37,7 @@ export function GlobeDemo() {
         autoRotate: true,
         autoRotateSpeed: 0.5,
     };
-    const colors = ["#ffffff",];
+    const colors = ["#FFBF00", "#a769e9"];
     const sampleArcs = [
         {
             order: 1,
@@ -397,6 +397,286 @@ export function GlobeDemo() {
             endLat: 21.395643,
             endLng: 39.883798,
             arcAlt: 0.3,
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        // Additional arcs with varied sizes
+        {
+            order: 15,
+            startLat: 55.7558,
+            startLng: 37.6176,
+            endLat: 39.9042,
+            endLng: 116.4074,
+            arcAlt: 0.8, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 15,
+            startLat: 40.7128,
+            startLng: -74.006,
+            endLat: 55.7558,
+            endLng: 37.6176,
+            arcAlt: 0.9, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 16,
+            startLat: -1.2921,
+            startLng: 36.8219,
+            endLat: 30.0444,
+            endLng: 31.2357,
+            arcAlt: 0.05, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 16,
+            startLat: 25.2048,
+            startLng: 55.2708,
+            endLat: 24.7136,
+            endLng: 46.6753,
+            arcAlt: 0.08, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 17,
+            startLat: -26.2041,
+            startLng: 28.0473,
+            endLat: 6.5244,
+            endLng: 3.3792,
+            arcAlt: 0.4, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 17,
+            startLat: 19.4326,
+            startLng: -99.1332,
+            endLat: 4.7110,
+            endLng: -74.0721,
+            arcAlt: 0.3, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 18,
+            startLat: 59.9139,
+            startLng: 10.7522,
+            endLat: 64.1466,
+            endLng: -21.9426,
+            arcAlt: 0.15, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 18,
+            startLat: 41.0082,
+            startLng: 28.9784,
+            endLat: 33.6844,
+            endLng: 73.0479,
+            arcAlt: 0.6, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 19,
+            startLat: 12.9716,
+            startLng: 77.5946,
+            endLat: 18.5204,
+            endLng: 73.8567,
+            arcAlt: 0.06, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 19,
+            startLat: -37.8136,
+            startLng: 144.9631,
+            endLat: -41.2865,
+            endLng: 174.7762,
+            arcAlt: 0.12, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 20,
+            startLat: 13.7563,
+            startLng: 100.5018,
+            endLat: 21.0285,
+            endLng: 105.8542,
+            arcAlt: 0.09, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 20,
+            startLat: 45.4215,
+            startLng: -75.6972,
+            endLat: 56.1304,
+            endLng: -106.3468,
+            arcAlt: 0.25, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 21,
+            startLat: -23.5505,
+            startLng: -46.6333,
+            endLat: -12.0464,
+            endLng: -77.0428,
+            arcAlt: 0.35, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 21,
+            startLat: 35.6762,
+            startLng: 139.6503,
+            endLat: -37.8136,
+            endLng: 144.9631,
+            arcAlt: 0.85, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 22,
+            startLat: 50.1109,
+            startLng: 8.6821,
+            endLat: 47.3769,
+            endLng: 8.5417,
+            arcAlt: 0.04, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 22,
+            startLat: 60.1282,
+            startLng: 18.6435,
+            endLat: 55.6761,
+            endLng: 12.5683,
+            arcAlt: 0.07, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 23,
+            startLat: 31.2304,
+            startLng: 121.4737,
+            endLat: 1.3521,
+            endLng: 103.8198,
+            arcAlt: 0.45, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 23,
+            startLat: 14.0583,
+            startLng: 108.2772,
+            endLat: 16.0544,
+            endLng: 108.2022,
+            arcAlt: 0.03, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 24,
+            startLat: 26.2041,
+            startLng: 50.5860,
+            endLat: 24.7136,
+            endLng: 46.6753,
+            arcAlt: 0.11, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 24,
+            startLat: -34.6118,
+            startLng: -58.3960,
+            endLat: -33.4489,
+            endLng: -70.6693,
+            arcAlt: 0.18, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 25,
+            startLat: 40.7128,
+            startLng: -74.006,
+            endLat: -33.8688,
+            endLng: 151.2093,
+            arcAlt: 1.0, // Very large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 25,
+            startLat: 51.5072,
+            startLng: -0.1276,
+            endLat: 35.6762,
+            endLng: 139.6503,
+            arcAlt: 0.95, // Very large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 26,
+            startLat: 37.7749,
+            startLng: -122.4194,
+            endLat: 55.7558,
+            endLng: 37.6176,
+            arcAlt: 0.9, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 26,
+            startLat: 23.1291,
+            startLng: 113.2644,
+            endLat: 25.2048,
+            endLng: 55.2708,
+            arcAlt: 0.65, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 27,
+            startLat: 52.3676,
+            startLng: 4.9041,
+            endLat: 50.8503,
+            endLng: 4.3517,
+            arcAlt: 0.02, // Very small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 27,
+            startLat: 43.6532,
+            startLng: -79.3832,
+            endLat: 42.3601,
+            endLng: -71.0589,
+            arcAlt: 0.13, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 28,
+            startLat: 28.6139,
+            startLng: 77.209,
+            endLat: 40.7128,
+            endLng: -74.006,
+            arcAlt: 0.8, // Large arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 28,
+            startLat: -1.2921,
+            startLng: 36.8219,
+            endLat: -17.8252,
+            endLng: 31.0522,
+            arcAlt: 0.22, // Medium arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 29,
+            startLat: 39.9042,
+            startLng: 116.4074,
+            endLat: 37.5665,
+            endLng: 126.978,
+            arcAlt: 0.16, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 29,
+            startLat: 6.9271,
+            startLng: 79.8612,
+            endLat: 8.5241,
+            endLng: 76.9366,
+            arcAlt: 0.05, // Small arc
+            color: colors[Math.floor(Math.random() * (colors.length - 1))],
+        },
+        {
+            order: 30,
+            startLat: 51.5072,
+            startLng: -0.1276,
+            endLat: 28.6139,
+            endLng: 77.209,
+            arcAlt: 0.7, // Large arc
             color: colors[Math.floor(Math.random() * (colors.length - 1))],
         },
     ];    return (
