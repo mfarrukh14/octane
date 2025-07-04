@@ -55,24 +55,53 @@ export default function LaptopMockup() {
   const intervalRef = useRef(null);
   const currentIndexRef = useRef(0);
   const containerRef = useRef(null);
+  const hasStartedRef = useRef(false);
 
   // All sidebar item IDs for iteration
   const allSidebarIds = sidebarItems.map(item => item.id);
 
+  // Mobile fallback - start animation after component mounts
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile && !hasStartedRef.current) {
+      const timer = setTimeout(() => {
+        setIsInView(true);
+        setIsAutoIterating(true);
+        hasStartedRef.current = true;
+      }, 1000); // Start after 1 second on mobile
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   // Intersection Observer to detect when component is in view
   useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Skip intersection observer on mobile if fallback has already started
+    if (isMobile && hasStartedRef.current) {
+      return;
+    }
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
-        if (entry.isIntersecting) {
-          setIsAutoIterating(true);
+        const isVisible = entry.isIntersecting;
+        setIsInView(isVisible);
+        
+        if (isVisible) {
+          // Add a small delay for mobile devices to ensure proper detection
+          setTimeout(() => {
+            setIsAutoIterating(true);
+            hasStartedRef.current = true;
+          }, isMobile ? 500 : 100);
         } else {
           setIsAutoIterating(false);
         }
       },
       {
-        threshold: 0.3, // Trigger when 30% of the component is visible
-        rootMargin: '-10px'
+        threshold: isMobile ? 0.1 : 0.3, // Lower threshold for mobile
+        rootMargin: isMobile ? '0px' : '-10px' // No margin for mobile
       }
     );
 
@@ -80,20 +109,49 @@ export default function LaptopMockup() {
       observer.observe(containerRef.current);
     }
 
+    // Fallback for mobile: check scroll position
+    const handleScroll = () => {
+      if (containerRef.current && isMobile && !hasStartedRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInViewport && !isInView) {
+          setIsInView(true);
+          setIsAutoIterating(true);
+          hasStartedRef.current = true;
+        } else if (!isInViewport && isInView) {
+          setIsInView(false);
+          setIsAutoIterating(false);
+        }
+      }
+    };
+
+    if (isMobile) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      // Initial check
+      handleScroll();
+    }
+
     return () => {
       if (containerRef.current) {
         observer.unobserve(containerRef.current);
       }
+      if (isMobile) {
+        window.removeEventListener('scroll', handleScroll);
+      }
     };
-  }, []);
+  }, [isInView]);
 
   // Auto-iteration effect - only runs when in view and auto-iterating is enabled
   useEffect(() => {
     if (isAutoIterating && isInView) {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const delay = isMobile ? 2000 : 1500; // Slower on mobile for better visibility
+      
       intervalRef.current = setInterval(() => {
         currentIndexRef.current = (currentIndexRef.current + 1) % allSidebarIds.length;
         setActiveSection(allSidebarIds[currentIndexRef.current]);
-      }, 1500);
+      }, delay);
     }
 
     return () => {
@@ -1117,6 +1175,12 @@ export default function LaptopMockup() {
 
         {/* Screen */}
         <div className="absolute inset-0 bg-white rounded-[18px] overflow-hidden flex flex-col">
+          {/* Debug indicator - remove this in production */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className={`absolute top-2 right-2 w-3 h-3 rounded-full z-50 ${
+              isInView && isAutoIterating ? 'bg-green-500' : 'bg-red-500'
+            }`} title={`In view: ${isInView}, Auto: ${isAutoIterating}`} />
+          )}
 
           {/* Main layout */}
           <div className="flex flex-1 overflow-hidden">            {/* Sidebar */}
@@ -1241,10 +1305,10 @@ export default function LaptopMockup() {
                   <button
                     key={item.id}
                     onClick={() => handleUserInteraction(item.id)}
-                    className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] ${
+                    className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] transition-all duration-200 ease-in-out ${
                       active
-                        ? 'bg-black text-white font-medium rounded-md mx-1'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-black text-white font-medium rounded-md mx-1 transform scale-105'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:scale-102'
                     }`}
                   >
                     <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
