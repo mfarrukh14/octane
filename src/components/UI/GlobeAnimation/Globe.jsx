@@ -166,7 +166,7 @@ function SatelliteCards() {
         const cardToGlobe = new Vector3().subVectors(cardPosition, globeCenter);
         
         // Check if card is on the opposite side of globe from camera
-        const dot = cameraToGlobe.dot(cardToGlobe);
+        const dot = cameraToGlobe.normalize().dot(cardToGlobe.normalize());
         
         if (dot < 0) {
           // Card is behind the globe - hide it completely
@@ -174,6 +174,17 @@ function SatelliteCards() {
         } else {
           // Card is on the same side as camera - show it
           cardRef.visible = true;
+          
+          // Calculate blur amount based on angle from center
+          // dot value ranges from 0 (side) to 1 (front center)
+          // We want blur to be minimal at center (dot = 1) and maximum at sides (dot = 0)
+          const blurAmount = (1 - dot) * 100; // 0 to 20px blur
+          
+          // Apply blur to the HTML element
+          const htmlElement = cardRef.children[0]; // Html component
+          if (htmlElement && htmlElement.style) {
+            htmlElement.style.filter = `blur(${blurAmount}px)`;
+          }
         }
       }
     });
@@ -206,24 +217,38 @@ function SatelliteCards() {
               >                <div
                   style={{
                     background: 'linear-gradient(135deg, rgba(13, 13, 13, 0.8) 0%, rgba(25, 25, 25, 0.9) 50%, rgba(13, 13, 13, 0.8) 100%)',
-                    border: `${typeof window !== 'undefined' && window.innerWidth < 768 ? '2px' : '4px'} solid`,
-                    borderImage: 'linear-gradient(180deg, rgba(0, 255, 136, 0.3) 0%, rgba(0, 255, 136, 1) 50%, rgba(0, 255, 136, 0.3) 100%) 1',
-                    borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Smaller radius on mobile
-                    padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '12px' : '20px', // Reduced padding
+                    borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '60px' : '60px',
+                    padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '3px' : '4px', // Space for gradient border
                     color: 'white',
                     fontFamily: 'Arial, sans-serif',
-                    fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '18px' : '28px', // Smaller text on mobile
+                    fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '18px' : '28px',
                     textAlign: 'left',
                     backdropFilter: 'blur(15px)',
-                    boxShadow: `0 0 ${typeof window !== 'undefined' && window.innerWidth < 768 ? '40px' : '70px'} rgba(255, 255, 255, 0.8)`, // Increased white glow
+                    boxShadow: `0 0 ${typeof window !== 'undefined' && window.innerWidth < 768 ? '40px' : '70px'} rgba(0, 255, 136, 0.6)`,
                     width: '100%',
-                    height: '100%',
+                    height: '65%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    boxSizing: 'border-box' // Ensures padding is included in width/height
-                  }}>                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                    <div style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '36px' : '60px', fontWeight: 'bold', textAlign: 'center', lineHeight: '1.2' }}> {/* Gray-200 text color */}
+                    boxSizing: 'border-box',
+                    background: `
+                      linear-gradient(135deg, rgba(13, 13, 13, 0.8) 0%, rgba(25, 25, 25, 0.9) 50%, rgba(13, 13, 13, 0.8) 100%),
+                      linear-gradient(0deg, rgba(0, 255, 136, 0.3) 0%, rgba(0, 255, 136, 1) 50%, rgba(0, 255, 136, 0.3) 100%)
+                    `,
+                    backgroundOrigin: 'border-box, border-box',
+                    backgroundClip: 'padding-box, border-box'
+                  }}>
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(13, 13, 13, 0.8) 0%, rgba(25, 25, 25, 0.9) 50%, rgba(13, 13, 13, 0.8) 100%)',
+                    borderRadius: typeof window !== 'undefined' && window.innerWidth < 768 ? '57px' : '56px', // Slightly smaller to show border
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0px'
+                  }}>
+                    <div style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '36px' : '60px', fontWeight: 'bold', textAlign: 'center', lineHeight: '1.2' }}>
                       {card.title}
                     </div>
                   </div>

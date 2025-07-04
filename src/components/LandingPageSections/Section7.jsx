@@ -77,11 +77,11 @@ const Section8 = () => {
               Based on external study with a Big Three global consulting firm in April, 2023.
             </p>
           </div>
-          <div className="w-full xl:w-1/2 flex justify-center relative">
+          <div className="w-full xl:w-1/2 flex justify-center relative px-4">
             {/* Moved 2 images here */}
             <div className="flex gap-4 justify-center">
-              <img src="/images/section10images/s1.png" alt="Tile 3" className="w-52 h-92 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section10images/s2.jpg" alt="Tile 4" className="w-52 h-92 object-cover rounded-lg relative" style={{ top: '8px' }} />
+              <img src="/images/section10images/s1.png" alt="Tile 3" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '-16px' }} />
+              <img src="/images/section10images/s2.jpg" alt="Tile 4" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '8px' }} />
             </div>
           </div>
         </div>
