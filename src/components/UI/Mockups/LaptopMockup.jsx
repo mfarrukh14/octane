@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   FaChartBar,
   FaBullhorn,
@@ -16,10 +16,8 @@ const sidebarItems = [
   { id: 'ledgers', label: 'Ledgers', icon: ReceiptIcon },
   { id: 'orders', label: 'Order Management', icon: PackageIcon },
   { id: 'customermanagement', label: 'Customer Management', icon: PackageIcon },
-    { id: 'products', label: 'Product Management', icon: TagIcon },
+  { id: 'products', label: 'Product Management', icon: TagIcon },
   { id: 'logistics', label: 'Logistics', icon: TruckIcon },
-  { id: 'marketing', label: 'Marketing', icon: FaBullhorn },
-  { id: 'discounts', label: 'Discounts', icon: FaPercentage },
 ];
 
 const alerts = [
@@ -52,8 +50,75 @@ export default function LaptopMockup() {
     products: true,
     logistics: true
   });
+  const [isAutoIterating, setIsAutoIterating] = useState(false); // Start as false
+  const [isInView, setIsInView] = useState(false);
+  const intervalRef = useRef(null);
+  const currentIndexRef = useRef(0);
+  const containerRef = useRef(null);
+
+  // All sidebar item IDs for iteration
+  const allSidebarIds = sidebarItems.map(item => item.id);
+
+  // Intersection Observer to detect when component is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsAutoIterating(true);
+        } else {
+          setIsAutoIterating(false);
+        }
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the component is visible
+        rootMargin: '-10px'
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  // Auto-iteration effect - only runs when in view and auto-iterating is enabled
+  useEffect(() => {
+    if (isAutoIterating && isInView) {
+      intervalRef.current = setInterval(() => {
+        currentIndexRef.current = (currentIndexRef.current + 1) % allSidebarIds.length;
+        setActiveSection(allSidebarIds[currentIndexRef.current]);
+      }, 1500);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoIterating, isInView, allSidebarIds]);
+
+  // Stop auto-iteration when user interacts
+  const handleUserInteraction = (sectionId) => {
+    setIsAutoIterating(false);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    setActiveSection(sectionId);
+    // Update current index to match user selection
+    currentIndexRef.current = allSidebarIds.indexOf(sectionId);
+  };
 
   const toggleDropdown = (dropdown) => {
+    setIsAutoIterating(false);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
     setOpenDropdowns(prev => ({
       ...prev,
       [dropdown]: !prev[dropdown]
@@ -1041,7 +1106,11 @@ export default function LaptopMockup() {
   };
 
   return (
-    <div className="flex justify-center p-8 bg-transparent" style={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+    <div 
+      ref={containerRef}
+      className="flex justify-center p-8 bg-transparent" 
+      style={{ fontFamily: 'Inter, Arial, sans-serif' }}
+    >
       <div className="relative w-[1000px] h-[700px] bg-black rounded-[30px] shadow-xl overflow-hidden border-[8px] border-black">
         {/* MacBook notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-black rounded-b-xl z-10" />
@@ -1064,7 +1133,7 @@ export default function LaptopMockup() {
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActiveSection(item.id)}
+                    onClick={() => handleUserInteraction(item.id)}
                     className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] ${
                       active
                         ? 'bg-black text-white font-medium rounded-md mx-1'
@@ -1097,13 +1166,13 @@ export default function LaptopMockup() {
                     <div key={item.id}>
                       <button
                         onClick={() => {
-                          setActiveSection(item.id);
+                          handleUserInteraction(item.id);
                           toggleDropdown('products');
                         }}
-                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full transition-all duration-200 ease-in-out ${
                           active
-                            ? 'bg-black text-white font-medium rounded-md mx-1'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                            ? 'bg-black text-white font-medium rounded-md mx-1 transform scale-105'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:scale-102'
                         }`}
                       >
                         <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-semibold' : 'text-gray-400'}`} />
@@ -1138,13 +1207,13 @@ export default function LaptopMockup() {
                     <div key={item.id}>
                       <button
                         onClick={() => {
-                          setActiveSection(item.id);
+                          handleUserInteraction(item.id);
                           toggleDropdown('logistics');
                         }}
-                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full ${
+                        className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] w-full transition-all duration-200 ease-in-out ${
                           active
-                            ? 'bg-black text-white font-medium rounded-md mx-1'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                            ? 'bg-black text-white font-medium rounded-md mx-1 transform scale-105'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:scale-102'
                         }`}
                       >
                         <Icon className={`w-2.5 h-2.5 ${active ? 'text-white font-medium' : 'text-gray-400'}`} />
@@ -1171,7 +1240,7 @@ export default function LaptopMockup() {
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActiveSection(item.id)}
+                    onClick={() => handleUserInteraction(item.id)}
                     className={`flex items-center cursor-pointer space-x-1 px-2 py-1.5 text-[10px] ${
                       active
                         ? 'bg-black text-white font-medium rounded-md mx-1'
@@ -1186,7 +1255,17 @@ export default function LaptopMockup() {
             </nav>
 
             {/* Content area */}
-            <div className="flex-1 overflow-y-auto bg-gray-100">{renderContent()}</div>
+            <div className="flex-1 overflow-y-auto bg-gray-100 relative">
+              <div 
+                key={activeSection}
+                className="transition-all duration-300 ease-in-out opacity-100 transform translate-y-0"
+                style={{
+                  animation: 'fadeSlideIn 0.3s ease-out'
+                }}
+              >
+                {renderContent()}
+              </div>
+            </div>
           </div>
         </div>
       </div>
