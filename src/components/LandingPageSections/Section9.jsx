@@ -112,7 +112,7 @@ export default function Section9() {
           </div>          {/* Mobile/Tablet Layout: Vertical column with symmetric positioning */}
           <div className={`${isSmallScreen ? 'flex' : 'flex lg:hidden'} flex-col items-center gap-6`}>
             {/* First Card */}
-            <div className={`${isSmallScreen ? 'w-3/4 h-3/4' : 'w-64 h-80'} rounded-xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out`}>
+            <div className={`${isSmallScreen ? 'w-64 h-80' : 'w-64 h-80'} rounded-xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out`}>
               <img 
                 src={leftCard.image} 
                 alt={leftCard.title}
@@ -121,7 +121,7 @@ export default function Section9() {
             </div>
             
             {/* Second Card */}
-            <div className={`${isSmallScreen ? 'w-3/4 h-3/4' : 'w-64 h-80'} rounded-xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out`}>
+            <div className={`${isSmallScreen ? 'w-64 h-80' : 'w-64 h-80'} rounded-xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out`}>
               <img 
                 src={rightCard.image} 
                 alt={rightCard.title}
