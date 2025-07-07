@@ -135,8 +135,8 @@ export default function BusinessAnimation() {
                   isActive ? 'pt-4' : ''
                 }`}
               >
-                <Icon size={32} />
-                <div className="text-base font-medium mt-1">{tile.label}</div>
+                <Icon size={window.innerWidth < 768 ? 28 : 32} />
+                <div className="text-sm md:text-base font-medium mt-1">{tile.label}</div>
               </motion.div>
 
               {isActive && (
@@ -145,7 +145,7 @@ export default function BusinessAnimation() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ delay: 0.1, duration: 0.25 }}
-                  className="grid grid-cols-2 gap-1 mb-5"
+                  className="grid grid-cols-2 gap-1 mb-3 md:mb-5"
                 >
                   {tile.detailIcons.map((SubIcon, idx) => (
                     <motion.div
@@ -156,9 +156,9 @@ export default function BusinessAnimation() {
                         delay: 0.1 + idx * 0.05,
                         duration: 0.2
                       }}
-                      className="flex items-center justify-center p-2 bg-white/10 rounded-lg"
+                      className="flex items-center justify-center p-1.5 md:p-2 bg-white/10 rounded-lg"
                     >
-                      <SubIcon size={24} />
+                      <SubIcon size={window.innerWidth < 768 ? 20 : 24} />
                     </motion.div>
                   ))}
                 </motion.div>
