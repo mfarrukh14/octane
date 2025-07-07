@@ -66,9 +66,12 @@ export default function BusinessAnimation() {
   const [hoveredTile, setHoveredTile] = useState(null);
 
   const tileTransforms = useMemo(() => {
-    const size = 448;
+    // Use viewport width to determine if mobile
+    const isMobile = window.innerWidth < 768;
+    const size = isMobile ? 320 : 448; // Smaller size for mobile
     const tileSize = size * 0.48;
     const offset = (size - tileSize) / 2;
+    
     return {
       'top-left': { x: offset, y: offset },
       'top-right': { x: -offset, y: offset },
@@ -78,7 +81,7 @@ export default function BusinessAnimation() {
   }, []);
 
   return (
-    <div className="relative w-[28rem] h-[28rem] mx-auto grid grid-cols-2 grid-rows-2 place-items-center">
+    <div className="relative w-[20rem] md:w-[28rem] h-[20rem] md:h-[28rem] mx-auto grid grid-cols-2 grid-rows-2 place-items-center">
       {tiles.map((tile) => {
         const isActive = hoveredTile === tile.id;
         const isInactive = hoveredTile !== null && !isActive;
@@ -91,7 +94,7 @@ export default function BusinessAnimation() {
             onMouseEnter={() => setHoveredTile(tile.id)}
             onMouseLeave={() => setHoveredTile(null)}
             animate={{
-              scale: isActive ? 2 : 1,
+              scale: isActive ? (window.innerWidth < 768 ? 1.8 : 2) : 1,
               x,
               y,
               zIndex: isActive ? 50 : 10,
@@ -166,7 +169,7 @@ export default function BusinessAnimation() {
       })}
 
       {/* Central Logo */}
-      <div className="absolute top-1/2 left-1/2 w-32 h-32 rounded-full bg-black/20 backdrop-blur-lg p-2 shadow-lg -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20">
+      <div className="absolute top-1/2 left-1/2 w-24 h-24 md:w-32 md:h-32 rounded-full bg-black/20 backdrop-blur-lg p-2 shadow-lg -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20">
         <img
           src={logo}
           alt="Logo"
