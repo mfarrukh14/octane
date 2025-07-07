@@ -77,12 +77,23 @@ const Section7 = () => {
             direction="top"
           />
         </div>
+        {/* Mobile: All 4 images in horizontal line */}
+        <div className="xl:hidden mb-8 flex justify-center">
+          <div className="flex gap-2 px-4">
+            <img src="/images/section8images/1.PNG" alt="Tile 1" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
+            <img src="/images/section8images/2.PNG" alt="Tile 2" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
+            <img src="/images/section8images/3.PNG" alt="Tile 3" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
+            <img src="/images/section8images/4.PNG" alt="Tile 4" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
+          </div>
+        </div>
+
+        {/* Desktop: Original 2x2 layout */}
         <div className="container mx-auto flex flex-col xl:flex-row items-start xl:items-center px-4">
           <div className="w-full xl:w-1/2 xl:pr-12 mb-12 xl:mb-0 flex flex-col items-center justify-center">
-            {/* 1x2 image row with staggered heights */}
-            <div className="flex gap-4 w-full ml-10 mb-8 justify-center">
-              <img src="/images/section7images/1.png" alt="Tile 1" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section7images/2.jpg" alt="Tile 2" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '8px' }} />
+            {/* 1x2 image row with staggered heights - Hidden on mobile */}
+            <div className="hidden xl:flex gap-4 w-full ml-10 mb-8 justify-center">
+              <img src="/images/section8images/1.PNG" alt="Tile 1" className="w-50 h-80 object-cover rounded-lg relative" style={{ top: '-16px' }} />
+              <img src="/images/section8images/2.PNG" alt="Tile 2" className="w-50 h-80 object-cover rounded-lg relative" style={{ top: '8px' }} />
             </div>
             {/* Description Paragraphs */}
             <p className="border-l-2 border-green-500 pl-4 text-gray-300 mb-8">
@@ -93,10 +104,10 @@ const Section7 = () => {
             </p>
           </div>
           <div className="w-full xl:w-1/2 flex justify-center relative px-4">
-            {/* Moved 2 images here */}
-            <div className="flex gap-4 justify-center">
-              <img src="/images/section7images/3.jpg" alt="Tile 3" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section7images/4.jpg" alt="Tile 4" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '8px' }} />
+            {/* Moved 2 images here - Hidden on mobile */}
+            <div className="hidden xl:flex gap-4 justify-center">
+              <img src="/images/section8images/3.PNG" alt="Tile 3" className="w-64 h-96 object-cover rounded-lg relative" style={{ top: '-16px' }} />
+              <img src="/images/section8images/4.PNG" alt="Tile 4" className="w-64 h-96 object-cover rounded-lg relative" style={{ top: '8px' }} />
             </div>
           </div>
         </div>
