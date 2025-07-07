@@ -1,6 +1,7 @@
 import React from 'react';
+import BlurText from '../UI/TextAnimations/BlurText';
 
-const Section8 = () => {
+const Section7 = () => {
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
       {/* Animated teal-900 oval gradient glow moving around the section */}
@@ -59,15 +60,29 @@ const Section8 = () => {
         }
       `}</style>
       <div className='max-w-7xl mx-auto relative z-10'>
-        <h2 className="text-center text-5xl md:text-6xl font-light mb-16 leading-tight">
-          Where your store goes from <br /> simple to standout.
+        <h2 className="text-center text-5xl md:text-6xl font-light mb-3 leading-tight">
+          From essential to exceptional
         </h2>
+        <div className="text-center mb-32 flex justify-center">
+          <BlurText
+            textList={[
+              "Show your best sellers",
+              "Show personalized options through A.I",
+              "Show your Instant Delivery Items"
+            ]}
+            rotationInterval={3500}
+            delay={60}
+            className="text-3xl md:text-4xl font-light leading-tight justify-center"
+            animateBy="words"
+            direction="top"
+          />
+        </div>
         <div className="container mx-auto flex flex-col xl:flex-row items-start xl:items-center px-4">
           <div className="w-full xl:w-1/2 xl:pr-12 mb-12 xl:mb-0 flex flex-col items-center justify-center">
             {/* 1x2 image row with staggered heights */}
             <div className="flex gap-4 w-full ml-10 mb-8 justify-center">
-              <img src="/images/section10images/s1.png" alt="Tile 1" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section10images/s2.jpg" alt="Tile 2" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '8px' }} />
+              <img src="/images/section7images/1.png" alt="Tile 1" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '-16px' }} />
+              <img src="/images/section7images/2.jpg" alt="Tile 2" className="w-36 h-60 object-cover rounded-lg relative" style={{ top: '8px' }} />
             </div>
             {/* Description Paragraphs */}
             <p className="border-l-2 border-green-500 pl-4 text-gray-300 mb-8">
@@ -80,8 +95,8 @@ const Section8 = () => {
           <div className="w-full xl:w-1/2 flex justify-center relative px-4">
             {/* Moved 2 images here */}
             <div className="flex gap-4 justify-center">
-              <img src="/images/section10images/s1.png" alt="Tile 3" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section10images/s2.jpg" alt="Tile 4" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '8px' }} />
+              <img src="/images/section7images/3.jpg" alt="Tile 3" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '-16px' }} />
+              <img src="/images/section7images/4.jpg" alt="Tile 4" className="w-1/2 h-92 object-cover rounded-lg relative" style={{ top: '8px' }} />
             </div>
           </div>
         </div>
@@ -90,4 +105,4 @@ const Section8 = () => {
   );
 };
 
-export default Section8;
+export default Section7;
