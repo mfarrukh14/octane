@@ -20,36 +20,36 @@ const stepCards = [
     {
       title: 'Product Added',
       subtitle: 'First Item Ready',
-      image: '/images/BrandWebsiteImages/r1.png'
+      image: '/images/section7images/5.jpg'
     },
     {
       title: 'Inventory Set',
       subtitle: 'Stock Management',
-      image: '/images/BrandWebsiteImages/sq1.png'
+      image: '/images/section7images/2.jpg'
     }
   ],
   [
     {
       title: 'Store Design',
       subtitle: 'Brand Identity',
-      image: '/images/BrandWebsiteImages/sq2.png'
+      image: '/images/section7images/3.jpg'
     },
     {
       title: 'Theme Applied',
       subtitle: 'Visual Complete',
-      image: '/images/BrandWebsiteImages/sq3.jpg'
+      image: '/images/section7images/4.jpg'
     }
   ],
   [
     {
       title: 'Payment Ready',
       subtitle: 'Secure Checkout',
-      image: '/images/BrandWebsiteImages/sq4.jpg'
+      image: '/images/section10images/s1.png'
     },
     {
       title: 'Gateway Active',
       subtitle: 'Processing Live',
-      image: '/images/BrandWebsiteImages/sq5.png'
+      image: '/images/section10images/s2.jpg'
     }
   ],
 ];
