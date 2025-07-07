@@ -4,7 +4,7 @@ const cards = [
   {
     id: 1,
     icon: '/images/section3images/reh1.PNG',
-    hoverIcon: '/images/section3images/reh2.png',    // Second image to show on hover
+    hoverIcon: '/images/section3images/rehh2.png',    // Second image to show on hover
     title: 'Start fast',
     description: 'Starting from home to now a team of hundreds, Octane helped Rang-e-Haya to become a dominating force in the online Fashion domain.',
   },
@@ -18,7 +18,7 @@ const cards = [
   {
     id: 3,
     icon: '/images/section3images/haseens1.jpeg',
-    hoverIcon: '/images/section3images/haseens2.jpg',    // Second image to show on hover
+    hoverIcon: '/images/section3images/haseens2.jpg',    
     title: 'Scale efficiently',
     description: 'Enterprises like Haseens rely on Octane to handle high-volume worldwide orders, warehousing, logistics and payments.',
   },
