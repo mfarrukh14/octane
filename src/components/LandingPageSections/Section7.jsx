@@ -16,22 +16,6 @@ const Section7 = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const getImageStyle = (type) => {
-    let cardWidth, cardHeight;
-    
-    if (typeof window !== 'undefined' && window.innerWidth < 1200) {
-      cardWidth = type === 'square' ? '250px' : '100px';
-      cardHeight = '230px';
-    } else {
-      cardWidth = type === 'square' ? '480px' : '200px';
-      cardHeight = '400px';
-    }
-
-    return {
-      width: cardWidth,
-      height: cardHeight
-    };
-  };
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
       {/* Animated teal-900 oval gradient glow moving around the section */}
@@ -90,10 +74,10 @@ const Section7 = () => {
         }
       `}</style>
       <div className='max-w-7xl mx-auto relative z-10'>
-        <h2 className="text-center text-5xl md:text-6xl font-light mb-3 leading-tight">
+        <h2 className="text-center text-5xl md:text-6xl font-light mb-2 leading-tight">
           From essential to exceptional
         </h2>
-        <div className="text-center mb-32 flex justify-center">
+        <div className="text-center flex justify-center">
           <BlurText
             textList={[
               "Show your best sellers",
@@ -108,32 +92,29 @@ const Section7 = () => {
           />
         </div>
         {/* Mobile & Desktop: 3 images in horizontal line - 1 vertical rectangle + 2 squares */}
-        <div className="mb-8 flex justify-center">
-          <div className="flex gap-4 mb-16 px-4 items-center">
+        <div className="flex justify-center w-full">
+          <div className="flex gap-2 px-4 items-center w-full">
             <img 
               src="/images/section8images/1.PNG" 
               alt="Tile 1" 
-              className="flex-shrink-0 object-cover rounded-lg" 
-              style={getImageStyle('vertical')}
+              className="flex-shrink-0 object-cover rounded-xl w-1/5 h-1/2" 
             />
             <img 
               src="/images/section8images/2.PNG" 
               alt="Tile 2" 
-              className="flex-shrink-0 object-cover rounded-lg" 
-              style={getImageStyle('square')}
+              className="flex-shrink-0 object-cover rounded-xl w-2/5 h-1/2" 
             />
             <img 
               src="/images/section8images/4.PNG" 
               alt="Tile 4" 
-              className="flex-shrink-0 object-cover rounded-lg" 
-              style={getImageStyle('square')}
+              className="flex-shrink-0 object-cover rounded-xl w-2/5 h-1/2" 
             />
           </div>
         </div>
 
         {/* Description Paragraphs - Centered below images */}
-        <div className="flex flex-col items-center text-center px-4 mb-12">
-          <p className="border-l-2 border-green-500 pl-4 text-gray-300 mb-8 text-xl">
+        <div className="flex flex-col items-center text-center px-4">
+          <p className="border-l-2 border-green-500 pl-4 text-gray-300 text-xl">
             Octane helps showcase your best sellers to build trust and boost conversions by highlighting what customers already love. It delivers Personalized Experiences with AI and Offers Instant Delivery Items so your customers can shop with confidence and receive their orders faster than ever.
           </p>
         </div>
