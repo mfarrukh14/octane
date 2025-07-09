@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BlurText from '../UI/TextAnimations/BlurText';
 
 const Section7 = () => {
+  const [screenSize, setScreenSize] = useState('desktop');
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        setScreenSize(window.innerWidth < 1200 ? 'mobile' : 'desktop');
+      }
+    };
+
+    handleResize(); // Set initial size
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const getImageStyle = (type) => {
+    let cardWidth, cardHeight;
+    
+    if (typeof window !== 'undefined' && window.innerWidth < 1200) {
+      cardWidth = type === 'square' ? '250px' : '100px';
+      cardHeight = '230px';
+    } else {
+      cardWidth = type === 'square' ? '480px' : '200px';
+      cardHeight = '400px';
+    }
+
+    return {
+      width: cardWidth,
+      height: cardHeight
+    };
+  };
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
       {/* Animated teal-900 oval gradient glow moving around the section */}
@@ -77,40 +107,37 @@ const Section7 = () => {
             direction="top"
           />
         </div>
-        {/* Mobile: All 4 images in horizontal line */}
-        <div className="xl:hidden mb-8 flex justify-center">
-          <div className="flex gap-2 px-4">
-            <img src="/images/section8images/1.PNG" alt="Tile 1" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
-            <img src="/images/section8images/2.PNG" alt="Tile 2" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
-            <img src="/images/section8images/3.PNG" alt="Tile 3" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
-            <img src="/images/section8images/4.PNG" alt="Tile 4" className="w-20 h-32 flex-shrink-0 object-cover rounded-lg" />
+        {/* Mobile & Desktop: 3 images in horizontal line - 1 vertical rectangle + 2 squares */}
+        <div className="mb-8 flex justify-center">
+          <div className="flex gap-4 mb-16 px-4 items-center">
+            <img 
+              src="/images/section8images/1.PNG" 
+              alt="Tile 1" 
+              className="flex-shrink-0 object-cover rounded-lg" 
+              style={getImageStyle('vertical')}
+            />
+            <img 
+              src="/images/section8images/2.PNG" 
+              alt="Tile 2" 
+              className="flex-shrink-0 object-cover rounded-lg" 
+              style={getImageStyle('square')}
+            />
+            <img 
+              src="/images/section8images/4.PNG" 
+              alt="Tile 4" 
+              className="flex-shrink-0 object-cover rounded-lg" 
+              style={getImageStyle('square')}
+            />
           </div>
         </div>
 
-        {/* Desktop: Original 2x2 layout */}
-        <div className="container mx-auto flex flex-col xl:flex-row items-start xl:items-center px-4">
-          <div className="w-full xl:w-1/2 xl:pr-12 mb-12 xl:mb-0 flex flex-col items-center justify-center">
-            {/* 1x2 image row with staggered heights - Hidden on mobile */}
-            <div className="hidden xl:flex gap-4 w-full ml-10 mb-8 justify-center">
-              <img src="/images/section8images/1.PNG" alt="Tile 1" className="w-50 h-80 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section8images/2.PNG" alt="Tile 2" className="w-50 h-80 object-cover rounded-lg relative" style={{ top: '8px' }} />
-            </div>
-            {/* Description Paragraphs */}
-            <p className="border-l-2 border-green-500 pl-4 text-gray-300 mb-8">
-              Octane helps showcase your best sellers to build trust and boost conversions by highlighting what customers already love. It delivers Personalized Experiences with AI and Offers Instant Delivery Items so your customers can shop with confidence and receive their orders faster than ever.
-            </p>
-            <p className="text-sm text-gray-500">
-              Based on external study with a Big Three global consulting firm in April, 2023.
-            </p>
-          </div>
-          <div className="w-full xl:w-1/2 flex justify-center relative px-4">
-            {/* Moved 2 images here - Hidden on mobile */}
-            <div className="hidden xl:flex gap-4 justify-center">
-              <img src="/images/section8images/3.PNG" alt="Tile 3" className="w-64 h-96 object-cover rounded-lg relative" style={{ top: '-16px' }} />
-              <img src="/images/section8images/4.PNG" alt="Tile 4" className="w-64 h-96 object-cover rounded-lg relative" style={{ top: '8px' }} />
-            </div>
-          </div>
+        {/* Description Paragraphs - Centered below images */}
+        <div className="flex flex-col items-center text-center px-4 mb-12">
+          <p className="border-l-2 border-green-500 pl-4 text-gray-300 mb-8 text-xl">
+            Octane helps showcase your best sellers to build trust and boost conversions by highlighting what customers already love. It delivers Personalized Experiences with AI and Offers Instant Delivery Items so your customers can shop with confidence and receive their orders faster than ever.
+          </p>
         </div>
+
       </div>
     </section>
   );
