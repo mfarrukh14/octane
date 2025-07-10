@@ -92,7 +92,7 @@ const Section7 = () => {
           />
         </div>
         {/* Mobile & Desktop: 3 images in horizontal line - 1 vertical rectangle + 2 squares */}
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full mt-0 md:-mt-50">
           <div className="flex gap-2 px-4 items-center w-full">
             <img 
               src="/images/section8images/1.PNG" 
@@ -113,8 +113,8 @@ const Section7 = () => {
         </div>
 
         {/* Description Paragraphs - Centered below images */}
-        <div className="flex flex-col items-center text-center px-4">
-          <p className="border-l-2 border-green-500 pl-4 text-gray-300 text-xl">
+        <div className="flex flex-col items-center text-left px-4 mt-0 md:-mt-40">
+          <p className="border-l-2 border-green-500 pl-4 text-gray-300 text-base md:text-xl">
             Octane helps showcase your best sellers to build trust and boost conversions by highlighting what customers already love. It delivers Personalized Experiences with AI and Offers Instant Delivery Items so your customers can shop with confidence and receive their orders faster than ever.
           </p>
         </div>

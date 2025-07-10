@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import OrbitAnimation from '../UI/OrbitAnimations';
 import BusinessAnimation from '../UI/BusinessAnimation';
 
 const Section5 = () => {
