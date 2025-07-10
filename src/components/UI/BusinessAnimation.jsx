@@ -5,10 +5,6 @@ import {
   FaShareAlt,
   FaCogs,
   FaChartLine,
-  FaCcVisa,
-  FaCcMastercard,
-  FaCcPaypal,
-  FaCcApplePay,
   FaFacebook,
   FaInstagram,
   FaTiktok,
@@ -16,11 +12,7 @@ import {
   FaReact,
   FaNodeJs,
   FaAws,
-  FaDocker,
-  FaGoogle,
-  FaSlack,
-  FaTrello,
-  FaLinkedin
+  FaDocker
 } from 'react-icons/fa';
 import logo from '/images/octaneLogo.png';
 
@@ -30,7 +22,14 @@ const tiles = [
     label: 'Payment Options',
     icon: FaMoneyCheckAlt,
     position: 'top-left',
-    detailIcons: [FaCcVisa, FaCcMastercard, FaCcPaypal, FaCcApplePay]
+    detailImages: [
+      '/images/paymentTile/p1.png',
+      '/images/paymentTile/p2.png',
+      '/images/paymentTile/p3.png',
+      '/images/paymentTile/p4.png',
+      '/images/paymentTile/p5.png',
+      '/images/100.png'
+    ]
   },
   {
     id: 'socials',
@@ -47,11 +46,20 @@ const tiles = [
     detailIcons: [FaReact, FaNodeJs, FaAws, FaDocker]
   },
   {
-    id: 'gtm',
-    label: 'GTM',
+    id: 'analytics',
+    label: 'Analytics',
     icon: FaChartLine,
     position: 'bottom-right',
-    detailIcons: [FaGoogle, FaSlack, FaTrello, FaLinkedin]
+    detailImages: [
+      '/images/analyticsTile/Checkout Journey.png',
+      '/images/analyticsTile/Customers.png',
+      '/images/analyticsTile/Landing Page.png',
+      '/images/analyticsTile/Purchase Journey.png',
+      '/images/analyticsTile/User Acqusition.png',
+      '/images/analyticsTile/promotion.png',
+      '/images/analyticsTile/transactions.png',
+      '/images/100.png'
+    ]
   }
 ];
 
@@ -132,7 +140,7 @@ export default function BusinessAnimation() {
                   duration: 0.2
                 }}
                 className={`flex flex-col items-center h-full justify-center ${
-                  isActive ? 'pt-4' : ''
+                  isActive ? 'pt-8' : ''
                 }`}
               >
                 <Icon size={window.innerWidth < 768 ? 28 : 32} />
@@ -145,22 +153,49 @@ export default function BusinessAnimation() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ delay: 0.1, duration: 0.25 }}
-                  className="grid grid-cols-2 gap-1 mb-3 md:mb-5"
+                  className="grid grid-cols-3 gap-1 mb-3 md:mb-5"
                 >
-                  {tile.detailIcons.map((SubIcon, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        delay: 0.1 + idx * 0.05,
-                        duration: 0.2
-                      }}
-                      className="flex items-center justify-center p-1.5 md:p-2 bg-white/10 rounded-lg"
-                    >
-                      <SubIcon size={window.innerWidth < 768 ? 20 : 24} />
-                    </motion.div>
-                  ))}
+                  {tile.detailImages ? (
+                    // Render images for payment and analytics tiles
+                    tile.detailImages.map((imageSrc, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          delay: 0.1 + idx * 0.05,
+                          duration: 0.2
+                        }}
+                        className="flex items-center justify-center p-1 bg-white rounded-lg"
+                      >
+                        <img 
+                          src={imageSrc} 
+                          alt={`${tile.label} ${idx + 1}`}
+                          className={`object-contain ${
+                            tile.id === 'payment' 
+                              ? 'w-6 h-6 md:w-10 md:h-10' 
+                              : 'w-4 h-4 md:w-8 md:h-8'
+                          } `}
+                        />
+                      </motion.div>
+                    ))
+                  ) : (
+                    // Render icons for other tiles
+                    tile.detailIcons.map((SubIcon, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          delay: 0.1 + idx * 0.05,
+                          duration: 0.2
+                        }}
+                        className="flex items-center justify-center p-1.5 md:p-2 bg-white/10 rounded-lg"
+                      >
+                        <SubIcon size={window.innerWidth < 768 ? 20 : 24} />
+                      </motion.div>
+                    ))
+                  )}
                 </motion.div>
               )}
             </div>

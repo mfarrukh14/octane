@@ -31,6 +31,7 @@ const Section5 = () => {
             <div className="flex-1 relative flex items-center justify-center p-6 min-h-0">
               <video
                 src="/videos/businessAnimation.mp4"
+                className='hover:opacity-70 transition-opacity duration-300'
                 loop
                 autoPlay
                 muted
