@@ -35,32 +35,32 @@ const faqs = [
   {
     id: 1,
     question: 'What is Octane?',
-    answer: "Octane is a revolutionary digital ecosystem designed to empower brands in Pakistan. It's a tailored platform that merges cutting-edge technology with market insights, meticulously customized for your brand."
+    answer: "Octane is a revolutionary digital ecosystem built to empower brands in Pakistan. It’s a tailored platform that blends cutting-edge technology with deep market insights—meticulously customized to support your brand’s growth."
   },
   {
     id: 2,
     question: 'How does Octane ensure data privacy and security for my customers?',
-    answer: 'Octane ensures data privacy and security for the customer through the security measures we have in place. Our technology stack offers the best cybersecurity tools to ensure the security of customer data.'
+    answer: 'Octane prioritizes data privacy and security through robust, enterprise-grade measures. Our technology stack is equipped with leading cybersecurity tools to protect customer data at every touchpoint.'
   },
   {
     id: 3,
     question: 'How quickly can a brand onboard and start using Octane?',
-    answer: 'It takes a brand 24 to 48 hours to onboard and start using octane.'
+    answer: 'Brands can be fully onboarded and operational within 24 to 48 hours. Our streamlined process ensures a fast, hassle-free start—so you can begin selling without delay.'
   },
   {
     id: 4,
     question: 'How and when do i get paid?',
-    answer: 'Sellers receive instant payments directly into their bank accounts.'
+    answer: 'Sellers receive instant payments directly into their bank accounts. There are no delays or complicated payout schedules—just fast, transparent transactions.'
   },
   {
     id: 5,
     question: "What's the cost for using Octane's warehousing and shipping services?",
-    answer: "There's no extra charges for warehousing, Shipping, logistics or any inventory handling process. We make sure that after opting this model you are not stressing about extra payment deductions or anything, just sit back and enjoy the growth."
+    answer: "There are no extra charges for warehousing, shipping, logistics, or inventory handling.With Octane, you don’t need to worry about hidden fees or deductions—just focus on growing your brand."
   },
   {
     id: 6,
     question: 'Do I have access to backend settings, reports, and analytics?',
-    answer: 'Yes, with Octane, you have full access to backend settings, detailed reports, and advanced analytics through the vendor portal. This gives you complete control over managing your brand, tracking performance, and making data-driven decisions.'
+    answer: 'Yes. Octane provides full access to backend controls, real-time reports, and advanced analytics through your dedicated vendor portal. You’ll have complete visibility and control to manage your brand and make data-driven decisions with confidence.'
   }
 ];
 

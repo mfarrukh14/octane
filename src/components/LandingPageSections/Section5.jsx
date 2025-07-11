@@ -40,9 +40,9 @@ const Section5 = () => {
             </div>
 
             <div className='text-white px-8 pb-8 relative z-10 flex-shrink-0'>
-              <h3 className="text-xl tracking-tighter mb-2">From pickup to delivery,Octane handles it all</h3>
+              <h3 className="text-xl tracking-tighter mb-2">Your entire setup - managed from a single dashboard</h3>
               <p className="text-gray-400 tracking-tighter leading-tight">
-                Visualize the entire fulfillment journey: from pickup at your vendor, to smart warehousing at Octane, to last-mile delivery — and even managed returns back to the vendor. Octane keeps every step connected and transparent.
+                From order placement, to inventory management, fulfilment and even returns, Octane handles it all right from your computer or mobile screen.
               </p>
             </div>
           </div>
@@ -51,9 +51,9 @@ const Section5 = () => {
               <BusinessAnimation />
             </div>
             <div className="relative z-10 flex-shrink-0">
-              <h3 className="text-xl tracking-tighter mb-2">Go Live  Everywhere — Powered by Smart Integrations</h3>
+              <h3 className="text-xl tracking-tighter mb-2">A store that never sleeps!</h3>
               <p className="text-gray-400 tracking-tighter leading-tight">
-                Track and optimize your store's performance across platforms with seamless tools and integrations .
+                24/7 omni present support for any hiccups or problems, Octane runs seamlessly as you rest! 
               </p>
             </div>
           </div>
