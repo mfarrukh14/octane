@@ -114,9 +114,9 @@ const Section3 = () => {
         ))}
       </div>        {/* Action button */}
       <div className="flex justify-center mt-8">
-        <button className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg transition-all duration-300 bg-black hover:bg-white hover:text-black">
+        <a href='https://wa.me/923104030793' className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg transition-all duration-300 bg-black hover:bg-white hover:text-black">
           Get in touch
-        </button>
+        </a>
       </div>
     </div>
   </section>

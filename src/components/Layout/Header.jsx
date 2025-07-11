@@ -31,12 +31,12 @@ const Header = () => {
           {/* Right actions */}
           <div className="flex items-center space-x-6">
 
-            <a href="/login" className="text-white hover:text-gray-200 transition-colors">
+            <a href="https://sellers.octane.store/login" className="text-white hover:text-gray-200 transition-colors">
               Log in
             </a>
 
             <a
-              href="/signup"
+              href="https://wa.me/923104030793"
               className="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-300 transition-colors"
             >
               Get in touch
