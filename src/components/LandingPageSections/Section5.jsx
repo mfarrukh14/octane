@@ -53,7 +53,7 @@ const Section5 = () => {
             <div className="relative z-10 flex-shrink-0">
               <h3 className="text-xl tracking-tighter mb-2">A store that never sleeps!</h3>
               <p className="text-gray-400 tracking-tighter leading-tight">
-                24/7 omni present support for any hiccups or problems, Octane runs seamlessly as you rest! 
+                24/7 omni present support, Octane runs seamlessly as you rest! 
               </p>
             </div>
           </div>

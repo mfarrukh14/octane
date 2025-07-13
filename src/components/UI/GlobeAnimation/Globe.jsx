@@ -100,7 +100,7 @@ function SatelliteCards() {
     },
     {
       id: 2,
-      title: "Shipped to 150+ countries",
+      title: "Shipping to 150+ countries",
       subtitle: "",
       subtitle2: "",
       position: { lat: 30, lng: 90 }, // 90° East

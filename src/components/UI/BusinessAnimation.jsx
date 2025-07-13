@@ -2,17 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   FaMoneyCheckAlt,
-  FaShareAlt,
   FaCogs,
   FaChartLine,
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-  FaTwitter,
-  FaReact,
-  FaNodeJs,
-  FaAws,
-  FaDocker
+  FaTag
 } from 'react-icons/fa';
 import logo from '/images/octaneLogo.png';
 
@@ -32,18 +24,25 @@ const tiles = [
     ]
   },
   {
-    id: 'socials',
-    label: 'Socials',
-    icon: FaShareAlt,
+    id: 'gtm',
+    label: 'GTM',
+    icon: FaTag,
     position: 'top-right',
-    detailIcons: [FaFacebook, FaInstagram, FaTiktok, FaTwitter]
+    detailImages: [
+      '/images/gtmTile/google-tag.png',
+      '/images/gtmTile/fb pixel icon.png',
+      '/images/gtmTile/instagram.jpg',
+      '/images/gtmTile/Logo_Google_Analytics.svg.png',
+      '/images/100.png'
+    ]
   },
   {
     id: 'tech',
     label: 'Tech',
     icon: FaCogs,
     position: 'bottom-left',
-    detailIcons: [FaReact, FaNodeJs, FaAws, FaDocker]
+    detailImages: ['/images/tech.png'],
+    hasOverlay: true
   },
   {
     id: 'analytics',
@@ -51,15 +50,16 @@ const tiles = [
     icon: FaChartLine,
     position: 'bottom-right',
     detailImages: [
-      '/images/analyticsTile/Checkout Journey.png',
-      '/images/analyticsTile/Customers.png',
-      '/images/analyticsTile/Landing Page.png',
-      '/images/analyticsTile/Purchase Journey.png',
-      '/images/analyticsTile/User Acqusition.png',
-      '/images/analyticsTile/promotion.png',
-      '/images/analyticsTile/transactions.png',
+      '/images/analyticsTile/sales report icon 2.png',
+      '/images/analyticsTile/customer insights icon.png',
+      '/images/analyticsTile/Product Analytics .png',
+      '/images/analyticsTile/Order Analytics icon.jpg',
+      '/images/analyticsTile/inventory reports icon.png',
+      '/images/analyticsTile/Feedback Analytics icon.png',
+      '/images/analyticsTile/google_analytics_logo_icon.png',
       '/images/100.png'
-    ]
+    ],
+    detailLabels: ['Sales Report', 'Customer Insights', 'Product Analytics', 'Order Analytics', 'Inventory Reports', 'Feedback Analytics', 'Google Analytics']
   }
 ];
 
@@ -153,10 +153,18 @@ export default function BusinessAnimation() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ delay: 0.1, duration: 0.25 }}
-                  className="grid grid-cols-3 gap-1 mb-3 md:mb-5"
+                  className={`grid gap-1 mb-3 md:mb-5 ${
+                    tile.id === 'payment' || tile.id === 'analytics' 
+                      ? 'grid-cols-3' 
+                      : tile.id === 'tech'
+                      ? 'grid-cols-1'
+                      : tile.id === 'gtm'
+                      ? 'grid-cols-3'
+                      : 'grid-cols-2'
+                  }`}
                 >
                   {tile.detailImages ? (
-                    // Render images for payment and analytics tiles
+                    // Render images for all tiles with images
                     tile.detailImages.map((imageSrc, idx) => (
                       <motion.div
                         key={idx}
@@ -166,17 +174,37 @@ export default function BusinessAnimation() {
                           delay: 0.1 + idx * 0.05,
                           duration: 0.2
                         }}
-                        className="flex items-center justify-center p-1 bg-white rounded-lg"
+                        className="flex flex-col items-center justify-center"
                       >
-                        <img 
-                          src={imageSrc} 
-                          alt={`${tile.label} ${idx + 1}`}
-                          className={`object-contain ${
-                            tile.id === 'payment' 
-                              ? 'w-6 h-6 md:w-10 md:h-10' 
-                              : 'w-4 h-4 md:w-8 md:h-8'
-                          } `}
-                        />
+                        <div className={`flex items-center justify-center mb-1 ${
+                          tile.id === 'tech' ? 'w-full h-30 md:h-30 relative' : 'p-1 bg-white rounded-lg'
+                        }`}>
+                          <img 
+                            src={imageSrc} 
+                            alt={`${tile.label} ${idx + 1}`}
+                            className={`object-contain ${
+                              tile.id === 'payment' 
+                                ? 'w-4 h-4 md:w-6 md:h-6' 
+                                : tile.id === 'gtm'
+                                ? 'w-4 h-4 md:w-6 md:h-6'
+                                : tile.id === 'tech'
+                                ? 'w-full h-full'
+                                : 'w-3 h-3 md:w-5 md:h-5'
+                            } `}
+                          />
+                          {tile.hasOverlay && tile.id === 'tech' && (
+                            <img 
+                              src="/images/100.png"
+                              alt="100+ Features"
+                              className="absolute top-14 -right-6 w-10 h-10 md:w-14 md:h-14 object-contain"
+                            />
+                          )}
+                        </div>
+                        {tile.detailLabels && tile.detailLabels[idx] && (
+                          <span className="text-[6px] text-white/70 text-center leading-tight">
+                            {tile.detailLabels[idx]}
+                          </span>
+                        )}
                       </motion.div>
                     ))
                   ) : (
