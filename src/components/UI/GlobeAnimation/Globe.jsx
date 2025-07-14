@@ -108,7 +108,7 @@ function SatelliteCards() {
     },
     {
       id: 3,    
-      title: "Serves 1 million customers",
+      title: "Serves unlimited customers",
       subtitle: "",
       subtitle2: "",
       position: { lat: 10, lng: 180 }, // 180° (International Date Line)
