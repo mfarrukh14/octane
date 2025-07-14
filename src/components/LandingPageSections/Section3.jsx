@@ -93,7 +93,7 @@ const Section3 = () => {
       <div className="flex flex-col xl:flex-row text-white gap-6">
         <div className="w-full xl:w-2/3">
           <h1 className="text-4xl md:text-6xl mb-6 tracking-tighter font-light leading-tight">
-            One platform, for scaling and business
+            One platform, for scaling any business
           </h1>
         </div>
         <div className="w-full xl:w-1/3 flex items-end">

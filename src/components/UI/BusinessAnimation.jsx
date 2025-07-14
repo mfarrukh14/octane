@@ -57,7 +57,6 @@ const tiles = [
       '/images/analyticsTile/inventory reports icon.png',
       '/images/analyticsTile/Feedback Analytics icon.png',
       '/images/analyticsTile/google_analytics_logo_icon.png',
-      '/images/100.png'
     ],
     detailLabels: ['Sales Report', 'Customer Insights', 'Product Analytics', 'Order Analytics', 'Inventory Reports', 'Feedback Analytics', 'Google Analytics']
   }
