@@ -192,13 +192,6 @@ export default function BusinessAnimation() {
                                 : 'w-3 h-3 md:w-5 md:h-5'
                             } `}
                           />
-                          {tile.hasOverlay && tile.id === 'tech' && (
-                            <img 
-                              src="/images/100.png"
-                              alt="100+ Features"
-                              className="absolute top-14 -right-6 w-10 h-10 md:w-14 md:h-14 object-contain"
-                            />
-                          )}
                         </div>
                         {tile.detailLabels && tile.detailLabels[idx] && (
                           <span className="text-[6px] text-white/70 text-center leading-tight">
