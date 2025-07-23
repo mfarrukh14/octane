@@ -45,7 +45,7 @@ const Section6 = () => {
                         <div className='text-white mt-4 px-8 pb-8 relative z-10'>
                             <h3 className="text-xl tracking-tighter mb-2">Everything managed from the same store front</h3>
                             <p className="text-gray-400 tracking-tighter leading-tight">
-                                From Inventory, logistics, to delivery confirmation everything is easily handled from Octane dashboard.
+                                From inventory and logistics to delivery confirmation, everything is seamlessly managed through the Octane dashboard.
                             </p>
                         </div>
                     </div>                {/* Card 2 */}
@@ -62,7 +62,7 @@ const Section6 = () => {
                         <div className="mt-4 relative z-10">
                             <h3 className="text-xl tracking-tighter mb-2">Ease of management - in your hands</h3>
                             <p className="text-gray-400 tracking-tighter leading-tight">
-                                With Octane, your entire store, and indeed your entire business is always in your pocket on your phone, or just a click away - via your laptop!
+                                With Octane, your entire store, and indeed your entire business is always in your pocket on your phone, or just a click away.
                             </p>
                         </div>
                     </div>            </div>
