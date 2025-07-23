@@ -12,7 +12,7 @@ const Section4 = () => (
                 </div>
                 <div className="w-full xl:w-1/2">
                     <span className="text-base md:text-lg tracking-tighter text-gray-400 block">
-                        <u className="cursor-pointer hover:text-white">Accelerate your launch</u> with professionally designed ready to use layouts, pick from refined, sales-optimized themes, or build a fully customized storefront from the ground up.
+                        <a href="https://sellers.octane.store/login" className="cursor-pointer hover:text-white"><u>Accelerate your launch</u></a> with professionally designed ready to use layouts, pick from refined, sales-optimized themes, or build a fully customized storefront from the ground up.
                     </span>
                 </div>
             </div>

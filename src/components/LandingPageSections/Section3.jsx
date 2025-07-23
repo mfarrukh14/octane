@@ -13,7 +13,7 @@ const cards = [
     icon: '/images/section3images/hsy1.PNG',
     hoverIcon: '/images/section3images/hsy2.PNG',    // Second image to show on hover
     title: 'Elevate your brand',
-    description: 'With Octane handling operations, HSY focuses on making  iconic designs ,while his brand reaches customers worldwide.',
+    description: 'With Octane handling operations, HSY focuses on making  iconic designs, while his brand reaches customers worldwide.',
   },
   {
     id: 3,
@@ -115,7 +115,7 @@ const Section3 = () => {
       </div>        {/* Action button */}
       <div className="flex justify-center mt-8">
         <a href='https://wa.me/923104030793' className="px-5 font-semibold cursor-pointer py-3 border-2 border-white text-white rounded-full text-lg transition-all duration-300 bg-black hover:bg-white hover:text-black">
-          Scale your store
+          See how they made it
         </a>
       </div>
     </div>

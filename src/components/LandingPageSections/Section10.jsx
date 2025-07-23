@@ -637,8 +637,8 @@ const Section10 = () => {
           <h4 className="text-xl font-semibold mb-2">Sell and ship everywhere</h4>
           <p className="text-gray-300">
             Octane takes the complexity out of international selling, from delivering products faster and more affordably with{' '}
-            <a href="#" className="underline">Octane Shipping</a> to localizing your experience with{' '}
-            <a href="#" className="underline">Octane Markets</a>.
+            <a className="">Octane Shipping</a> to localizing your experience with{' '}
+            <a className="">Octane Markets</a>.
           </p>
         </div>
       </div>

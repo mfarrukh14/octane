@@ -31,7 +31,7 @@ const tiles = [
     detailImages: [
       '/images/gtmTile/google-tag.png',
       '/images/gtmTile/fb pixel icon.png',
-      '/images/gtmTile/instagram.jpg',
+      '/images/gtmTile/insta.png',
       '/images/gtmTile/Logo_Google_Analytics.svg.png',
       '/images/100.png'
     ]
@@ -41,8 +41,14 @@ const tiles = [
     label: 'Tech',
     icon: FaCogs,
     position: 'bottom-left',
-    detailImages: ['/images/tech.png'],
-    hasOverlay: true
+    detailImages: [
+      '/images/techTile/cms.png',
+      '/images/techTile/dms.png',
+      '/images/techTile/ims.png',
+      '/images/techTile/oms.png',
+      '/images/techTile/wms.png',
+      '/images/100.png'
+    ]
   },
   {
     id: 'analytics',
@@ -157,7 +163,7 @@ export default function BusinessAnimation() {
                     tile.id === 'payment' || tile.id === 'analytics' 
                       ? 'grid-cols-3' 
                       : tile.id === 'tech'
-                      ? 'grid-cols-1'
+                      ? 'grid-cols-3'
                       : tile.id === 'gtm'
                       ? 'grid-cols-3'
                       : 'grid-cols-2'
@@ -176,9 +182,7 @@ export default function BusinessAnimation() {
                         }}
                         className="flex flex-col items-center justify-center"
                       >
-                        <div className={`flex items-center justify-center mb-1 ${
-                          tile.id === 'tech' ? 'w-full h-30 md:h-30 relative' : 'p-1 bg-white rounded-lg'
-                        }`}>
+                        <div className="flex items-center justify-center p-1 bg-white rounded-lg mb-1">
                           <img 
                             src={imageSrc} 
                             alt={`${tile.label} ${idx + 1}`}
@@ -188,17 +192,10 @@ export default function BusinessAnimation() {
                                 : tile.id === 'gtm'
                                 ? 'w-4 h-4 md:w-6 md:h-6'
                                 : tile.id === 'tech'
-                                ? 'w-full h-full'
+                                ? 'w-4 h-4 md:w-6 md:h-6'
                                 : 'w-3 h-3 md:w-5 md:h-5'
                             } `}
                           />
-                          {tile.hasOverlay && tile.id === 'tech' && (
-                            <img 
-                              src="/images/100.png"
-                              alt="100+ Features"
-                              className="absolute top-14 -right-6 w-10 h-10 md:w-14 md:h-14 object-contain"
-                            />
-                          )}
                         </div>
                         {tile.detailLabels && tile.detailLabels[idx] && (
                           <span className="text-[6px] text-white/70 text-center leading-tight">

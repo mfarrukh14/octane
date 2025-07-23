@@ -164,7 +164,7 @@ export default function Section9() {
             );
           })}          </ul>
           <button className={`bg-white text-black px-8 py-3 rounded-full font-medium ${isSmallScreen ? 'mx-auto w-full max-w-xs' : 'mx-auto w-full max-w-xs lg:w-1/2'}`}>
-            Start your journey
+            See what sets us apart
           </button>
         </div>
 
