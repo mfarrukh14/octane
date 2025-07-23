@@ -43,9 +43,9 @@ const Section6 = () => {
                             <LaptopMockup />
                         </div>
                         <div className='text-white mt-4 px-8 pb-8 relative z-10'>
-                            <h3 className="text-xl tracking-tighter mb-2">Manage everything in one place</h3>
+                            <h3 className="text-xl tracking-tighter mb-2">Everything managed from the same store front</h3>
                             <p className="text-gray-400 tracking-tighter leading-tight">
-                                From back office to front of store, you’re always in control with the fully centralized Shopify Admin.
+                                From Inventory, logistics, to delivery confirmation everything is easily handled from Octane dashboard.
                             </p>
                         </div>
                     </div>                {/* Card 2 */}
@@ -60,9 +60,9 @@ const Section6 = () => {
                             <MobileMockup />
                         </div>
                         <div className="mt-4 relative z-10">
-                            <h3 className="text-xl tracking-tighter mb-2">Run your store from anywhere</h3>
+                            <h3 className="text-xl tracking-tighter mb-2">Ease of management - in your hands</h3>
                             <p className="text-gray-400 tracking-tighter leading-tight">
-                                Do it all right from your pocket with the full-featured Shopify mobile app.
+                                With Octane, your entire store, and indeed your entire business is always in your pocket on your phone, or just a click away - via your laptop!
                             </p>
                         </div>
                     </div>            </div>

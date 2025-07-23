@@ -72,6 +72,13 @@ const Section7 = () => {
         .animate-ovalMove {
           animation: ovalMove 36s ease-in-out infinite;
         }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
       `}</style>
       <div className='max-w-7xl mx-auto relative z-10'>
         <h2 className="text-center text-5xl md:text-6xl font-light mb-2 leading-tight">
@@ -92,8 +99,8 @@ const Section7 = () => {
           />
         </div>
         {/* Mobile & Desktop: 3 images in horizontal line - 1 vertical rectangle + 2 squares */}
-        <div className="flex justify-center w-full mt-12">
-          <div className="flex gap-6 px-4 items-center justify-center">
+        <div className="w-full mt-12">
+          <div className={`flex gap-6 px-4 items-center ${screenSize === 'mobile' ? 'overflow-x-auto scrollbar-hide' : 'justify-center'}`}>
             <img 
               src="/images/section8images/1.PNG" 
               alt="Tile 1" 
